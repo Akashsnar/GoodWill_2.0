@@ -195,3 +195,38 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // app.post("/images", function (req, res) {
 //   res.redirect("/users");
 // });
+
+
+
+
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
+
+
+app.post("/deleteNgo", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await ngoschema.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+const User = require("./mongoSchema/userdetails");
+app.post("/deleteUser", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await User.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+

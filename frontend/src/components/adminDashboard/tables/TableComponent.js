@@ -1,5 +1,5 @@
 // TableComponent.js
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,10 +11,18 @@ import TableRow from "@mui/material/TableRow";
 import IconButton from "@mui/material/IconButton";
 import "./tables.css";
 import NavAdmin from "../NavAdmin";
+import DeleteConfirmation from "./DeleteConfirmation";
 
-function TableComponent({ columns, rows, onDelete, props }) {
+function TableComponent({
+  columns,
+  rows,
+  onDelete,
+  props
+}) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [rowToDelete, setRowToDelete] = useState(null);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -24,20 +32,28 @@ function TableComponent({ columns, rows, onDelete, props }) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+   const handleDeleteClick = (index) => {
+     setRowToDelete(index + page * rowsPerPage);
+     setDeleteConfirmationOpen(true);
+   };
 
-  const handleDelete = (index) => {
-    if (onDelete) {
-      onDelete(index);
-    }
-  };
+   const handleConfirmDelete = () => {
+     onDelete(rowToDelete);
+     setDeleteConfirmationOpen(false);
+   };
+
+   const handleCancelDelete = () => {
+     setDeleteConfirmationOpen(false);
+   };
+
 
   return (
     <>
-      <NavAdmin/>
+      <NavAdmin />
       <div className="mainTable">
-      <center>
-        <h1 className="tableHeader">{props.heading}</h1>
-      </center>
+        <center>
+          <h1 className="tableHeader">{props.heading}</h1>
+        </center>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 600 }}>
             <Table stickyHeader aria-label="sticky table">
@@ -65,17 +81,24 @@ function TableComponent({ columns, rows, onDelete, props }) {
                           const value = row[column.id];
                           return (
                             <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
+                              {(column.id === ("profilePic" || "image")) ? (
+                                <img
+                                  src={value}
+                                  alt="Profile Pic"
+                                  style={{ width: 50, height: 50,borderRadius: "50%"}}
+                                />
+                              ) : column.format && typeof value === "number" ? (
+                                column.format(value)
+                              ) : (
+                                value
+                              )}
                             </TableCell>
                           );
                         })}
                         <TableCell>
                           <IconButton
-                            onClick={() =>
-                              handleDelete(index + page * rowsPerPage)
-                            }
+                            // onClick={() => onDelete(index + page * rowsPerPage)}
+                            onClick={() => handleDeleteClick(index)}
                           >
                             <i class="fa-solid fa-trash"></i>
                           </IconButton>
@@ -97,6 +120,11 @@ function TableComponent({ columns, rows, onDelete, props }) {
           />
         </Paper>
       </div>
+      <DeleteConfirmation
+        open={deleteConfirmationOpen}
+        onClose={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
     </>
   );
 }

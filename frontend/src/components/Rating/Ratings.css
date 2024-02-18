@@ -22,7 +22,13 @@
     background-color: var(--background);
 }
 
-.avatar {
+.rating-avatar {
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    object-fit: cover;
+}
+.ratings-avatar {
     border-radius: 50%;
     width: 2.5rem;
     height: 2.5rem;
