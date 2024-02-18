@@ -1,0 +1,70 @@
+/* * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+  } */
+  .loginh1{
+        color: rgb(0, 0, 0);
+        height: 100px;
+  }
+.loginbody{
+  background: url(https://cdn.pixabay.com/photo/2018/12/01/09/53/network-3849202__340.jpg);
+      /* height: 80vh;
+      background-size: cover;
+      background-position: center; */
+    }
+.loginwrapper{
+    display : flex;
+    justify-content: center;
+    /* margin-top: 20px; */
+}
+.loginContainer{
+    padding : 20px;
+    width :80%;
+    max-width : 500px;
+    z-index: 10;
+    border : 1px solid #dedede;
+    background-color: white;
+    text-align : center;
+    height:80vh;
+    margin:10vh;
+    background-color: rgba(255, 255, 255, 0.133);
+    box-shadow: 0 0 6px 0 rgba(29, 29, 29, 0.203);
+
+
+    border-radius:10px;
+}
+.loginform{
+    display : flex;
+    flex-direction: column;
+
+}
+.loginform 
+input[type="text"],
+input[type="email"],
+input[type="password"]
+{
+    margin-bottom:30px;
+    padding: 5px 10px; 
+    border-radius: 2px;
+    border:1px solid #dedede;
+    background-color: #f2f2f2;
+
+}
+.loginform 
+input[type="submit"]
+{
+    background-color: #0099ff;
+    color:#fff;
+    border:none;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    height: 50px;
+    margin-top: 30px;
+}
+.loginform 
+.errorMessage{
+    color: red;
+    animation: linear 3s 0 0.3s 2 ;
+  }

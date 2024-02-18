@@ -1,0 +1,7 @@
+.sblock{
+    /* background: linear-gradient(rgba(255, 255, 255, 0.524), rgba(255, 255, 255, 0.427)),url("https://community.thriveglobal.com/wp-content/uploads/2018/09/helping-hands.jpg"); */
+  background:linear-gradient(rgba(148, 253, 129, 0.524), rgba(255, 255, 255, 0.427)), url("https://media.istockphoto.com/id/944914940/photo/helping-hand.jpg?s=612x612&w=0&k=20&c=s9tvWejM2FDLbfkBmrh3hRcWu49BcPvOMxlxvjBsggY=");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    /* opacity: 0.5; */
+}

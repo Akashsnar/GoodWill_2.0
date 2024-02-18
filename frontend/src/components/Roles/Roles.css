@@ -1,0 +1,62 @@
+.select-container {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 50%;
+  height: 2rem;
+  margin: 8px 0;
+}
+
+#select-options {
+  border: none;
+  appearance: none;
+  /* padding:0 30px 0 15px; */
+  width: 100%;
+  background-color: rgba(240,240,240,1);
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  text-align: center;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  position: relative;
+}
+.down-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: inherit;
+  position: absolute;
+  right: 0;
+  color: #2c2a2a;
+  background-color: rgba(240,240,240,1);
+  cursor: pointer;
+  /* border-radius: 4px; */
+
+}
+
+.option-container {
+  width: 100%;
+  height: fit-content;
+  /* background-color: rgb(221, 234, 234); */
+  position: absolute;
+  top: 0;
+}
+
+.option-p {
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  background-color: rgba(240,240,240,1);
+  width: calc(100%);
+  margin-bottom: 0rem;
+}
+
+.option-p:hover{
+  background-color: rgba(41, 38, 38, 1);
+  color:whitesmoke
+}

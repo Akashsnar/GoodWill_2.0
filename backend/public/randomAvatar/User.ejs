@@ -1,0 +1,71 @@
+<%-include("header2")%>
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="userstyle.css">
+<!-- <%include("nav")%> -->
+
+<!-- <div calss="sidenav
+" style="padding-top: 20%;">
+    <div class="aside">
+        <div class="logo">
+            <a href="#">Wyd</a>
+        </div>
+        <div class="nav-toggler">
+            <span></span>
+        </div>
+        <ul >
+            <li>(User name)</li>
+            <li>(email)</li>
+            <li> {}</li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+</div> -->
+
+
+<!-- <%include("footer")%> -->
+
+
+
+
+<div class="userbody" style="padding: 2.8rem;">
+
+<div class="s-layout">
+
+    <div class="s-layout__sidebar">
+      <a class="s-sidebar__trigger" href="#0">
+         <i class="fa fa-bars"></i>
+      </a>
+    
+      <nav class="s-sidebar__nav">
+         <ul>
+            <li>
+               <p class="s-sidebar__nav-link" style="height: 200%;" href="#0">
+                  <img src="https://i.pravatar.cc/237" style="border-radius: 50%;" alt="">
+               </p>
+            </li>
+            <li>
+               <a class="s-sidebar__nav-link" href="#0">
+                 <i class="fa fa-user"></i><em style=" text-transform: uppercase;"><%= name %></em>
+               </a>
+            </li>
+            <li>
+               <a class="s-sidebar__nav-link" href="#0">
+                  <i class="fa fa-envelope"></i><em><%= email %></em>
+               </a>
+            </li>
+            <li>
+                <a class="s-sidebar__nav-link" href="/">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i><em>Logout</em>
+                </a>
+             </li>
+         </ul>
+      </nav>
+    </div>
+    
+
+</div>
+
+
+
+<%-include("onlycards")%>

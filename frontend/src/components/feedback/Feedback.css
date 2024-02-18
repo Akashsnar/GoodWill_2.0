@@ -1,0 +1,211 @@
+/*Feedback.css*/
+.mainFeedback .bodyFeedback {
+  box-sizing: border-box;
+}
+
+b {
+  color: #ff9d00;
+}
+.feedbackHeader {
+  font-family: "Abril Fatface", cursive;
+  color: #ff9d00;
+}
+
+.bodyFeedback {
+  width: 100%;
+  font-family: "Shadows Into Light", cursive;
+  font-size: large;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedbackForm {
+  max-width: 60vw;
+  margin: 0 auto;
+  padding: 1rem;
+  margin-top: 10%;
+  border-radius: 0.5rem;
+  box-shadow: 0px 10px 60px 0px rgb(0, 0, 0, .07);
+  animation: slideInFromTop 0.5s ease-in-out;
+  transition: all 0.3s ease;
+}
+
+@keyframes slideInFromTop {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.feedbackForm header {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.feedbackForm header h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.625rem;
+  color: #02c3a9;
+}
+
+.feedbackForm label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.3125rem;
+  color: #ff9d00;
+}
+
+.feedbackForm input[type="text"],
+.feedbackForm input[type="text"],
+.feedbackForm textarea {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1.875rem;
+  border: 1px solid #ddd;
+  border-radius: 0.1875rem;
+  transition: border-color 0.3s ease;
+  background: transparent;
+}
+
+.feedbackForm input[type="text"]:focus,
+.feedbackForm input[type="text"]:focus,
+.feedbackForm textarea:focus {
+  border-color: #0bff48;
+}
+
+.feedbackForm input[type="radio"],
+.feedbackForm input[type="checkbox"] {
+  margin-right: 0.625rem;
+  font-size: 0.5rem
+}
+
+.feedbackForm fieldset {
+  border: 1px solid #ddd;
+  border-radius: 0.1875rem;
+  padding: 1rem;
+  margin-bottom: 1.875rem;
+}
+
+.feedbackForm select {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 15rem;
+  margin-bottom: 1.875rem;
+  border: 1px solid #ddd;
+  border-radius: 0.1875rem;
+  background: transparent;
+}
+
+.feedbackForm #submit-button {
+  font-size: 1.25rem;
+  line-height: 1.125rem;
+  color: #0a4e2c;
+  background: linear-gradient(to bottom right, #ff9d00, #ff6d12);
+  padding: 1rem 5rem;
+  cursor: pointer;
+  border-radius: 3rem;
+  transition: background-color 0.3s ease;
+}
+.feedbackInput {
+  font-family: "Rubik", sans-serif;
+}
+.feedbackRequired {
+  color: #ff4b4b;
+  margin-left: 0.3125rem;
+}
+
+@media screen and (max-width: 600px) {
+  .feedback-form {
+    padding: 0.625rem;
+  }
+}
+
+.feedbackForm fieldset input[type="radio"] {
+  margin-right: 0.3125rem;
+}
+
+.feedbackForm fieldset label {
+  display: inline-block;
+  margin-right: 0.625rem;
+}
+
+.feedbackForm fieldset input[type="radio"]:checked + label {
+  font-weight: bold;
+  color: #ff6d12;
+}
+
+.feedbackForm #submit-button:hover {
+  background-color: #008000;
+  color: #fff;
+  transform: scale(1.05);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.feedbackBox {
+  background: transparent;
+  padding: 2rem 4rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.emoji {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 0.625rem;
+  overflow: hidden;
+}
+
+.emoji img {
+  width: 80px;
+  margin: 0 0.625rem;
+}
+
+#emoji {
+  display: flex;
+  align-items: center;
+  transform: translateX(-400px);
+  transition: 0.3s;
+}
+
+.ratingFeedback .fas {
+  font-size: 2.5rem;
+  color: #e4e4e4;
+  cursor: pointer;
+}
+.ratingFeedback .fas {
+  font-size: 2.5rem;
+  color: #e4e4e4;
+  cursor: pointer;
+}
+
+.ratingFeedback .fas.selected {
+  color: #ffd93b;
+}
+.error-message {
+  color: red;
+  font-size: 0.5rem;
+  padding-left: 30%;
+  font-family: "Rubik", sans-serif;
+}
+@media screen and (max-width: 1050px) {
+  .ratingFeedback {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ratingFeedback .fas {
+    font-size: calc(1.5rem + (2 - 1.5) * ((100vw - 600px) / (1050 - 600)));
+    margin-bottom: 0.5rem;
+  }
+}

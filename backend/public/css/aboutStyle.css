@@ -1,0 +1,110 @@
+
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800&amp;display=swap');
+
+    * {
+        font-family: Nunito, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mainBlock {
+        min-height: 75px;
+        width: 100%;
+        padding: 10px 10px 10px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: auto;
+        margin-left: auto;
+        justify-content: flex-start;
+    }
+
+    .aboutText {
+        padding: 10px 10px 10px 10px;
+        line-height: 25px;
+    }
+
+    .mainBlock.bigContainer {
+        padding: 10px 30px 30px 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mainImg {
+        width: 55%;
+        height: auto;
+        box-shadow: rgba(143, 243, 125, 0.18) 0px 5px 10px 7px;
+        border-radius: 30px;
+    }
+
+    .headingText {
+        font-size: 25px;
+        font-weight: 700;
+        line-height: 34px;
+        color: rgb(51, 51, 51);
+        padding: 0px 10px 0px 10px;
+        margin-bottom: 10px;
+    }
+
+    .mainText {
+        margin-left: 40px;
+        width: 40%;
+        margin: 0 0 0 0;
+    }
+
+    .subHeadingText {
+        color: rgb(102, 102, 102);
+        font-size: 25px;
+        line-height: 34px;
+        font-weight: 700;
+        padding: 0px 10px 0px 10px;
+        margin-bottom: 15px;
+    }
+
+    .description {
+        font-size: 25px;
+        line-height: 34px;
+        color: rgb(71, 71, 71);
+        margin-bottom: 50px;
+        padding: 0px 10px 0px 10px;
+    }
+
+    .explore {
+        font-size: 20px;
+        line-height: 28px;
+        color: rgb(169, 252, 149);
+        background-color: rgb(0, 0, 0);
+        padding: 1rem 5rem 1rem 5rem;
+        cursor: pointer;
+        border-radius: 3rem;
+        -webkit-border-radius: 3rem;
+        -moz-border-radius: 3rem;
+        -ms-border-radius: 3rem;
+        -o-border-radius: 3rem;
+}
+
+    .explore:hover {
+        background-color: rgb(10, 10, 10);
+        color: rgb(30, 231, 114);
+    }
+
+    .Container {
+        margin: 80px auto 50px auto;
+        justify-content: center;
+        align-items: center;
+        max-width: 1320px;
+        padding: 10px 10px 10px 10px;
+    }
+
+    .bottomContainer {
+        flex-direction: row-reverse;
+        margin: 100px auto 50px auto;
+    }
+
+    .mainText.aboveText {
+        margin: 0 0 0 40px;
+    }
+
+    .mainText.bottomText {
+        margin: 0 40px 0 0;
+    }

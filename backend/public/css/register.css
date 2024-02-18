@@ -1,0 +1,36 @@
+body {
+    background: url(https://cdn.pixabay.com/photo/2018/12/01/09/53/network-3849202__340.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-color: whitesmoke;
+  }
+h1{
+    color:whitesmoke;
+    text-align: center;
+}
+.content {
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    text-align: center;
+    padding: 60px 32px;
+    width: 370px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.133);
+    border: 1px solid white;
+    backdrop-filter: blur(3px);
+    box-shadow: 0 0 6px 0 rgba(29, 29, 29, 0.203);
+    color : yellow;
+  }
+  
+  #registerForm{
+  display: flex;
+  flex-direction: column;
+ }
+.errorMessage{
+  color: red;
+  animation: linear 3s 0 0.3s 2 ;
+}

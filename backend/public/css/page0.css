@@ -1,0 +1,190 @@
+/* page 0*/
+
+.page0 {
+    padding-bottom: 5%;
+  }
+  @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500");
+  
+  .font_custom {
+    font-weight: bold;
+    font-family: "Merriweather", serif;
+    font-size: larger;
+  }
+  
+  .mycarousel {
+    margin-top: 3vh;
+  }
+  .mycontainer {
+    min-height: 85vh;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  p {
+    margin: 0px;
+  }
+  
+  .card_page0 {
+    width: 280px;
+    height: 590px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: #fff;
+    transition: all 0.5s ease;
+    cursor: pointer;
+    z-index: 10;
+    overflow: hidden;
+  }
+  
+  .card_page0 .backgroundEffect {
+    bottom: 0;
+    height: 0px;
+    width: 100%;
+  }
+  
+  .card_page0:hover {
+    color: #fff;
+    transform: scale(1.025);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 5px 10px;
+  }
+  
+  .card_page0:hover .backgroundEffect {
+    bottom: 0;
+    height: 320px;
+    width: 100%;
+    position: absolute;
+    z-index: -1;
+    background:  linear-gradient(to top right, #13e837 -5%, #0a1602 100%);
+    animation: popBackground 0.5s ease-in;
+  }
+  .card_page0:hover .button {
+    color: #000;
+    background-color: white;
+  }
+  
+  @keyframes popBackground {
+    0% {
+      height: 20px;
+      border-top-left-radius: 50%;
+      border-top-right-radius: 50%;
+    }
+  
+    50% {
+      height: 80px;
+      border-top-left-radius: 75%;
+      border-top-right-radius: 75%;
+    }
+  
+    75% {
+      height: 160px;
+      border-top-left-radius: 85%;
+      border-top-right-radius: 85%;
+    }
+  
+    100% {
+      height: 320px;
+      border-top-left-radius: 100%;
+      border-top-right-radius: 100%;
+    }
+  }
+  .card_page0 .pic {
+    position: relative;
+  }
+  
+  .card_page0 .pic img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+  }
+  
+  .card_page0 .text-muted {
+    font-size: 12px;
+  }
+  
+  .card_page0:hover .text-muted {
+    color: #fff !important;
+  }
+  
+  .card_page0 .content {
+    padding: 0 20px;
+    height: 310px;
+  }
+  
+  .card_page0 .content .mybuttons {
+    position: absolute;
+    bottom: -9px;
+    width: 240px;
+  }
+  
+  .card_page0 .content .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    color: white;
+    background-color: #1b9ce3;
+    border-radius: 25px;
+    font-size: 12px;
+    border: none;
+  }
+  
+  .card_page0:hover .content .btn {
+    background: #fff;
+    color: #1b9ce3;
+    box-shadow: #0000001a 0px 3px 5px;
+  }
+  
+  .card_page0 .content .btn .fas {
+    font-size: 10px;
+  }
+  
+  .card_page0 .content .foot .admin {
+    color: #1b9ce3;
+    font-size: 12px;
+  }
+  
+  .card_page0:hover .content .foot .admin {
+    color: #fff;
+  }
+  
+  .card_page0 .content .foot .icon {
+    font-size: 12px;
+  }
+  .admin {
+    width: 7em;
+    height: 3em;
+    font-size: larger;
+    font-weight: 700;
+  }
+  .myNav {
+    display: block;
+    margin: 3%;
+  }
+  .mygrid {
+    min-height: 100vh;
+    width: 100vw;
+    margin: auto auto;
+    align-items: center;
+    justify-content: center;
+  }
+  .button {
+    background-color: #4caf50; /* Green */
+    border: none;
+    color: white;
+    padding: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+  }
+  
+  .tcHeading {
+    padding-top: 2rem;
+    text-decoration: underline;
+    color: black;
+    font-weight: bolder;
+  }

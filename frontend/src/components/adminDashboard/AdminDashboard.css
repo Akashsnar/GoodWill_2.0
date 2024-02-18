@@ -1,0 +1,152 @@
+#mainContainerDashBoard {
+  margin: 0;
+  padding: 0;
+  /* font-family: "Shadows Into Light", monospace; */
+}
+
+/*AdminDashboard*/
+
+#mainContainerDashBoard {
+  background-image: "url(assets/images/backgrounds/welcome_one_hands.jpg)";
+  background-repeat: no-repeat;
+}
+
+#mainContainerDashBoard h2 {
+  margin-right: 6rem;
+  margin-left: 6rem;
+  font-size: 3rem;
+  margin-top: 8rem;
+  text-align: center;
+}
+
+.mainDash {
+  padding: 1rem;
+}
+
+@media (min-width: 48rem) {
+  .mainDash {
+    padding-right: 3rem;
+    padding-left: 3rem;
+  }
+}
+
+.isPlaceholders {
+  margin-bottom: 1rem;
+  text-align: center;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.isPlaceholders h4 {
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.isPlaceholder {
+  margin-bottom: 3rem;
+}
+
+.isPlaceholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.dashboard-item {
+  display: inline-block;
+  width: 8.5rem;
+  height: 8.5rem;
+  border: 0.563rem double #eff;
+  border-radius: 50%;
+  vertical-align: middle;
+  font-size: 4.063rem;
+  color: #fff;
+  box-shadow: 0px 0px 1rem #999;
+}
+
+.dashboard-item:hover {
+  box-shadow: 0px 0px 1.563rem #888;
+  width: 9.5rem;
+  height: 9.5rem;
+}
+
+.menuCircle {
+  width: 10rem;
+  height: 10rem;
+  margin: 0 auto;
+}
+
+.circle {
+  width: 13.5rem;
+  height: 13.5rem;
+  opacity: 0;
+}
+
+.menu-button {
+  position: relative;
+  top: -14.063rem;
+}
+
+#iconID {
+  font-size: 2.5rem;
+  color: rgba(250, 235, 215, 0.781);
+}
+
+.axy {
+  color: #000000;
+  text-decoration: none;
+}
+
+.countdata {
+  font-size: 1rem;
+  color: #ff6d12;
+}
+
+.countdata:hover {
+  color: #03a696;
+}
+
+.mainArea {
+  display: flex;
+}
+
+.graphArea {
+  flex: 1;
+  margin-right: 1rem;
+  box-shadow: 0px 0px 1rem #999;
+  border: 0.563rem double #eff;
+  border-radius: 5%;
+  -webkit-border-radius: 5%;
+  -moz-border-radius: 5%;
+  -ms-border-radius: 5%;
+  -o-border-radius: 5%;
+}
+
+.graphArea:hover {
+  box-shadow: 0px 0px 1.563rem #888;
+}
+
+.messagesArea {
+  width: 30vw;
+  height: 62vh;
+  overflow-y: auto;
+  z-index: 2;
+  box-shadow: 0px 0px 1rem #999;
+  border: 0.563rem double #eff;
+  border-radius: 10%;
+  -webkit-border-radius: 10%;
+  -moz-border-radius: 10%;
+  -ms-border-radius: 10%;
+  -o-border-radius: 10%;
+}
+
+.messagesArea:hover {
+  box-shadow: 0px 0px 1.563rem #888;
+}
+
+.shiftIcon {
+  margin-left: 95%;
+}
+
+.iconS {
+  font-size: 1rem;
+}

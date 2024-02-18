@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.paddingR_custom {
+  padding-right: 2.5rem;
+}
+
+.paddingL_custom {
+  padding-left: 8rem;
+}
+
+.flex_custom {
+  display: flex;
+}
+
+.alignSelf_custom {
+  align-self: center;
+}
+
+#menuBar {
+  display: none;
+}
+
+.logo {
+  background-image: url(https://iili.io/HXsiYfR.png);
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.logoAtVertNav {
+  background-image: url(https://iili.io/HXsiYfR.png);
+  width: 140px;
+  height: 140px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.font_custom {
+  font-weight: bold;
+  font-family: "Merriweather", serif;
+  font-size: larger;
+}
+
+li:hover {
+  text-decoration: underline #03a696;
+}

@@ -1,0 +1,21 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.mainTable {
+  width: 80%;
+  height: 100%;
+  box-shadow: 0px 0px 1rem #999;
+  background-color: rgba(250, 235, 215, 0.658);
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 10%;
+
+}
+.mainTable h1 {
+  margin-bottom: 1rem;
+  padding-top: 1rem;
+  font-family: 'Abril Fatface', cursive;
+  text-align:center;
+}

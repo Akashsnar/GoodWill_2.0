@@ -1,0 +1,142 @@
+  .paddingR_custom {
+    padding-right: 2.5rem;
+  }
+
+  .paddingL_custom {
+    padding-left: 5rem;
+  }
+
+  .flex_custom {
+    display: flex;
+  }
+
+  .alignSelf_custom {
+    align-self: center;
+  }
+
+  #menuBar {
+    display: none;
+  }
+
+  .logo {
+    background-image: url(https://iili.io/HXsiYfR.png);
+    width: 4rem;
+    height: 4rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .logoAtVertNav {
+    background-image: url(https://iili.io/HXsiYfR.png);
+    width: 10rem;
+    height: 10rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 7rem;
+  }
+
+  .font_custom {
+    font-weight: bold;
+    font-family: "Merriweather", serif;
+    font-size: larger;
+  }
+
+
+  .customTextColor {
+    color: #b9b2ae;
+  }
+  .pla{
+    padding-left: 3.5rem;
+  }
+  .pla1{
+    padding-left: 1rem;
+  }
+  .pla12{
+   font-size: medium; padding-left:1rem
+  }
+  .pla2{
+    padding-left: 2rem;
+  }
+  .pla46{
+    padding-right:46em 
+  }
+  .pla5{
+    padding-left: 0.5rem;
+  }
+  .cRed{
+    color: red;
+  }
+  .ul1{
+    position: absolute; 
+    z-index: 1;
+  }
+
+  .donateBtn {
+    font-size: .8rem;
+    line-height: .125rem;
+    color: #ffffff;
+    background: #ff6d12;
+    padding: .8rem .8rem;
+    margin-top: 1.2rem;
+    cursor: pointer;
+    border-radius: 10rem;
+    transition: background-color 0.7s ease, box-shadow 0.3s ease;
+  }
+
+  .donateBtn:hover {
+    background-color: rgb(248, 173, 12);
+    color: rgb(248, 203, 79);
+    box-shadow: 0px 4px 6px rgba(255, 187, 0, 0.685);
+  }
+
+  .nav-link {
+    transition: color .7s ease;
+    transition: transform 0.7s ease;
+  }
+
+  .nav-link:hover {
+    color: #ff6d12;
+    transform: scale(1.18);
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .navbar.fade-in {
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(-100%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .navbar.slide-in {
+    animation: slideIn 1s ease-out;
+  }
+
+  @keyframes fadeInMenu {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .dropdown-menu.fade-in-menu {
+    animation: fadeInMenu 0.5s ease;
+  }
