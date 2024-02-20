@@ -11,7 +11,15 @@ const DashboardItem = ({ iconClass, bgColor, link, count, title }) => (
           className="dashboard-item menu-button"
           style={{ backgroundColor: bgColor }}
         >
-          <span className={`fa ${iconClass}`} id="iconID"></span>
+          <span
+            className={`fa ${iconClass}`}
+            id="iconID"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          ></span>
           {/* <sub className="countdata">{count}</sub> */}
         </button>
       </a>

@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {  Link} from "react-router-dom";
 
-const Campaign = ({ data }) => {
+const Campaign = ({ data , mode}) => {
   const [percentage, setPercentage] = useState(0);
   const barInnerRef = useRef(null);
 
@@ -41,7 +41,13 @@ if(color==='red'){
                                     <img src={data.image} alt={data.name} srcset="" style={{width: "25rem", height:"15rem"}}/>
                                 </div>
                                 <div style={{textAlign:"center"}}>
-                                <a href={data.link}><h4 style={{paddingLeft:"5rem"}} className='ngolink'>{data.name}</h4></a>
+                                  {
+                                    mode!=='ngodash' ? (
+                                <a href={data.link}><h4 style={{paddingLeft:"5rem"}} className='ngolink'>{data.campagainname}</h4></a>
+                                    ) : (
+                                        <Link to={'/Campaign'}><h4 style={{paddingLeft:"5rem"}} className='ngolink'>{data.campagainname}</h4></Link>
+                                    )
+                                  }
                                 <p className="feature-p">
                                     {data.desc}
                                 </p>
@@ -66,15 +72,21 @@ if(color==='red'){
                 <span>${data.goal}</span> Goal
               </p>
             </div>
-            <div className="text-center more-post__btn Ngobtn" style={{marginTop:"1rem", display:"flex"}}>
-            <Link to="/givereview" className="thm-btn" style={{height:"2rem",width:"10rem" , margin:"0px",marginBottom:"1rem", padding:"10px", textAlign:"center", lineHeight:"10px"}}>
-              Give Review
-            </Link>
-            <a href="#" className="thm-btn" style={{height:"2rem",width:"10rem" , margin:"0px",marginBottom:"1rem", padding:"10px", textAlign:"center", lineHeight:"10px"}}>
-              Donate
-            </a>
-          </div>
-          <p class="NGOReport" style={{textAlign:"right"}}>Report this NGO <i id={data.name} class="fa-solid fa-thumbs-down thumbsdown" onClick={(e)=>{reportthis(e)}}></i></p>
+            {
+              mode!=='ngodash' ? (
+                <>
+                <div className="text-center more-post__btn Ngobtn" style={{marginTop:"1rem", display:"flex"}}>
+                <Link to="/givereview" className="thm-btn" style={{height:"2rem",width:"10rem" , margin:"0px",marginBottom:"1rem", padding:"10px", textAlign:"center", lineHeight:"10px"}}>
+                  Give Review
+                </Link>
+                <a href="#" className="thm-btn" style={{height:"2rem",width:"10rem" , margin:"0px",marginBottom:"1rem", padding:"10px", textAlign:"center", lineHeight:"10px"}}>
+                  Donate
+                </a>
+              </div>
+              <p class="NGOReport" style={{textAlign:"right"}}>Report this NGO <i id={data.name} class="fa-solid fa-thumbs-down thumbsdown" onClick={(e)=>{reportthis(e)}}></i></p></>
+              ) : ( <p></p> )
+            }
+
 
                             </div>
                         </div>

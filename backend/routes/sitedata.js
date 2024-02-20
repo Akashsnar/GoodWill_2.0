@@ -24,6 +24,14 @@ router.get('/ngodetails', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+router.get('/allUsers', async (req, res) => {
+  try {
+    const User = await User.find()
+    res.json(User)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
 
 router.get('/userlength', async (req, res) => {
   try {
@@ -71,6 +79,20 @@ router.get('/ngodetail', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+
+
+router.get("/campaign/:name", async(req, res, next) => {
+  try {
+     const name=req.params.name;
+     console.log(name);
+     const regex = new RegExp(name, 'i');
+     const Campaign_details = await Ngomodel.find({ campagainname : regex});
+     console.log(Campaign_details[0]);
+     res.json(Campaign_details[0])
+   } catch (err) {
+     res.status(500).json({ message: err.message })
+   }
+ })
 
 // Getting One
 router.get('/:id', getUser, (req, res) => {

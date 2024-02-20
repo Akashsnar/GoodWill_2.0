@@ -31,7 +31,7 @@ const AddComment = ({ users, addComment, formData }) => {
   return (
     <div className="discussionHeader">
       <div className="authedUser">
-        <img className="avatar" src={loggedUser.src} alt={loggedUser.name} />
+        <img className="ratings-avatar" src={loggedUser.src} alt={loggedUser.name} />
       </div>
       <form id="newcommentForm" onSubmit={handleCommentSubmit}>
         <textarea
