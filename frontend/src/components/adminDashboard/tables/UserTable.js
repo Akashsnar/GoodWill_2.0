@@ -1,5 +1,6 @@
 // UserTable.js
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import TableComponent from "./TableComponent";
 
 // const customRows = [
@@ -274,7 +275,10 @@ function UserTable() {
         rows={rows}
         onDelete={handleDelete}
         props={{ heading: "NGOs" }}
-        confirmDeleteIndex={confirmDeleteIndex}
+        confirmDeleteIndex={confirmDeleteIndex} renderCell={(row, column) => {
+          return row[column.id];
+        }}
+
       />
     </>
   );

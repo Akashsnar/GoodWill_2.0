@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Campaign from "./UserNGO";
 
-function GetUserNGO(){
+function GetUserNGO(props){
     const [campaigns, setCampaigns] = useState([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState(3);
     useEffect(() => {
@@ -29,7 +29,7 @@ function GetUserNGO(){
     return(
         <div style={{marginTop:"0px"}}>
             {campaigns.slice(0, visibleCampaigns).map(campaign => (
-              <Campaign key={campaign._id} data={campaign} />
+              <Campaign key={campaign._id} data={campaign} mode={props.mode} />
             ))}
              {visibleCampaigns < campaigns.length && (
           <div className="text-center more-post__btn">

@@ -80,6 +80,20 @@ router.get('/ngodetail', async (req, res) => {
   }
 })
 
+
+router.get("/campaign/:name", async(req, res, next) => {
+  try {
+     const name=req.params.name;
+     console.log(name);
+     const regex = new RegExp(name, 'i');
+     const Campaign_details = await Ngomodel.find({ campagainname : regex});
+     console.log(Campaign_details[0]);
+     res.json(Campaign_details[0])
+   } catch (err) {
+     res.status(500).json({ message: err.message })
+   }
+ })
+
 // Getting One
 router.get('/:id', getUser, (req, res) => {
   res.json(res.User)

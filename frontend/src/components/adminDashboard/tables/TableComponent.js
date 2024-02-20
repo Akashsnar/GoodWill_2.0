@@ -12,12 +12,15 @@ import IconButton from "@mui/material/IconButton";
 import "./tables.css";
 import NavAdmin from "../NavAdmin";
 import DeleteConfirmation from "./DeleteConfirmation";
+import { Link } from "react-router-dom"; // Import Link component
+// import './onlystyle.css'
+
 
 function TableComponent({
   columns,
   rows,
   onDelete,
-  props
+  props,
 }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -80,18 +83,21 @@ function TableComponent({
                         {columns.map((column) => {
                           const value = row[column.id];
                           return (
-                            <TableCell key={column.id} align={column.align}>
-                              {(column.id === ("profilePic" || "image")) ? (
+                            <TableCell key={column.id} align={column.align}>                                                            
+                              {column.id === "profilePic" || column.id ==="image" ? (
                                 <img
                                   src={value}
                                   alt="Profile Pic"
                                   style={{ width: 50, height: 50,borderRadius: "50%"}}
                                 />
-                              ) : column.format && typeof value === "number" ? (
+                              ) : column.id === "name" ? (
+                                <Link to={`/${value}`}>{value}</Link>
+                            ) : column.format && typeof value === "number" ? (
                                 column.format(value)
                               ) : (
                                 value
                               )}
+
                             </TableCell>
                           );
                         })}

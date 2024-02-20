@@ -24,6 +24,20 @@ app.set("views", "./views");
 
 // ,middleware.requireLogin
 app.use(bodyparser, urlencoded({ extended: false }));
+
+router.get("/:name", async(req, res, next) => {
+  try {
+     const name=req.params.name;
+    //  console.log(name);
+     const regex = new RegExp(name, 'i');
+     const User_details = await User.find({ name : regex});
+     console.log(User_details[0]);
+     res.json(User_details[0])
+   } catch (err) {
+     res.status(500).json({ message: err.message })
+   }
+ })
+
 router.get("/", async(req, res, next) => {
  try {
     const User_details = await User.find()
@@ -34,6 +48,8 @@ router.get("/", async(req, res, next) => {
 
 
 })
+
+
 
 router.post("/", async (req, res, next) => {
     const payload= req.body;
