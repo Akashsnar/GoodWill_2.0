@@ -5,11 +5,13 @@ import TableComponent from "./TableComponent";
 function NGOsTable() {
   const [customRowsX, setCustomRowsX] = useState([]);
   const [rows, setRows] = useState([]);
+  const [confirmDeleteIndex, setConfirmDeleteIndex] = useState(null);
+
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/sitedata/ngosc");
+        const response = await fetch("http://localhost:4000/sitedata/ngodetails");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -28,13 +30,24 @@ function NGOsTable() {
     if (customRowsX.length > 0) {
       const newRows = [];
       for (let i = 0; i < customRowsX.length; i++) {
+        // const createdAtDate = new Date(customRowsX[i].createdAt);
+        // const updatedAtDate = new Date(customRowsX[i].updatedAt);
         newRows[i] = {
           id: customRowsX[i]._id,
-          name: customRowsX[i].name,
+          image: customRowsX[i].image,
+          name: customRowsX[i].campagainname,
           desc: customRowsX[i].desc,
           category: customRowsX[i].category,
           goal: customRowsX[i].goal,
           raised: customRowsX[i].raised,
+          // createdAt: new Intl.DateTimeFormat("en-US", {
+          //   dateStyle: "medium",
+          //   timeStyle: "short",
+          // }).format(createdAtDate),
+          // updatedAt: new Intl.DateTimeFormat("en-US", {
+          //   dateStyle: "medium",
+          //   timeStyle: "short",
+          // }).format(updatedAtDate),
         };
       }
       setRows(newRows);
@@ -50,19 +63,46 @@ function NGOsTable() {
   }));
 
   const handleDelete = (index) => {
+    const deleteId = rows[index].id;
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
+    setConfirmDeleteIndex(() => handleConfirmDelete(deleteId));
+  };
+
+  const handleConfirmDelete = async (deleteId) => {
+    try {
+      const response = await fetch("http://localhost:4000/deleteNgo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: deleteId }),
+      });
+
+      console.log("Server response:", response);
+
+      if (!response.ok) {
+        console.error("Server error:", response.statusText);
+        throw new Error("Network response was not ok");
+      }
+
+      setRows((prevRows) => prevRows.filter((row) => row.id !== deleteId));
+      setConfirmDeleteIndex(null);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
     <>
-      {/* {console.log(customRowsX[0])} */}
+      {/* {console.log(rows[0].id)} */}
       <TableComponent
         columns={customColumns}
         rows={rows}
         onDelete={handleDelete}
-        props={{ heading: "NGOs" }}
+        props={{ heading: "NGOs' Campaign" }}
+        confirmDeleteIndex={confirmDeleteIndex}
       />
     </>
   );

@@ -134,3 +134,90 @@ app.use("/blog", blogRoute);
 const userdataRouter = require("./routes/sitedata");
 app.use("/sitedata", userdataRouter);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
+// dcheckout -> ngo_route
+
+// app.post('/getreviews', async (req, res) =>   AdminRoute
+
+//ngdetails-> adminRoute
+//userdetail -> adminRoute
+//reviewdetails-> adminRoute
+//reportdetails-> adminRoute
+//ngos
+// app.post("/reportdata", async (req, res) =>  Services
+
+//ngos
+// app.post('/getrating', async (req, res) => Services
+
+// app.post("/feedback", async (req, res) => {
+//   res.redirect("feedback");
+// });
+
+// post
+// app.post('/post', upload.single('image'), async (req, res) => {
+//   var x = new ngoschema();
+//   x.username = req.session.ngo;
+//   x.name = req.body.name;
+//   x.image = req.file.filename;
+//   x.desc = req.body.desc;
+//   console.log(x.name);
+//   console.log(x.username);
+//   console.log(x.desc);
+//   console.log(req.body.desc);
+//   x.save()
+//     .then((doc) => {
+//       console.log("bloody pass");
+//       res.redirect("/users");
+//     })
+//     .catch(function (err) {
+//       console.log(err);
+
+//     })
+// });
+
+// app.post("/delete", function (req, res) {
+//   const it = req.body.checkbox;
+//   ngoschema.findByIdAndDelete(it)
+//     .then(function (it) {
+//       console.log("bloody pass");
+//       res.redirect("/users");
+//     })
+//     .catch(function (err) {
+//       console.log(err);
+
+//     })
+
+// });
+
+// app.post("/images", function (req, res) {
+//   res.redirect("/users");
+// });
+
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
+
+app.post("/deleteNgo", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await ngoschema.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+const User = require("./mongoSchema/userdetails");
+app.post("/deleteUser", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await User.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});

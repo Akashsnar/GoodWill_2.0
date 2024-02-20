@@ -88,7 +88,7 @@ function Services() {
                                                     <img src="assets/images/resources/three_iocn_box_bg-3.png" alt="" />
                                                 </div>
                                                 <div>
-                                                    <i class="fa-solid fa-hands-holding-dollar fa-3x"></i>
+                                                    <i class="fa-solid fa-hand-holding-dollar fa-3x"></i>
 
                                                 </div>
                                             </div>
