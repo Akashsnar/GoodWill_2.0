@@ -146,7 +146,7 @@ router.post('/ngo_details', async (req, res) => {
     const newngomodel = new Ngomodel();
     console.log("i am working");
     // newngomodel.Id= userExists._id;
-    newngomodel.ngoname = payload.campagainname ,
+    newngomodel.ngoname = payload.ngoname ,
     newngomodel.campagainname = payload.campagainname ,
     newngomodel.category = payload.category ,
     newngomodel.goal=payload.goal,

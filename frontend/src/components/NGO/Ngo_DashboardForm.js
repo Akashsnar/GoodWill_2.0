@@ -7,7 +7,7 @@ import axios from "axios";
 function NGO_Dashboard_form(props) {
 
   const [image, setimage] = useState();
-  const Ngonameused =props.Ngoname;
+  const Ngonameused = props.Ngoname;
   const [imagelink, setimagelink] = useState();
 
   const navigate = useNavigate();
@@ -18,13 +18,13 @@ function NGO_Dashboard_form(props) {
   }
 
   const [formData, setFormData] = useState({
-    ngoname: {Ngonameused},
+    ngoname:  Ngonameused,
     campagainname: '',
     category: '',
     goal: 0,
     desc: '',
     image: '',
-    raised:0
+    raised: 0
   });
 
   // Handle input changes
@@ -73,21 +73,21 @@ function NGO_Dashboard_form(props) {
 
     try {
       console.log(formData);
-            const response = await axios.post(' http://localhost:4000/sitedata/ngo_details', formData);
-            console.log("data saved");
+      const response = await axios.post(' http://localhost:4000/sitedata/ngo_details', formData);
+      console.log("data saved");
 
       // Log the response from the server (you can handle it as needed)
       const responseData = await response.json();
       console.log(responseData);
-      
+
       setFormData({
-        ngoname: {Ngonameused},
+        ngoname: { Ngonameused },
         campagainname: '',
         category: '',
         goal: 0,
         desc: '',
         image: '',
-        raised:0
+        raised: 0
       });
     } catch (error) {
       console.log('Error Submitting form'.error);
@@ -125,7 +125,7 @@ function NGO_Dashboard_form(props) {
                           />
                         </div>
                       </div>
-                      <div className="col-xl-6">
+                      {/* <div className="col-xl-6">
                         <div className="contact-form__input-box">
                           <input
                             type="text"
@@ -135,7 +135,22 @@ function NGO_Dashboard_form(props) {
                             onChange={handleInputChange}
                           />
                         </div>
+                      </div> */}
+                      <div className="col-xl-6 pt-2">
+                        <div>
+                          <select className="w-full bg-[#f7f4f2] border text-black text-xs px-4 pr-8 py-3 rounded-full h-18 text-[1rem]" id="location" name="category" value={formData.category} onChange={handleInputChange}>
+                            <option>General</option>
+                            <option>Children</option>
+                            <option>Senior Citizen</option>
+                            <option>Women</option>
+                            <option>Food</option>
+
+
+                          </select>
+                        </div>
                       </div>
+
+
                     </div>
                     <div className="row">
                       <div className="col-xl-12">
@@ -186,81 +201,3 @@ function NGO_Dashboard_form(props) {
   )
 }
 export default NGO_Dashboard_form
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { useState } from "react";
-// import CloudinaryUploadWidget from "./CloudinaryUploadWidget";
-// import { Cloudinary } from "@cloudinary/url-gen";
-// import { AdvancedImage, responsive, placeholder } from "@cloudinary/react";
-
-// import "./styles.css";
-
-// export default function App() {
-//   const [publicId, setPublicId] = useState("");
-//   const [cloudName] = useState("hzxyensd5");
-//   const [uploadPreset] = useState("aoh4fpwm");
-//   const [uwConfig] = useState({
-//     cloudName,
-//     uploadPreset
-//   });
-//   const cld = new Cloudinary({
-//     cloud: {
-//       cloudName
-//     }
-//   });
-
-//   const myImage = cld.image(publicId);
-
-//   return (
-//     <div className="App">
-//       <h3>Cloudinary Upload Widget Example</h3>
-//       <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} />
-//       <p>
-//         <a
-//           href="https://cloudinary.com/documentation/upload_widget"
-//           target="_blank"
-//         >
-//           Upload Widget User Guide
-//         </a>
-//       </p>
-//       <p>
-//         <a
-//           href="https://cloudinary.com/documentation/upload_widget_reference"
-//           target="_blank"
-//         >
-//           Upload Widget Reference
-//         </a>
-//       </p>
-//       <div style={{ width: "800px" }}>
-//         <AdvancedImage
-//           style={{ maxWidth: "100%" }}
-//           cldImg={myImage}
-//           plugins={[responsive(), placeholder()]}
-//         />
-//       </div>
-//     </div>
-//   );
-// }

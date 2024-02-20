@@ -1,10 +1,8 @@
-//MainDashboard.js
 import React from "react";
 import "./AdminDashboard.css";
 import NavAdmin from "./NavAdmin";
 import DashboardItems from "./DashboardItems";
 import AllComments from "../Rating/AllComments";
-import Graph from "./Graph";
 import { Link } from "react-router-dom";
 function MainDashboard() {
   const users = {
@@ -72,7 +70,7 @@ function MainDashboard() {
           <Link to="/adminDashboard/DonationsTable">
             <i class="fa-solid fa-arrow-up-right-from-square shiftIcon"></i>
           </Link>
-          <Graph />
+          {/* <Graph /> */}
         </div>
         <div className="messagesArea">
           <center>

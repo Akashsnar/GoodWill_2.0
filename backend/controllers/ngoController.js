@@ -20,6 +20,5 @@ const checkout_session= asyncHandler(async (req, res)=>{
 
 module.exports={
   checkout_session,
-  logout,
-  loginStatus
+
 }
