@@ -33,6 +33,8 @@ import ContactUs from "./blogs/ContactUs.js";
 import AboutUs from "./blogs/AboutUs.js";
 import Layout from './blogs/Layout.js';
 import Became_volunteer from './components/Services/forms/became_volunteer.js';
+import UserProfile from './components/user/Userprofile.js'
+import Campaign from './components/NGO/Campaign_Dashboard.js'
 
 axios.defaults.withCredentials = true;
 
@@ -66,6 +68,8 @@ function App() {
             <Route exact path='/Ngo_dashboard' element={<NGO_Dashboard />} />  {/*hide*/}
             <Route exact path='/Admin' element={<MainDashboard />} />  {/*hide*/}
             <Route exact path='/givereview' element={<UserReviews />} />  {/*hide*/}
+            <Route exact path='/:username' element={<UserProfile />} />  
+            <Route exact path='/campaign' element={<Campaign />} />  
        
        <Route exact path='/services' element={<SerVices/>}/>
        <Route exact path='/services/volunteer' element={<Became_volunteer/>} />
