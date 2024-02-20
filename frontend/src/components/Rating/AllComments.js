@@ -57,11 +57,13 @@ const AllComments = ({ comments, users, showStars }) => {
 
     return (
       <div key={comment.UserID} className="comment">
-        <div className="avatar">
+        <div className="">
           <img
-            className="avatar"
+            className="rating-avatar"
             src={comment.author.src}
             alt={comment.author.name}
+            height={100}
+            width={100}
           />
         </div>
         <div className="commentBody">

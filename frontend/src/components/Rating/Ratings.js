@@ -13,7 +13,7 @@ const Ratings = () => {
   const users = {
     ReyKan: {
       name: "ReyKan",
-      src: "assets/images/users/u1.png",
+      src: "assets/images/users/u5.png",
     },
     Rishi: {
       name: "Rishi",

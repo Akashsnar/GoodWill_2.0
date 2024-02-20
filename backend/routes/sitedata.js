@@ -24,6 +24,14 @@ router.get('/ngodetails', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+router.get('/allUsers', async (req, res) => {
+  try {
+    const User = await User.find()
+    res.json(User)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
 
 router.get('/userlength', async (req, res) => {
   try {
