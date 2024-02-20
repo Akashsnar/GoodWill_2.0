@@ -2,9 +2,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 
 const NavBar = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  console.log(useSelector((state) => state.auth));
+  const navigate = useNavigate();
   useEffect(() => {
     const navbar = document.querySelector(".navbar");
     navbar.classList.add("fade-in");
@@ -32,6 +37,17 @@ const NavBar = () => {
         elements[i].style.display = "block";
         document.getElementById("donateBtn").style.marginTop = "1.3rem";
       }
+    }
+  };
+
+  const handleDonation = () => {
+    alert(`Login : ${isLoggedIn}`);
+    if (!isLoggedIn) {
+      alert("Plz login first");
+      navigate("/");
+    } else {
+      console.log("hello");
+      navigate("/donation");
     }
   };
 
@@ -146,27 +162,25 @@ const NavBar = () => {
                 <i class="fa-regular fa-message"></i>
                 <span class="displayNone">&nbsp; Feedback</span>
               </Link>
-            
             </li>
             <li className="nav-item">
-            <Link
+              <Link
                 class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer "
                 to="/blogs"
               >
                 <i class="fa-solid fa-newspaper"></i>
-                <span class="displayNone">&nbsp;   Blog</span>
+                <span class="displayNone">&nbsp; Blog</span>
               </Link>
-
             </li>
             <li class="nav-item">
-              <Link
-                to="#"
+              <button
                 class="donateBtn nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"
                 id="donateBtn"
+                onClick={handleDonation}
               >
                 <i class="fa-solid fa-heart cRed"></i>
                 &nbsp;Donate
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -216,21 +230,30 @@ const NavBar = () => {
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link customTextColor font_custom p-4" to="/services">
+                <Link
+                  class="nav-link customTextColor font_custom p-4"
+                  to="/services"
+                >
                   <center>
                     <i class="fas fa-hands-helping"></i>&nbsp;Services
                   </center>
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link customTextColor font_custom p-4" to="/ngo">
+                <Link
+                  class="nav-link customTextColor font_custom p-4"
+                  to="/ngo"
+                >
                   <center>
                     <i class="fa fa-users"></i>&nbsp;NGO
                   </center>
                 </Link>
               </li>
               <li class="nav-item">
-                <Link class="nav-link customTextColor font_custom p-4" to="/contact">
+                <Link
+                  class="nav-link customTextColor font_custom p-4"
+                  to="/contact"
+                >
                   <center>
                     <i class="fa fa-envelope"></i>&nbsp;Contact
                   </center>
