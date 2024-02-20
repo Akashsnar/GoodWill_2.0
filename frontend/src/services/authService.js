@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-export const Backend_URL = 'http://localhost:4000'
+export const Backend_URL = "http://localhost:4000";
 
 export const validateEmail = (email) => {
   return email.match(
@@ -42,7 +42,7 @@ export const loginUser = async (userData) => {
       userData,
       { withCredentials: true }
     );
-        
+
     if (response.statusText === "OK") {
       toast.success("Login Successfull...");
     }
@@ -61,9 +61,11 @@ export const loginUser = async (userData) => {
 //logout user
 export const logoutUser = async () => {
   try {
-    console.log("logoutUser")
+    console.log("logoutUser");
+
     await axios.get(`http://localhost:4000/api/users/logout`);
-    toast.success("Logged Out")
+
+    toast.success("Logged Out");
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -87,7 +89,24 @@ export const getLoginStatus = async () => {
       error.message ||
       error.toString();
 
-      
-      throw new Error(message);
+    throw new Error(message);
+  }
+};
+
+export const donationInfo = async (formData) => {
+  try {
+    console.log("donationInfo");
+
+    await axios.post(`${Backend_URL}/userinfo/donation`, formData, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    // toast.error(message);
+    throw new Error(message);
   }
 };
