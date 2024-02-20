@@ -72,7 +72,7 @@ function NGOsTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteFeedback", {
+      const response = await fetch("http://localhost:4000/deleteNGO", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

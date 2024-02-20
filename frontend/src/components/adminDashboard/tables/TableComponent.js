@@ -20,6 +20,7 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [rowToDelete, setRowToDelete] = useState(null);
+  const [expandedRows, setExpandedRows] = useState({});
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -87,6 +88,8 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
                           >
                             {columns.map((column) => {
                               const value = row[column.id];
+                              const isLongText =
+                                typeof value === "string" && value.length > 100;
                               return (
                                 <TableCell key={column.id} align={column.align}>
                                   {column.id === "profilePic" ||
@@ -105,6 +108,24 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
                                   ) : column.format &&
                                     typeof value === "number" ? (
                                     column.format(value)
+                                  ) : isLongText && !expandedRows[index] ? (
+                                    <>
+                                      {value.slice(0, 100)}...
+                                      <span
+                                        style={{
+                                          color: "blue",
+                                          cursor: "pointer",
+                                        }}
+                                        onClick={() =>
+                                          setExpandedRows({
+                                            ...expandedRows,
+                                            [index]: true,
+                                          })
+                                        }
+                                      >
+                                        Read more
+                                      </span>
+                                    </>
                                   ) : (
                                     value
                                   )}
