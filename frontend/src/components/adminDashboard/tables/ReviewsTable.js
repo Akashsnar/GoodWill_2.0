@@ -147,6 +147,7 @@ function ReviewsTable() {
       columns={customColumns}
       rows={rows}
       onDelete={handleDelete}
+      showSidebar={true}
       props={{ heading: "Reviews" }}
     />
   );

@@ -40,7 +40,7 @@ router.get("/:name", async(req, res, next) => {
 
 router.get("/", async(req, res, next) => {
  try {
-    const User_details = await User.find()
+    const User_details = await User.find().sort({ _id: -1 });
     res.json(User_details)
   } catch (err) {
     res.status(500).json({ message: err.message })

@@ -72,7 +72,7 @@ function NGOsTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteNgo", {
+      const response = await fetch("http://localhost:4000/deleteFeedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,6 +102,7 @@ function NGOsTable() {
         rows={rows}
         onDelete={handleDelete}
         props={{ heading: "NGOs' Campaign" }}
+        showSidebar={true}
         confirmDeleteIndex={confirmDeleteIndex}
       />
     </>
