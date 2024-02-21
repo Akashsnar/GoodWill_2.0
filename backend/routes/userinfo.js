@@ -23,7 +23,7 @@ router.get("/:name", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res, next) => {  
   try {
     const User_details = await User.find();
     res.json(User_details);
@@ -32,74 +32,127 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+
+
+
 router.post("/", async (req, res, next) => {
   const payload = req.body;
-
   console.log(payload);
-
   const UserAuthEmail = payload.UserloginEmail;
-  const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
-  if (!userExists) {
-    res.status(400);
-    throw new Error("User not found, please signup");
-  }
 
-  // console.log(payload.file);
+  try {
+  
+    const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
+    const userid=userExists._id;
+    let user = await User.findOne({ Id: userid  });
 
-  // const user = await User.findOne({
-  //   $or:   [{username : payload.username},
-  //         {email: payload.email}]
-  // })
-  // .catch((error)=>{
-  //     console.log(error);
-  //     console.log("error in userinfo js");
-  // })
-  // console.log(user);
-  if (0) {
-    console.log("user exist");
-    res.send("username or email already in use");
-  } else {
-    //update
-    // newvalues = {name : payload.name ,
-    //      email: payload.email ,
-    //      phone:payload.phone ,
-    //      dob:payload.dob,
-    //      gender:payload.gender,
-    //      details:payload.details,
-    //     //  profilePic: req.file.filename
-    //     };
-    console.log(userExists);
-    console.log("i am working");
-    let newvalues = new User();
-    newvalues.Id = userExists._id;
-    (newvalues.name = payload.name),
-      (newvalues.email = payload.email),
-      (newvalues.phone = payload.phone),
-      (newvalues.dob = payload.dob),
-      (newvalues.gender = payload.gender),
-      (newvalues.details = payload.details),
-      (newvalues.profilePic = payload.image);
-    //  profilePic: req.file.filename
+    if (!user) {
+        user = new User({
+            Id:userExists._id,
+            name:payload.name,
+            Email:payload.email,
+            profilePic:payload.image,
+            phone:payload.phone,
+            dob:payload.dob,
+            gender:payload.gender,
+            details:payload.details
+        });
 
-    // let filter = {username : req.session.user.username};
-    // console.log(filter);
-    // const result = await User.updateOne({},newvalues);
-    newvalues.save().then(() => {
-      console.log("saved successfully");
-      //   res.redirect("/users");
-    });
+        await user.save();
+        res.status(201).json({ message: 'User created successfully', user });
+    } else {
+      
+      user.name=payload.name,
+      user.profilePic=payload.image,
+      user.Email=payload.email,
+      user.phone=payload.phone,
+      user.dob=payload.dob,
+      user.gender=payload.gender,
+      user.details=payload.details
 
-    // if(result)
-    // {
-    //     console.log(result);
-    //     console.log("successfully updated");
-    //     // req.session.user = payload;
-    //     res.redirect('/user');
-    // }
-    // else {
-    //     console.log("error in updation");
-    // }
-  }
+        await user.save();
+        res.json({ message: 'User details updated successfully', user });
+    }
+} catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+  // const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
+  // if (!userExists) {
+  //   res.status(400);
+  //   throw new Error("User not found, please signup");
+  // }
+
+  // // console.log(payload.file);
+
+  // // const user = await User.findOne({
+  // //   $or:   [{username : payload.username},
+  // //         {email: payload.email}]
+  // // })
+  // // .catch((error)=>{
+  // //     console.log(error);
+  // //     console.log("error in userinfo js");
+  // // })
+  // // console.log(user);
+  // if (0) {
+  //   console.log("user exist");
+  //   res.send("username or email already in use");
+  // } else {
+  //   //update
+  //   // newvalues = {name : payload.name ,
+  //   //      email: payload.email ,
+  //   //      phone:payload.phone ,
+  //   //      dob:payload.dob,
+  //   //      gender:payload.gender,
+  //   //      details:payload.details,
+  //   //     //  profilePic: req.file.filename
+  //   //     };
+  //   console.log(userExists);
+  //   console.log("i am working");
+  //   let newvalues = new User();
+  //   newvalues.Id = userExists._id;
+  //   (newvalues.name = payload.name),
+  //     (newvalues.email = payload.email),
+  //     (newvalues.phone = payload.phone),
+  //     (newvalues.dob = payload.dob),
+  //     (newvalues.gender = payload.gender),
+  //     (newvalues.details = payload.details),
+  //     (newvalues.profilePic = payload.image);
+  //   //  profilePic: req.file.filename
+
+  //   // let filter = {username : req.session.user.username};
+  //   // console.log(filter);
+  //   // const result = await User.updateOne({},newvalues);
+  //   newvalues.save().then(() => {
+  //     console.log("saved successfully");
+  //     //   res.redirect("/users");
+  //   });
+
+  //   // if(result)
+  //   // {
+  //   //     console.log(result);
+  //   //     console.log("successfully updated");
+  //   //     // req.session.user = payload;
+  //   //     res.redirect('/user');
+  //   // }
+  //   // else {
+  //   //     console.log("error in updation");
+  //   // }
+  // }
 });
 
 router.post("/", async (req, res, next) => {

@@ -15,7 +15,8 @@ function UserdetailsForm(props) {
         phone: '',
         dob: '',
         details: '',
-        image: ''
+        image: '',
+        gender: ''
     });
     const [error, setError] = useState('');
 
@@ -130,7 +131,6 @@ function UserdetailsForm(props) {
                             </div>
 
                             <div className="-mx-3 md:flex mb-2">
-
                                 <div className="md:w-1/2 px-3">
                                     <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="title">
                                         Phone
@@ -144,12 +144,36 @@ function UserdetailsForm(props) {
                                     <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="title" type="text" name='dob' placeholder="email@gmail.com" value={formData.dob} onChange={handleChange} />
                                 </div>
                             </div>
+                            <div className="md:w-1/2 ">
+                                <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="title">
+                                    Gender
+                                </label>
+                                {/* <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="title" type="text" name='gender' placeholder="Gender" value={formData.gender} onChange={handleChange} /> */}
+                                <select className="w-full bg-gray-200 text-black border border-gray-200 rounded py-1 px-4 mb-3" id="location" name="gender" value={formData.gender} onChange={handleChange}>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                            
+                            </div>
+
+                            {/* <div className="col-xl-6 pt-2">
+                                <div>
+                                    <select className="w-full bg-[#f7f4f2] border text-black text-xs px-4 pr-8 py-3 rounded-full h-18 text-[1rem]" id="location" name="category" value={formData.category} onChange={handleChange}>
+                                        <option>General</option>
+                                        <option>Children</option>
+                                        <option>Senior Citizen</option>
+                                        <option>Women</option>
+                                        <option>Food</option>
+                                    </select>
+                                </div>
+                            </div> */}
+
                             <div className="-mx-3 md:flex mb-6">
                                 <div className="md:w-full px-3">
                                     <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="application-link">
                                         Details
                                     </label>
-                                    <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="application-link" type="text" name='details' placeholder="" value={formData.details} onChange={handleChange} />
+                                    <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="application-link" type="text" name='details' placeholder="Tell us about you" value={formData.details} onChange={handleChange} />
                                 </div>
                             </div>
                             <div className="-mx-3 md:flex mt-2">

@@ -33,6 +33,7 @@ import Layout from "./blogs/Layout.js";
 import Became_volunteer from "./components/Services/forms/became_volunteer.js";
 import UserProfile from "./components/user/Userprofile.js";
 import Campaign from "./components/NGO/Campaign_Dashboard.js";
+import NgoProfile from "./components/NgoProfile/NgoProfile.js";
 
 axios.defaults.withCredentials = true;
 
@@ -55,21 +56,16 @@ function App() {
           <Routes forceRefresh={true}>
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/login" element={<LoginContainer />} />
-            <Route exact path="/user" element={<Userhome />} /> {/*hide*/}
+            <Route exact path="/user/:id" element={<Userhome />} /> {/*hide*/}
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="/ngo" element={<NGO_page />} />
             <Route exact path="/userdetails" element={<UserdetailsForm />} />
             <Route exact path="/donation" element={<Donation />} />
-            <Route
-              exact
-              path="/Ngo_dashboard"
-              element={<NGO_Dashboard />}
-            />{" "}
-            {/*hide*/}
+            <Route exact path="/Ngo_dashboard" element={<NGO_Dashboard />} />{" "} {/*hide*/}
             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
-            <Route exact path="/givereview" element={<UserReviews />} />{" "}
-            {/*hide*/}
+            <Route exact path="/givereview" element={<UserReviews />} />{" "}{/*hide*/}
             <Route exact path="/services" element={<SerVices />} />
+            <Route exact path="/ngo_page/:id" element={<NgoProfile/>} />
             <Route
               exact
               path="/services/volunteer"

@@ -30,7 +30,7 @@ const Campaign = ({ data, mode }) => {
   };
 
   return (
-    <div>
+    <Link to={`/ngo_page/${data._id}`}>
       <section class="feature-one features-service">
         <div class="container">
           <div class="feature-one__inner" style={{ padding: "0" }}>
@@ -141,7 +141,7 @@ const Campaign = ({ data, mode }) => {
           </div>
         </div>
       </section>
-    </div>
+    </Link>
   );
 };
 

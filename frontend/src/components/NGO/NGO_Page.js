@@ -12,6 +12,7 @@ function NGOPage() {
     return (
       <>
       <Navbar/>
+      
         <NGOHeader props = { headerProps } />
         <NGOContent />
       </>

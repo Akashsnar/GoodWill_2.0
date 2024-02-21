@@ -126,10 +126,10 @@ const Login = () => {
         dispatch(SET_NAME(data.name));
         dispatch(SAVE_USER(data.email));
 
-        console.log(data);
+        console.log("user ka ",data);
 
         if (data.mode === "User") {
-          navigate("/user");
+          navigate(`/user/${data._id}`);
         } else if (data.mode === "Ngo") {
           navigate("/Ngo_dashboard");
         }
