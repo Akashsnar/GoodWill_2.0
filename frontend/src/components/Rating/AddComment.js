@@ -13,20 +13,45 @@ const AddComment = ({ users, addComment, formData }) => {
     setNewCommentText("");
   };
 
-  const handleCommentSubmit = (event) => {
-    event.preventDefault();
+  // const handleCommentSubmit = (event) => {
+  //   event.preventDefault();
+const handleCommentSubmit = async (event) => {
+  event.preventDefault();
 
-    const newComment = {
-      UserID: new Date().getTime(),
-      text: newCommentText,
-      author: loggedUser,
-      rating: formData.rating,
-      createdAt: new Date().toISOString(),
-    };
+  const newComment = {
+    author: loggedUser.name,
+    ngoname: "Your NGO Name",
+    campagainname: "Your Campaign Name",
+    rating: formData.rating,
+    text: newCommentText,
+    createdAt: new Date().toISOString(),
+  };
 
+  try {
+    const response = await fetch("http://localhost:4000/sitedata/addComment", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newComment),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Handle the response (optional)
+    const data = await response.json();
+    console.log("Comment added:", data);
+
+    // Update local state if needed
     addComment(newComment);
     handleReset();
-  };
+  } catch (error) {
+    console.error("Error adding comment:", error);
+  }
+};
+
 
   return (
     <div className="discussionHeader">

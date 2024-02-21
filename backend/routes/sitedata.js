@@ -88,6 +88,32 @@ router.get('/feedbacks', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+router.get('/reviews', async (req, res) => {
+  try {
+    const review = await Review.find().sort({ _id: -1 });
+    res.json(review)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.post("/addComment", async (req, res) => {
+  try {
+    const { author, ngoname, campagainname, rating, text } = req.body;
+
+    const newComment = new Review({
+      author,
+      ngoname,
+      campagainname,
+      rating,
+      text,
+    });
+
+    const savedComment = await newComment.save();
+    res.json(savedComment);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 router.get('/contact', async (req, res) => {
   try {
     const contact = await Contact.find().sort({ _id: -1 });

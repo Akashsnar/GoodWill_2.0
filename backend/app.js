@@ -257,3 +257,15 @@ app.post("/deleteMessage", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+app.post("/deleteReview", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await reviewschema.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
