@@ -6,17 +6,13 @@ const Campaign = ({ data }) => {
   const barInnerRef = useRef(null);
 
   useEffect(() => {
-    // Calculate the percentage based on raised and goal
     const calculatedPercentage = Math.floor((data.raised / data.goal) * 100);
     setPercentage(calculatedPercentage);
 
     if(barInnerRef.current) {
       barInnerRef.current.classList.add('counted')
     }
-  }, [data.raised, data.goal]);
-  // const image=`http://localhost:4000/${data.image}`
-
-  return (
+  }, [data.raised, data.goal]);  return (
     <div className="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="100ms">
       {console.log(data.image)}
 

@@ -27,7 +27,7 @@ function help_need() {
                             <ul class="list-unstyled">
                                 <li>
                                     <div class="icon" style={{color: 'rgb(216, 142, 4)'}}>
-                                    <i class="fa-regular fa-bowl-food"></i>
+                                    <i class="fa-solid fa-bowl-food"></i>
 
                                     </div>
                                     <div class="text">

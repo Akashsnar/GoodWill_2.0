@@ -3,7 +3,11 @@ import RegisterForm from "./components/LoginForm/RegisterForm";
 import LoginFom from "./components/LoginForm/LoginFom";
 import { toast } from "react-toastify";
 import { loginUser, registerUser, validateEmail } from "./services/authService";
-import { SAVE_USER, SET_LOGIN_USER, SET_NAME } from "./redux/features/auth/authSlice";
+import {
+  SAVE_USER,
+  SET_LOGIN_USER,
+  SET_NAME,
+} from "./redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./components/LoginForm/LoginRegister2.css";
@@ -60,24 +64,19 @@ const Login = () => {
       setIsLoading(true);
       try {
         const data = await registerUser(userData);
-        console.log("hel")
+        console.log("hel");
         console.log(data);
-        await dispatch(SET_LOGIN_USER(true));
-        await dispatch(SET_NAME(data.name));
-        await dispatch(SAVE_USER(data.email))
-        
-        if(data.mode=="User")
-        {
+        dispatch(SET_LOGIN_USER(true));
+        dispatch(SET_NAME(data.name));
+        dispatch(SAVE_USER(data.email));
 
+        if (data.mode === "User") {
           navigate("/user");
+        } else if (data.mode === "Ngo") {
+          navigate("/Ngo_dashboard");
         }
-        else if(data.mode=="Ngo")
-        {
-          navigate('/Ngo_dashboard');
-        }
-       
-        setIsLoading(false);
 
+        setIsLoading(false);
       } catch (error) {
         setIsLoading(false);
         toast.error(error.message);
@@ -112,42 +111,33 @@ const Login = () => {
       };
       setLogIsLoading(true);
       try {
-        console.log("login user")
+        console.log("login user");
 
-
-        if(LogFormData.mode=="Admin")
-        {
+        if (LogFormData.mode === "Admin") {
           console.log("navigat ku nahi..");
-          navigate('/Admin')
+          navigate("/Admin");
         }
         console.log("hi wtf");
         console.log(userData);
         const data = await loginUser(userData);
 
-        // console.log(data);
+        console.log(data);
         dispatch(SET_LOGIN_USER(true));
         dispatch(SET_NAME(data.name));
         dispatch(SAVE_USER(data.email));
-        
-        console.log(data)
-        
-        
-        if(data.mode=="User")
-        {
 
-          navigate("/user");
-        }
-        else if(data.mode=="Ngo")
-        {
-          navigate('/Ngo_dashboard');
+        console.log("user ka ",data);
+
+        if (data.mode === "User") {
+          navigate(`/user/${data._id}`);
+        } else if (data.mode === "Ngo") {
+          navigate("/Ngo_dashboard");
         }
         // else if(data.name=="Admin")
         // {
         //   navigate('/Admin')
         // }
         setLogIsLoading(false);
-
-
       } catch (error) {
         setLogIsLoading(false);
         console.log("error");

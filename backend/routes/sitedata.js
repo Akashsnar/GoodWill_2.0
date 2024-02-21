@@ -25,6 +25,19 @@ router.get('/ngodetails', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+router.get('/ngodetail/:ngoid', async (req, res) => {
+  const campagainid=req.params.ngoid;
+  console.log(campagainid);
+  try {
+    let query = {_id: campagainid};
+    const ngomodel = await Ngomodel.findOne(query)
+    console.log(ngomodel);
+    res.json(ngomodel)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+
+})
 router.get('/allUsers', async (req, res) => {
   try {
     const User = await User.find()
@@ -33,6 +46,8 @@ router.get('/allUsers', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+
+
 
 router.get('/userlength', async (req, res) => {
   try {
@@ -137,9 +152,20 @@ router.get("/campaign/:name", async(req, res, next) => {
    }
  })
 
-// Getting One
-router.get('/:id', getUser, (req, res) => {
-  res.json(res.User)
+// Getting One use detail
+router.get('/userdetail/:userid', async (req, res) => {
+  console.log("i am triggered");
+  const User_Id=req.params.userid;
+  console.log(User_Id);
+  try {
+    let query = {Id: User_Id};
+    const Result = await User.findOne(query)
+    console.log(Result);
+    res.json(Result)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+
 })
 
 // Creating one
@@ -155,6 +181,9 @@ router.post('/', async (req, res) => {
     res.status(400).json({ message: err.message })
   }
 })
+
+// router.get('/userdetail/:id', getUser, (req, res) => {
+
 
 router.post('/submitmessage', async (req, res) => {
   try {
@@ -184,23 +213,14 @@ router.post('/feedback', async (req, res) => {
   }
 });
 
-router.post('/ngo_details', async (req, res) => {
+router.post('/ngo_details', async (req, res) => {  
   try {
     console.log(req.body);
     const payload=req.body;
-
-    // const UserAuthEmail= payload.UserloginEmail;
-    // const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
-    // if (!userExists) {
-    //     res.status(400);
-    //     throw new Error("User not found, please signup");
-    //   }
-
-
     const newngomodel = new Ngomodel();
     console.log("i am working");
     // newngomodel.Id= userExists._id;
-    newngomodel.ngoname = payload.campagainname ,
+    newngomodel.ngoname = payload.ngoname ,
     newngomodel.campagainname = payload.campagainname ,
     newngomodel.category = payload.category ,
     newngomodel.goal=payload.goal,
@@ -257,17 +277,19 @@ router.delete('/:id', getUser, async (req, res) => {
 })
 
 async function getUser(req, res, next) {
-  let User
+  let user
   try {
-    User = await User.findById(req.params.id)
-    if (User == null) {
+    user = await User.findById(req.params.id)
+    // User = "Hi i am"
+
+    if (user == null) {
       return res.status(404).json({ message: 'Cannot find User' })
     }
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
 
-  res.User = User
+  res.User = user
   next()
 }
 

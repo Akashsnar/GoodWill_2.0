@@ -1,0 +1,96 @@
+.typewriter-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 20vh;
+    padding-top: 1rem;
+    align-items: flex-start;
+    /* padding-bottom: 3rem; */
+  }
+  .Typewriter {
+    text-shadow: 0 4px 8px rgba(16, 15, 15, 0.8);
+    font-size: 2em;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-family: serif;
+  }
+  .description_container {
+    display: flex;
+    width: inherit;
+    /* background-color: blue; */
+    /* font-weight: bolder; */
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  .campaign_container {
+    flex-grow: 1;
+    padding-top: 1rem;
+    text-shadow: 0 4px 8px rgba(16, 15, 15, 0.8);
+    font-size: 3em;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-family: serif;
+  }
+  .description {
+    width: 60%;
+    flex-grow: 1;
+    font-size: 1em;
+    color: antiquewhite;
+    font-family: serif;
+  }
+  .leftarrowContainer {
+    height: inherit;
+    width: 5rem;
+    /* background-color: green; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rightarrowContainer {
+    height: inherit;
+    width: 5rem;
+    /* background-color: green; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .leftArrowStyles {
+    justify-self: center;
+    font-size: xx-large;
+    z-index: 1;
+    cursor: pointer;
+    color: antiquewhite;
+    margin-right: 10px;
+  }
+  .rightArrowStyles {
+    justify-self: flex-end;
+    font-size: xx-large;
+    z-index: 1;
+    cursor: pointer;
+    color: antiquewhite;
+  }
+  .extra_details_container {
+    text-align: center;
+    font-weight: bolder;
+    font-size: 0.8em;
+    font-family: serif;
+    /* background-color: antiquewhite; */
+    width: inherit;
+    height: 30vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .amt_raised {
+    border-right: 5px solid whitesmoke;
+    font-size: 1.5em;
+    flex-grow: 1;
+    color: whitesmoke;
+    font-family: serif;
+  }
+  
+  .amt_raised:nth-of-type(3) {
+    border: none;
+  }

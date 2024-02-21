@@ -19,5 +19,5 @@ const ngoSchema = new Schema(
 );
 
 //model
-var ngomodel = mongoose.model('ngodetails', ngoSchema);
+var ngomodel = mongoose.model("ngodetails", ngoSchema);
 module.exports = ngomodel;
