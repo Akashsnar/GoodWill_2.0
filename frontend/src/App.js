@@ -58,21 +58,13 @@ function App() {
           <Routes forceRefresh={true}>
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/login" element={<LoginContainer />} />
-//             <Route exact path="/user" element={<Userhome />} /> {/*hide*/}
-//             <Route exact path="/contact" element={<Contact />} />
-//             <Route exact path="/ngo" element={<NGO_page />} />
-//             <Route exact path="/userdetails" element={<UserdetailsForm />} />
-//             <Route
-//               exact
-//               path="/Ngo_dashboard"
-//               element={<NGO_Dashboard />}
-//             />{" "}
+
             {/*hide*/}
 //             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
 //             <Route exact path="/givereview" element={<UserReviews />} />{" "}
             {/*hide*/}
             <Route exact path="/campaign" element={<Campaign />} />
-//             <Route exact path="/services" element={<SerVices />} />
+           <Route exact path="/services" element={<SerVices />} />
             <Route exact path="/user/:id" element={<Userhome />} /> {/*hide*/}
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="/ngo" element={<NGO_page />} />

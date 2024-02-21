@@ -73,7 +73,7 @@ function Userprofile() {
                     <div style={{ display: "flex", paddingTop: "2rem" }}>
                       <div style={{ color: "black", width: "20rem" }}>
                         <i className="fa fa-envelope" aria-hidden="true"></i>{" "}
-                        Swastikmukati@gmail.com
+                        {user.Email}
                       </div>
                       <div style={{ color: "black", width: "20rem" }}>
                         <i class="fa fa-phone" aria-hidden="true"></i>{" "}

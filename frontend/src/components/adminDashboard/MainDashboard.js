@@ -5,6 +5,7 @@ import NavAdmin from "./NavAdmin";
 import DashboardItems from "./DashboardItems";
 import AllComments from "../Rating/AllComments";
 import { Link } from "react-router-dom";
+import Graph from "./Graph"
 // import SideMenu from "./Sidebar";
 import Sidebar from "./Sidebar";
 function MainDashboard() {

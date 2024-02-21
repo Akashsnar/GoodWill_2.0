@@ -81,10 +81,10 @@ function Userhome() {
                   alt=""
                 />
               </div>
-              <div className="profile-usertitle">
+              <Link to={`/${userDetails.name}`} className="profile-usertitle"> 
                 <div className="profile-usertitle-name">{userDetails.name}</div>
                 <Link className="profile-usertitle-job">{userDetails.Email}</Link>
-              </div>
+              </Link>
               {/* <div className="profile-userbuttons">
                             <button type="button" className="btn btn-success btn-sm">Donation</button>
                             <button type="button" className="btn btn-danger btn-sm">Message</button>

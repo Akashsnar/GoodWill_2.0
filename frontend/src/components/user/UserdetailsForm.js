@@ -4,103 +4,103 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 function UserdetailsForm(props) {
-//   const { state } = useLocation();
-//   const navigate = useNavigate();
-//   const [imagePreview, setimagePreview] = useState();
-//   const [file, setfile] = useState();
-//   const [formData, setFormData] = useState({
-//     UserloginEmail: state.UserloginEmail,
-//     name: "",
-//     email: "",
-//     phone: "",
-//     dob: "",
-//     details: "",
-//     image: "",
-//   });
-//   const [error, setError] = useState("");
+  //   const { state } = useLocation();
+  //   const navigate = useNavigate();
+  //   const [imagePreview, setimagePreview] = useState();
+  //   const [file, setfile] = useState();
+  //   const [formData, setFormData] = useState({
+  //     UserloginEmail: state.UserloginEmail,
+  //     name: "",
+  //     email: "",
+  //     phone: "",
+  //     dob: "",
+  //     details: "",
+  //     image: "",
+  //   });
+  //   const [error, setError] = useState("");
 
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData({ ...formData, [name]: value });
-//   };
+  //   const handleChange = (e) => {
+  //     const { name, value } = e.target;
+  //     setFormData({ ...formData, [name]: value });
+  //   };
 
-//   const _handleImageChange = (e) => {
-//     e.preventDefault();
+  //   const _handleImageChange = (e) => {
+  //     e.preventDefault();
 
-//     const imgfile = e.target.files[0];
-//     console.log(imgfile);
-//     console.log(imgfile.name);
-//     setfile(imgfile);
+  //     const imgfile = e.target.files[0];
+  //     console.log(imgfile);
+  //     console.log(imgfile.name);
+  //     setfile(imgfile);
 
-//     if (imgfile) {
-//       const reader = new FileReader();
+  //     if (imgfile) {
+  //       const reader = new FileReader();
 
-//       reader.onloadend = () => {
-//         setimagePreview(reader.result);
-//       };
+  //       reader.onloadend = () => {
+  //         setimagePreview(reader.result);
+  //       };
 
-//       reader.readAsDataURL(imgfile);
-    const { state } = useLocation();
-    const navigate = useNavigate();
-    const [imagePreview, setimagePreview] = useState()
-    const [file, setfile] = useState()
-    const [formData, setFormData] = useState({
-        UserloginEmail: state.UserloginEmail,
-        name: '',
-        email: '',
-        phone: '',
-        dob: '',
-        details: '',
-        image: '',
-        gender: ''
-    });
-    const [error, setError] = useState('');
+  //       reader.readAsDataURL(imgfile);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+  const [imagePreview, setimagePreview] = useState()
+  const [file, setfile] = useState()
+  const [formData, setFormData] = useState({
+    UserloginEmail: state.UserloginEmail,
+    name: '',
+    email: '',
+    phone: '',
+    dob: '',
+    details: '',
+    image: '',
+    gender: ''
+  });
+  const [error, setError] = useState('');
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
-    };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    const _handleImageChange = (e) => {
-        e.preventDefault();
+  const _handleImageChange = (e) => {
+    e.preventDefault();
 
-        const imgfile = e.target.files[0];
-        console.log(imgfile);
-        console.log(imgfile.name);
-        setfile(imgfile);
+    const imgfile = e.target.files[0];
+    console.log(imgfile);
+    console.log(imgfile.name);
+    setfile(imgfile);
 
-        if (imgfile) {
-            const reader = new FileReader();
+    if (imgfile) {
+      const reader = new FileReader();
 
-            reader.onloadend = () => {
-                setimagePreview(reader.result);
-            };
+      reader.onloadend = () => {
+        setimagePreview(reader.result);
+      };
 
-            reader.readAsDataURL(imgfile);
-        }
-
-
-        if (imgfile.type === 'image/jpeg' || imgfile.type === 'image/png') {
-            console.log("cloudnary");
-            const data = new FormData()
-            data.append("file", imgfile);
-            data.append("upload_preset", "qyabhaz3")
-            data.append("cloud_name", "dhwrvpowg")
-            fetch("https://api.cloudinary.com/v1_1/dhwrvpowg/image/upload", {
-                method: 'post', body: data,
-            }).then((res) => res.json())
-                .then(data => {
-                    // setPic(data.url.toString());
-                    setFormData({ ...formData, 'image': data.url.toString() });
-                    console.log(data);
-                    // setLoading(false);
-                }).catch((err) => {
-                    console.log(err);
-                    // setLoading(false);
-
-                })
-        }
+      reader.readAsDataURL(imgfile);
     }
+
+
+    if (imgfile.type === 'image/jpeg' || imgfile.type === 'image/png') {
+      console.log("cloudnary");
+      const data = new FormData()
+      data.append("file", imgfile);
+      data.append("upload_preset", "qyabhaz3")
+      data.append("cloud_name", "dhwrvpowg")
+      fetch("https://api.cloudinary.com/v1_1/dhwrvpowg/image/upload", {
+        method: 'post', body: data,
+      }).then((res) => res.json())
+        .then(data => {
+          // setPic(data.url.toString());
+          setFormData({ ...formData, 'image': data.url.toString() });
+          console.log(data);
+          // setLoading(false);
+        }).catch((err) => {
+          console.log(err);
+          // setLoading(false);
+
+        })
+    }
+
 
     if (imgfile.type === "image/jpeg" || imgfile.type === "image/png") {
       console.log("cloudnary");
@@ -124,8 +124,7 @@ function UserdetailsForm(props) {
           // setLoading(false);
         });
     }
-  };
-
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -209,74 +208,7 @@ function UserdetailsForm(props) {
                                             Please fill out this field.
                                         </span>
                                     </div> */}
-//                                 </div>
-//                                 <div className="md:w-1/2 px-3">
-//                                     <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="title">
-//                                         Email
-//                                     </label>
-//                                     <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" name='email' id="title" type="email" placeholder="email@gmail.com" value={formData.email} onChange={handleChange} />
-//                                 </div>
-//                             </div>
 
-//                             <div className="-mx-3 md:flex mb-2">
-//                                 <div className="md:w-1/2 px-3">
-//                                     <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="title">
-//                                         Phone
-//                                     </label>
-//                                     <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="title" type="text" name='phone' placeholder="email@gmail.com" value={formData.phone} onChange={handleChange} />
-//                                 </div>
-//                                 <div className="md:w-1/2 px-3">
-//                                     <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="title">
-//                                         Dob
-//                                     </label>
-//                                     <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="title" type="text" name='dob' placeholder="email@gmail.com" value={formData.dob} onChange={handleChange} />
-//                                 </div>
-//                             </div>
-//                             <div className="md:w-1/2 ">
-//                                 <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="title">
-//                                     Gender
-//                                 </label>
-//                                 {/* <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="title" type="text" name='gender' placeholder="Gender" value={formData.gender} onChange={handleChange} /> */}
-//                                 <select className="w-full bg-gray-200 text-black border border-gray-200 rounded py-1 px-4 mb-3" id="location" name="gender" value={formData.gender} onChange={handleChange}>
-//                                         <option>Male</option>
-//                                         <option>Female</option>
-//                                     </select>
-                            
-//                             </div>
-
-//                             {/* <div className="col-xl-6 pt-2">
-//                                 <div>
-//                                     <select className="w-full bg-[#f7f4f2] border text-black text-xs px-4 pr-8 py-3 rounded-full h-18 text-[1rem]" id="location" name="category" value={formData.category} onChange={handleChange}>
-//                                         <option>General</option>
-//                                         <option>Children</option>
-//                                         <option>Senior Citizen</option>
-//                                         <option>Women</option>
-//                                         <option>Food</option>
-//                                     </select>
-//                                 </div>
-//                             </div> */}
-
-//                             <div className="-mx-3 md:flex mb-6">
-//                                 <div className="md:w-full px-3">
-//                                     <label className="uppercase tracking-wide text-black text-xs font-bold mb-2" htmlFor="application-link">
-//                                         Details
-//                                     </label>
-//                                     <input className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3" id="application-link" type="text" name='details' placeholder="Tell us about you" value={formData.details} onChange={handleChange} />
-//                                 </div>
-//                             </div>
-//                             <div className="-mx-3 md:flex mt-2">
-//                                 <div className="md:w-full px-3">
-//                                     <button type="submit" className="md:w-full bg-gray-900 text-white font-bold py-2 px-4 border-b-4 hover:border-b-2 border-gray-500 hover:border-gray-100 rounded-full">
-//                                         Update your Profile
-//                                     </button>
-//                                 </div>
-//                             </div>
-
-//                             <div className="preview">
-//                                 <img id="file-ip-1-preview" />
-//                             </div>
-//                         </div>
-//                     </form>
                 </div>
                 <div className="md:w-1/2 px-3">
                   <label
@@ -372,6 +304,6 @@ function UserdetailsForm(props) {
       </div>
     </div>
   );
-}
 
+}
 export default UserdetailsForm;
