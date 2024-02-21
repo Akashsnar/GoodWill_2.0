@@ -41,6 +41,24 @@ router.post("/", async (req, res, next) => {
   const UserAuthEmail = payload.UserloginEmail;
 
   try {
+     const name=req.params.name;
+    //  console.log(name);
+     const regex = new RegExp(name, 'i');
+     const User_details = await User.find({ name : regex});
+     console.log(User_details[0]);
+     res.json(User_details[0])
+   } catch (err) {
+     res.status(500).json({ message: err.message })
+   }
+ })
+
+router.get("/", async(req, res, next) => {
+ try {
+    const User_details = await User.find().sort({ _id: -1 });
+    res.json(User_details)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
   
     const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
     const userid=userExists._id;

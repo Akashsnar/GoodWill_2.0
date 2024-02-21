@@ -202,13 +202,15 @@ function DonationsTable() {
 
     return (
       <>
-    <TableComponent
-      columns={customColumns}
-      rows={sortedRows}
-      onDelete={handleDelete}
-      props={{ heading: "Donation Graph" }}
-    /></>
-  );
+        <TableComponent
+          columns={customColumns}
+          rows={sortedRows}
+          onDelete={handleDelete}
+          showSidebar={false}
+          props={{ heading: "Donation Graph" }}
+        />
+      </>
+    );
 }
 
 export default DonationsTable;

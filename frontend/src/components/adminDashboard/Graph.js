@@ -29,6 +29,8 @@ const App = () => {
     theme: "light1",
     animationEnabled: true,
     zoomEnabled: true,
+    exportFileName: "DonationGraph",
+    exportEnabled: true,
     backgroundColor: "transparent",
     title: {
       text: `Monthly Donations - Total: ₹${totalDonation}`,
@@ -52,7 +54,7 @@ const App = () => {
   };
   const chartContainerStyle = {
     width: "60vw",
-    height: "55vh",
+    height: "35vh",
   };
 
   return (

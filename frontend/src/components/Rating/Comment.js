@@ -1,7 +1,7 @@
 // Comment.js
 import React from "react";
 import AddComment from "./AddComment";
-import AllComments from "./AllComments";
+import AllComments from "./ShowAllComments";
 
 const Comment = ({ users, comments, addComment, formData }) => {
   return (

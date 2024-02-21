@@ -21,7 +21,9 @@ import FeedbackTable from "./components/adminDashboard/tables/FeedbackTable";
 import ReviewsTable from "./components/adminDashboard/tables/ReviewsTable";
 import MessagesTable from "./components/adminDashboard/tables/MessagesTable";
 import DonationsTable from "./components/adminDashboard/tables/DonationsTable";
-import Feedback from "./components/feedback/Feedback";
+import DonationGraphTable from "./components/adminDashboard/DonationGraphTable.js";
+import NgosAndUserChart from './components/adminDashboard/NgosAndUserChart.js';
+import Feedback from "./components/feedback/FeedbackN";
 import Home from "./blogs/Home";
 import AddBlog from "./blogs/AddBlog.js";
 import BlogDetails from "./blogs/BlogDetails.js";
@@ -56,6 +58,21 @@ function App() {
           <Routes forceRefresh={true}>
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/login" element={<LoginContainer />} />
+//             <Route exact path="/user" element={<Userhome />} /> {/*hide*/}
+//             <Route exact path="/contact" element={<Contact />} />
+//             <Route exact path="/ngo" element={<NGO_page />} />
+//             <Route exact path="/userdetails" element={<UserdetailsForm />} />
+//             <Route
+//               exact
+//               path="/Ngo_dashboard"
+//               element={<NGO_Dashboard />}
+//             />{" "}
+            {/*hide*/}
+//             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
+//             <Route exact path="/givereview" element={<UserReviews />} />{" "}
+            {/*hide*/}
+            <Route exact path="/campaign" element={<Campaign />} />
+//             <Route exact path="/services" element={<SerVices />} />
             <Route exact path="/user/:id" element={<Userhome />} /> {/*hide*/}
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="/ngo" element={<NGO_page />} />
@@ -84,6 +101,8 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/adminDashboard" element={<MainDashboard />} />
           <Route path="/adminDashboard/UserTable" element={<UserTable />} />
+          <Route path="/adminDashboard/Graph" element={<DonationGraphTable />} />
+          <Route path="/adminDashboard/PieChart" element={<NgosAndUserChart />} />
           <Route
             path="/adminDashboard/FeedbackTable"
             element={<FeedbackTable />}
@@ -101,6 +120,7 @@ function App() {
             element={<MessagesTable />}
           />
           <Route path="/adminDashboard/NGOsTable" element={<NGOsTable />} />
+          <Route exact path="/:username" element={<UserProfile />} />
         </Routes>
       </div>
     </Router>

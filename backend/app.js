@@ -221,3 +221,44 @@ app.post("/deleteUser", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+const Feedback = require("./mongoSchema/feedbackSchema");
+app.post("/deleteFeedback", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Feedback.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+const Contact = require("./mongoSchema/contactSchema");
+app.post("/deleteMessage", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Contact.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteReview", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await reviewschema.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});

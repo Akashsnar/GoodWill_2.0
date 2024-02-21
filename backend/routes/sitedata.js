@@ -4,6 +4,7 @@ const User = require('../mongoSchema/userdetails')
 const Ngos = require('../mongoSchema/ngoschema')
 const Review = require("../mongoSchema/reviewschema");
 const Contact = require("../mongoSchema/contactSchema");
+const Feedback = require("../mongoSchema/feedbackSchema");
 const Ngomodel = require("../mongoSchema/mongoschemango");
 
 // Getting all
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
 
 router.get('/ngodetails', async (req, res) => {
   try {
-    const ngomodel = await Ngomodel.find()
+    const ngomodel = await Ngomodel.find().sort({ _id: -1 });
     res.json(ngomodel)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -59,7 +60,7 @@ router.get('/userlength', async (req, res) => {
 
 router.get('/ngolength', async (req, res) => {
   try {
-    const ngos = await Ngos.find()
+    const ngos = await Ngomodel.find();
     res.json(ngos.length)
   } catch (err) {
     res.status(500).json({ message: err.message })
@@ -88,8 +89,50 @@ router.get('/messageslength', async (req, res) => {
 
 router.get('/ngodetail', async (req, res) => {
   try {
-    const ngo = await Ngos.find()
+    const ngo = await Ngos.find().sort({ _id: -1 });
     res.json(ngo)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/feedbacks', async (req, res) => {
+  try {
+    const feedback = await Feedback.find().sort({ _id: -1 });
+    res.json(feedback)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/reviews', async (req, res) => {
+  try {
+    const review = await Review.find().sort({ _id: -1 });
+    res.json(review)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.post("/addComment", async (req, res) => {
+  try {
+    const { author, ngoname, campagainname, rating, text } = req.body;
+
+    const newComment = new Review({
+      author,
+      ngoname,
+      campagainname,
+      rating,
+      text,
+    });
+
+    const savedComment = await newComment.save();
+    res.json(savedComment);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+router.get('/contact', async (req, res) => {
+  try {
+    const contact = await Contact.find().sort({ _id: -1 });
+    res.json(contact)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
@@ -152,6 +195,17 @@ router.post('/submitmessage', async (req, res) => {
     await newContact.save();
 
     // Send a response back to the client
+    res.status(200).json({ message: 'Form data submitted successfully' });
+  } catch (error) {
+    console.error('Error submitting form data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+router.post('/feedback', async (req, res) => {
+  try {
+    const feedbackData = new Feedback(req.body);
+    console.log(feedbackData)
+    await feedbackData.save();
     res.status(200).json({ message: 'Form data submitted successfully' });
   } catch (error) {
     console.error('Error submitting form data:', error);

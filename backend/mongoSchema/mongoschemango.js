@@ -1,15 +1,22 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ngoSchema = new Schema({
-  ngoname: String,
-  campagainname: String,
-  image: String,
-  desc: String,
-  category: String,
-  goal: Number,
-  raised: Number,
-});
+const ngoSchema = new Schema(
+  {
+    Id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+    ngoname: String,
+    campagainname: String,
+    image: String,
+    desc: String,
+    category: String,
+    goal: Number,
+    raised: Number,
+  },
+  { timestamps: true }
+);
 
 //model
 var ngomodel = mongoose.model("ngodetails", ngoSchema);
