@@ -1,7 +1,6 @@
-# Project-NGO
-`                                                        `GOODWILL
+# GOODWILL
 
-`                 `SOCIAL MARKET PLACE FOR NGOs
+`SOCIAL MARKET PLACE FOR NGOs`
 
 This is a website designed to connect NGOs with potential donors and volunteers. The website serves as a platform for NGOs to showcase their causes and projects, while also allowing users to browse and donate to the causes they support.
 
@@ -18,7 +17,7 @@ To run this project, you will need:
 
 To run the project, simply navigate to the website URL in your web browser.
 
-1. **Git clone https://github.com/Rohank1442/Project-NGO.git**
+1. **Git clone gh repo clone Akashsnar/GoodWill_2.0**
 1. Open the project folder
 1. Open the terminal and run 
 
