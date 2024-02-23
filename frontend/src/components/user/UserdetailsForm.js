@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
+
 function UserdetailsForm(props) {
   //   const { state } = useLocation();
   //   const navigate = useNavigate();
@@ -52,7 +53,7 @@ function UserdetailsForm(props) {
     dob: '',
     details: '',
     image: '',
-    gender: ''
+    gender: 'Male'
   });
   const [error, setError] = useState('');
 
@@ -68,7 +69,6 @@ function UserdetailsForm(props) {
     console.log(imgfile);
     console.log(imgfile.name);
     setfile(imgfile);
-
     if (imgfile) {
       const reader = new FileReader();
 
@@ -80,62 +80,54 @@ function UserdetailsForm(props) {
     }
 
 
-    if (imgfile.type === 'image/jpeg' || imgfile.type === 'image/png') {
-      console.log("cloudnary");
-      const data = new FormData()
-      data.append("file", imgfile);
-      data.append("upload_preset", "qyabhaz3")
-      data.append("cloud_name", "dhwrvpowg")
-      fetch("https://api.cloudinary.com/v1_1/dhwrvpowg/image/upload", {
-        method: 'post', body: data,
-      }).then((res) => res.json())
-        .then(data => {
-          // setPic(data.url.toString());
-          setFormData({ ...formData, 'image': data.url.toString() });
-          console.log(data);
-          // setLoading(false);
-        }).catch((err) => {
-          console.log(err);
-          // setLoading(false);
+    // if (imgfile.type === 'image/jpeg' || imgfile.type === 'image/png') {
+    //   console.log("cloudnary");
+    //   const data = new FormData()
+    //   data.append("file", imgfile);
+    //   data.append("upload_preset", "qyabhaz3")
+    //   data.append("cloud_name", "dhwrvpowg")
+    //   fetch("https://api.cloudinary.com/v1_1/dhwrvpowg/image/upload", {
+    //     method: 'post', body: data,
+    //   }).then((res) => res.json())
+    //     .then(data => {
+    //       // setPic(data.url.toString());
+    //       setFormData({ ...formData, 'image': data.url.toString() });
+    //       console.log(data);
+    //       // setLoading(false);
+    //     }).catch((err) => {
+    //       console.log(err);
+    //       // setLoading(false);
 
-        })
-    }
-
-
-    if (imgfile.type === "image/jpeg" || imgfile.type === "image/png") {
-      console.log("cloudnary");
-      const data = new FormData();
-      data.append("file", imgfile);
-      data.append("upload_preset", "qyabhaz3");
-      data.append("cloud_name", "dhwrvpowg");
-      fetch("https://api.cloudinary.com/v1_1/dhwrvpowg/image/upload", {
-        method: "post",
-        body: data,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // setPic(data.url.toString());
-          setFormData({ ...formData, image: data.url.toString() });
-          console.log(data);
-          // setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-          // setLoading(false);
-        });
-    }
+    //     })
+    // }
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    console.log("image", file);
+    const formDatas = new FormData();
+    formDatas.append('image', file);
+    formDatas.append('UserloginEmail', state.UserloginEmail);
+    formDatas.append('name', formData.name);
+    formDatas.append('email', formData.email);
+    formDatas.append('phone', formData.phone);
+    formDatas.append('dob', formData.dob);
+    formDatas.append('gender', formData.gender);
+    formDatas.append('details', formData.details);
+    formDatas.append('Email', formData.email);
+
 
     try {
       console.log(formData);
       const response = await axios.post(
         " http://localhost:4000/userinfo",
-        formData
+        formDatas, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
       );
-      console.log("data saved");
+      console.log("data saved", response);
       // navigate('/postlist', { state: response.data.token })
     } catch (error) {
       console.log(error);
@@ -167,7 +159,7 @@ function UserdetailsForm(props) {
                   <input
                     id="dropzone-file"
                     type="file"
-                    className="m-auto"
+                    className="m-auto pb-5"
                     name="image"
                     onChange={(e) => _handleImageChange(e)}
                   />
@@ -252,19 +244,43 @@ function UserdetailsForm(props) {
                     className="uppercase tracking-wide text-black text-xs font-bold mb-2"
                     htmlFor="title"
                   >
-                    Dob
+                    gender
+                  </label>
+                  <select
+                    className="w-full bg-gray-200 text-black border border-gray-200 rounded py-2 px-4 mb-3"
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                  >
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select >
+                </div>
+              </div>
+
+              <div className="-mx-3 md:flex mb-2">
+                <div className="md:w-1/2 px-3">
+                  <label
+                    className="uppercase tracking-wide text-black text-xs font-bold mb-2"
+                    htmlFor="title"
+                  >
+                    DOB
                   </label>
                   <input
                     className="w-full bg-gray-200 text-black border border-gray-200 rounded py-3 px-4 mb-3"
                     id="title"
-                    type="text"
+                    type="date"
                     name="dob"
-                    placeholder="email@gmail.com"
+                    placeholder="dd-mm-yy"
                     value={formData.dob}
                     onChange={handleChange}
                   />
                 </div>
+
+            
               </div>
+
               <div className="-mx-3 md:flex mb-6">
                 <div className="md:w-full px-3">
                   <label

@@ -114,7 +114,7 @@ router.get('/reviews', async (req, res) => {
 router.post("/addComment", async (req, res) => {
   try {
     const { author, ngoname, campagainname, rating, text } = req.body;
-
+console.log("comment", req.body);
     const newComment = new Review({
       author,
       ngoname,
@@ -151,6 +151,18 @@ router.get("/campaign/:name", async(req, res, next) => {
      res.status(500).json({ message: err.message })
    }
  })
+
+ router.get('/:ngoname', async (req, res) => {
+  const ngoname=req.params.ngoname;
+  console.log(ngoname)
+  try {
+    let query={ngoname: ngoname}
+    const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
+    res.json(ngomodel)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
 
 // Getting One use detail
 router.get('/userdetail/:userid', async (req, res) => {

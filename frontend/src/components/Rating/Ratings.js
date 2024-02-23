@@ -4,11 +4,21 @@ import "./Ratings.css";
 import FeedbackRating from "../feedback/FeedbackRating";
 import Comment from "./Comment";
 import Navbar from "../navbar/Navbar";
+import { useLocation } from 'react-router-dom';
 
 const Ratings = () => {
+const {state} = useLocation()
+const ngodetail= state.ngodata;
+const username= state.username;
+const userDetails=state.userDetails;
+
+  console.log("ratings", state.ngodata, username, userDetails);
+
   const [formData, setFormData] = useState({
     rating: 0,
   });
+  // const { state } = props.location;
+  // console.log(state);
 
   const users = {
     ReyKan: {
@@ -136,6 +146,10 @@ const handleInputChange = (name, value) => {
             onChange={(value) => handleInputChange("rating", value)}
           />
           <Comment
+            userDetails={userDetails}
+            username={username}
+            ngoname= {ngodetail.ngoname}
+            campagainname={ngodetail.campagainname}
             users={users}
             comments={comments}
             addComment={addComment}

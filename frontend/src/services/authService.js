@@ -96,7 +96,6 @@ export const getLoginStatus = async () => {
 export const donationInfo = async (formData) => {
   try {
     console.log("donationInfo");
-
     await axios.post(`${Backend_URL}/userinfo/donation`, formData, {
       withCredentials: true,
     });

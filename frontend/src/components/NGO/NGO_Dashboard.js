@@ -9,11 +9,11 @@ import GetUserNGO from './GetUserNGO';
 function NGODashboard() {
   // const percentage=36;
 
-  const Ngoname = useSelector((state) => state.name);
+  const Ngoname = useSelector((state) => state.auth.name);
   console.log(Ngoname)
-  const Email = useSelector((state) => state.email)
+  const Email = useSelector((state) => state.auth.email)
   console.log(Email)
-
+// console.log(isLoggedIn)
 
 
 
@@ -68,7 +68,7 @@ function NGODashboard() {
         </div>
       </section> */}
 
-      <GetUserNGO mode={'ngodash'}/>
+      <GetUserNGO mode={'ngodash'} ngoname = {Ngoname} />
       {/* <Campaign_Dashboard /> */}
       <NGO_Dashboard_form Ngoname={Ngoname}/>
 

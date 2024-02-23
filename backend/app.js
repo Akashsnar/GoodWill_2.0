@@ -8,13 +8,17 @@ const reportschema = require("./mongoSchema/reportschema");
 const cookieParser = require("cookie-parser");
 const db = require("./mongoSchema/database");
 const multer = require("multer");
-
+const morgan = require("morgan");
 const userRoute = require("./routes/user");
 const blogRoute = require("./routes/blog");
 const cors = require("cors");
 const { config } = require("dotenv");
+const fs = require('fs');
+
+
 config();
-app.use(express.static("uploads"));
+// app.use(express.static("uploads"));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(express.static("registrationproof"));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -52,11 +56,10 @@ var upload = multer({
 });
 const UserRoute = require("./routes/UserRoute.js");
 app.use("/api/users", UserRoute);
+const Group_no = 'Group_28'; 
+const logStream = fs.createWriteStream(`${Group_no}_log.txt`, { flags: 'a' });
+app.use(morgan('combined', { stream: logStream }));
 const port = 4000;
-
-// app.post('/contact', async (req, res) => in services
-// app.post('/deleteContact', async (req, res) => in services
-////searching
 
 app.post("/user", async (req, res) => {
   console.log("/user running");

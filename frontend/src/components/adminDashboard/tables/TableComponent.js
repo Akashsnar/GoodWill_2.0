@@ -92,8 +92,17 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
                                 typeof value === "string" && value.length > 100;
                               return (
                                 <TableCell key={column.id} align={column.align}>
-                                  {column.id === "profilePic" ||
-                                  column.id === "image" ? (
+                                  {column.id === "profilePic"? (
+                                    <img
+                                      src={`http://localhost:4000/uploads/${value}`}
+                                      alt="Profile Pic"
+                                      style={{
+                                        width: 50,
+                                        height: 50,
+                                        borderRadius: "50%",
+                                      }}
+                                    />
+                                  ) : column.id === "image"? (
                                     <img
                                       src={value}
                                       alt="Profile Pic"
@@ -103,8 +112,8 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
                                         borderRadius: "50%",
                                       }}
                                     />
-                                  ) : column.id === "name" ? (
-                                    <Link to={`/${value}`}>{value}</Link>
+                                  ) : column.id === "campagain_name" ? (
+                                    <Link to={`/userprofile/${value}`}>{value}</Link>
                                   ) : column.format &&
                                     typeof value === "number" ? (
                                     column.format(value)

@@ -35,7 +35,7 @@ function NGOsTable() {
         newRows[i] = {
           id: customRowsX[i]._id,
           image: customRowsX[i].image,
-          name: customRowsX[i].campagainname,
+          campagain_name: customRowsX[i].campagainname,
           desc: customRowsX[i].desc,
           category: customRowsX[i].category,
           goal: customRowsX[i].goal,

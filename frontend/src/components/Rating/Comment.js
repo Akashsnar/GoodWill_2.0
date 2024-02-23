@@ -3,10 +3,10 @@ import React from "react";
 import AddComment from "./AddComment";
 import AllComments from "./ShowAllComments";
 
-const Comment = ({ users, comments, addComment, formData }) => {
+const Comment = ({userDetails,username,ngoname,campagainname, users, comments, addComment, formData }) => {
   return (
     <div className="discussion">
-      <AddComment users={users} addComment={addComment} formData={formData} />
+      <AddComment userDetails={userDetails} username={username} ngoname={ngoname} campagainname={campagainname} users={users} addComment={addComment} formData={formData} />
       <AllComments comments={comments} users={users} showStars={true} />
     </div>
   );

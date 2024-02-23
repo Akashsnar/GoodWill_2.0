@@ -10,12 +10,25 @@ const multer = require("multer");
 const path = require("path");
 const { log } = require("util");
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Destination folder for uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+  }
+});
+
+// File upload middleware
+const upload = multer({ storage: storage });
+
+
 router.get("/:name", async (req, res, next) => {
   try {
     const name = req.params.name;
     //  console.log(name);
-    const regex = new RegExp(name, "i");
-    const User_details = await User.find({ name: regex });
+    // const regex = new RegExp(name, "i");
+    const User_details = await User.find({ name: name });
     console.log(User_details[0]);
     res.json(User_details[0]);
   } catch (err) {
@@ -35,41 +48,44 @@ router.get("/", async (req, res, next) => {
 
 
 
-router.post("/", async (req, res, next) => {
-  const payload = req.body;
-  console.log(payload);
-  const UserAuthEmail = payload.UserloginEmail;
+// router.post("/", async (req, res, next) => {
+//   const payload = req.body;
+//   console.log("new mongo",payload);
+//   const UserAuthEmail = payload.UserloginEmail;
+//   try {
+//      const name=req.params.name;
+//     //  console.log(name);
+//      const regex = new RegExp(name, 'i');
+//      const User_details = await User.find({ name : regex});
+//      console.log(User_details[0]);
+//      res.json(User_details[0])
+//    } catch (err) {
+//      res.status(500).json({ message: err.message })
+//    }
+//  })
 
-  try {
-     const name=req.params.name;
-    //  console.log(name);
-     const regex = new RegExp(name, 'i');
-     const User_details = await User.find({ name : regex});
-     console.log(User_details[0]);
-     res.json(User_details[0])
-   } catch (err) {
-     res.status(500).json({ message: err.message })
-   }
- })
 
-router.get("/", async(req, res, next) => {
- try {
-    const User_details = await User.find().sort({ _id: -1 });
-    res.json(User_details)
-  } catch (err) {
-    res.status(500).json({ message: err.message })
-  }
-  
-    const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
+
+router.post("/", upload.single('image'), async(req, res, next) => {
+//  try {
+//     const User_details = await User.find().sort({ _id: -1 });
+//     res.json(User_details)
+//   } catch (err) {
+//     res.status(500).json({ message: err.message })
+//   }.
+const payload = req.body;
+console.log(payload);
+console.log(req.file);
+    const userExists = await UserAuthLogin.findOne({ email: payload.UserloginEmail });
     const userid=userExists._id;
     let user = await User.findOne({ Id: userid  });
-
+try{
     if (!user) {
         user = new User({
             Id:userExists._id,
             name:payload.name,
             Email:payload.email,
-            profilePic:payload.image,
+            profilePic:req.file.filename,
             phone:payload.phone,
             dob:payload.dob,
             gender:payload.gender,
@@ -81,8 +97,8 @@ router.get("/", async(req, res, next) => {
     } else {
       
       user.name=payload.name,
-      user.profilePic=payload.image,
-      user.Email=payload.email,
+      user.profilePic=req.file.filename,
+      user.Email=payload.Email,
       user.phone=payload.phone,
       user.dob=payload.dob,
       user.gender=payload.gender,
@@ -91,7 +107,8 @@ router.get("/", async(req, res, next) => {
         await user.save();
         res.json({ message: 'User details updated successfully', user });
     }
-} catch (err) {
+  }
+     catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
 }

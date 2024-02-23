@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/actions/useractions";
 import GetUserNGO from "../NGO/GetUserNGO";
 import axios from 'axios'
+// import '../../../../backend/uploads/'
 
 function Userhome() {
   const navigate = useNavigate();
@@ -76,14 +77,16 @@ function Userhome() {
             <div className="profile-sidebar">
               <div className="profile-userpic">
                 <img
-                  src={userDetails.profilePic}
+                  src={`http://localhost:4000/uploads/${userDetails.profilePic}`}
+                  // src={`../../../../backend/uploads/1708607269276.jpg`}
+                   
                   className="img-responsive"
                   alt=""
                 />
               </div>
-              <Link to={`/${userDetails.name}`} className="profile-usertitle"> 
+              <Link to={`/userprofile/${userDetails.name}`} className="profile-usertitle"> 
                 <div className="profile-usertitle-name">{userDetails.name}</div>
-                <Link className="profile-usertitle-job">{userDetails.Email}</Link>
+                <div className="profile-usertitle-job">{userDetails.Email}</div>
               </Link>
               {/* <div className="profile-userbuttons">
                             <button type="button" className="btn btn-success btn-sm">Donation</button>
@@ -135,8 +138,7 @@ function Userhome() {
                     state={{ UserloginEmail: Email }}
                     className="text-green-600"
                     >
-                    <i className="fa-light fa-pen-to-square"></i> Update your
-                    Profile
+                    <i className="fa-light fa-pen-to-square"></i> Update your Profile
                   </Link>
                 </div>
 
@@ -158,7 +160,7 @@ function Userhome() {
         <div className="col-md-9">
           <div className="profile-content">
             <h2 className="NgosTitle">Our NGOs</h2>
-            <GetUserNGO />
+            <GetUserNGO username={name} userDetails={userDetails}/>
           </div>
         </div>
       </div>

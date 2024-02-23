@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import './onlystyle.css'
 import { useParams } from "react-router-dom";
+import NavBar from "../navbar/Navbar";
 /* Example CSS import with relative path */
 
 function Userprofile() {
@@ -16,6 +17,7 @@ function Userprofile() {
         );
         if (response.ok) {
           const userData = await response.json();
+          console.log("userdata", userData);
           setUser(userData);
         } else {
           console.error("Error fetching user details:", response.statusText);
@@ -35,7 +37,10 @@ function Userprofile() {
   }
 
   return (
+    
     <div style={{ margin: "20vh" }}>
+    <NavBar />
+
       {user ? (
         <section class="feature-one features-service">
           <div class="container">
@@ -50,8 +55,9 @@ function Userprofile() {
                   className="block-title UserNgoContainer"
                 >
                   {/* <div style={{width:"100%"}}> */}
+              
                   <img
-                    src={user.profilePic}
+                    src={(user.profilePic!='')? `http://localhost:4000/uploads/${user.profilePic}`:'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg'}
                     alt="Iamge alt"
                     srcset=""
                     style={{

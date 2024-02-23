@@ -36,6 +36,7 @@ import Became_volunteer from "./components/Services/forms/became_volunteer.js";
 import UserProfile from "./components/user/Userprofile.js";
 import Campaign from "./components/NGO/Campaign_Dashboard.js";
 import NgoProfile from "./components/NgoProfile/NgoProfile.js";
+import './style.css'
 
 axios.defaults.withCredentials = true;
 
@@ -60,21 +61,22 @@ function App() {
             <Route exact path="/login" element={<LoginContainer />} />
 
             {/*hide*/}
-//             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
-//             <Route exact path="/givereview" element={<UserReviews />} />{" "}
+             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
+             <Route exact path="/givereview" element={<UserReviews />} />
             {/*hide*/}
             <Route exact path="/campaign" element={<Campaign />} />
-           <Route exact path="/services" element={<SerVices />} />
+            <Route exact path="/services" element={<SerVices />} />
             <Route exact path="/user/:id" element={<Userhome />} /> {/*hide*/}
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="/ngo" element={<NGO_page />} />
             <Route exact path="/userdetails" element={<UserdetailsForm />} />
-            <Route exact path="/donation" element={<Donation />} />
+            <Route exact path="/donation/:name" element={<Donation />} />
             <Route exact path="/Ngo_dashboard" element={<NGO_Dashboard />} />{" "} {/*hide*/}
             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
             <Route exact path="/givereview" element={<UserReviews />} />{" "}{/*hide*/}
             <Route exact path="/services" element={<SerVices />} />
             <Route exact path="/ngo_page/:id" element={<NgoProfile/>} />
+            <Route path="/Ngo_dashboard/:campaignname" element={<Campaign/>} />
             <Route
               exact
               path="/services/volunteer"
@@ -112,7 +114,7 @@ function App() {
             element={<MessagesTable />}
           />
           <Route path="/adminDashboard/NGOsTable" element={<NGOsTable />} />
-          <Route exact path="/:username" element={<UserProfile />} />
+          <Route exact path="/userprofile/:username" element={<UserProfile />} />
         </Routes>
       </div>
     </Router>

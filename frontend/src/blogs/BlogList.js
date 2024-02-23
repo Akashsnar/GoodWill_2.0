@@ -12,7 +12,7 @@ const BlogList = ({blogs}) => {
     return ( 
         <div className="w-4/5 md:w-9/12 mx-auto md:mt-10">
             <div className="grid md:grid-cols-3 gap-4">
-                {blogs.map( blog => (
+                {blogs?.map( blog => (
                     <div className="blog-div" key={blog.id}>
                         <div className="flex flex-col">
                             <Link to={`/blogs/${blog.id}`}>

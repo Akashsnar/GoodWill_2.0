@@ -12,7 +12,9 @@ const UserSchema = new Schema({
     phone:{type: String },
     dob: {type: String, trim: true},
     gender: {type: String, trim: true},
-    details: {type: String, trim: true,  default: "No detail"}
+    details: {type: String, trim: true,  default: "No detail"},
+    donatetmoney:{type: Number}
+
 },{timestamps: true});
 
 var User = mongoose.model('Userdetail', UserSchema);

@@ -20,6 +20,9 @@ function DonationGraphTable() {
           <center>
             <Graph />
           </center>
+          <br />
+      <br />
+      <br />
           <DonationsTable sidebar={false} />
         </div>
       </div>
