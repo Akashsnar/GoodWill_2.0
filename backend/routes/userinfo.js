@@ -67,12 +67,6 @@ router.get("/", async (req, res, next) => {
 
 
 router.post("/", upload.single('image'), async(req, res, next) => {
-//  try {
-//     const User_details = await User.find().sort({ _id: -1 });
-//     res.json(User_details)
-//   } catch (err) {
-//     res.status(500).json({ message: err.message })
-//   }.
 const payload = req.body;
 console.log(payload);
 console.log(req.file);

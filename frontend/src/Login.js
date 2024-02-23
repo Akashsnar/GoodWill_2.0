@@ -71,7 +71,7 @@ const Login = () => {
         dispatch(SAVE_USER(data.email));
 
         if (data.mode === "User") {
-          navigate("/user");
+          navigate(`/user/${data._id}`);
         } else if (data.mode === "Ngo") {
           navigate("/Ngo_dashboard");
         }
