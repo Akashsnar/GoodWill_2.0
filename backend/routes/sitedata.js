@@ -307,4 +307,14 @@ async function getUser(req, res, next) {
 
 
 
+router.get('/reviews/:campaignname', async (req, res) => {
+  try {
+    const review = await Review.find({campagainname:req.params.campaignname}).sort({ _id: -1 });
+    res.json(review)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+
 module.exports = router

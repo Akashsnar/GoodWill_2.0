@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 import "./Ratings.css";
 
-const AllComments = ({ users, showStars }) => {
+const AllComments = ({campagainname, users, showStars }) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch("http://localhost:4000/sitedata/reviews");
+        const response = await fetch(`http://localhost:4000/sitedata/reviews/${campagainname}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

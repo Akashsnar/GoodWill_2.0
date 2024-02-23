@@ -47,87 +47,65 @@ function CampaignDashboard() {
       id: 1,
       Username: "Swastik",
       Donated: 5000,
-      profile: "assets/images/users/u0.png"
+      profile: "/assets/images/users/u0.png"
     }, {
       id: 2,
       Username: "Aakash",
       Donated: 6000,
-      profile: "assets/images/users/u1.png"
+      profile: "/assets/images/users/u1.png"
 
     }, {
       id: 3,
       Username: "Stephen",
       Donated: 2000,
-      profile: "assets/images/users/u2.png"
+      profile: "/assets/images/users/u2.png"
     },
     {
       id: 4,
       Username: "Johnny",
       Donated: 1500,
-      profile: "assets/images/users/u0.png"
+      profile: "/assets/images/users/u0.png"
     }
     , {
       id: 5,
       Username: "Raj",
       Donated: 3200,
-      profile: "assets/images/users/u0.png"
+      profile: "/assets/images/users/u1.png"
     }, {
       id: 6,
       Username: "Dhruv",
       Donated: 4500,
-      profile: "assets/images/users/u0.png"
+      profile: "/assets/images/users/u3.png"
     }
     // Add more campaigns as needed
   ];
-  const initialUserReviews = [
-    {
-      id: 1,
-      name: "Swastik",
-      Review: 5,
-      Comment: "Lorem ipsum dolor sit amet, consectetur adipisicing",
-      src: "assets/images/users/u0.png"
-    }, {
-      id: 2,
-      name: "Aakash",
-      Review: 3,
-      Comment: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam, consequuntur.",
-      src: "assets/images/users/u1.png"
-
-    }, {
-      id: 3,
-      name: "Stephen",
-      Review: 2,
-      Comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, maiores!",
-      src: "assets/images/users/u2.png"
-    },
-    {
-      id: 4,
-      name: "Johnny",
-      Review: 5,
-      Comment: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, cum!",
-      src: "assets/images/users/u0.png"
-    }
-    , {
-      id: 5,
-      name: "Raj",
-      Review: 3,
-      Comment: "Lorem ipsum dolor sit, amet consectetur adipisicing elit.",
-      src: "assets/images/users/u0.png"
-    }, {
-      id: 6,
-      name: "Dhruv",
-      Review: 4,
-      Comment: "Lorem ipsum, dolor sit amet consectetur adipisicing.",
-      src: "assets/images/users/u0.png"
-    }
-  ];
+  
   const [userDonations, setUserDonations] = useState(initialUserDonations);
-  const [userReviews, setUserReviews] = useState(initialUserReviews);
+  const [userReviews, setUserReviews] = useState();
   const [percentage, setPercentage] = useState(0);
 
 
   const barInnerRef = useRef(null);
 
+
+  useEffect(() => {
+    const fetchReviewDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:4000/sitedata/reviews/${campaignname}`);
+        if (response.ok) {
+          const ReviewData = await response.json();
+          setUserReviews(ReviewData);
+          // console.log(userReviews);
+        } else {
+          console.error('Error fetching user details:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    fetchReviewDetails();
+  }, []);
 
   useEffect(() => {
     if (campaign) {
@@ -142,7 +120,7 @@ function CampaignDashboard() {
 
   return (
     <div style={{ backgroundColor: 'white', paddingTop: '6rem' }}>
-      {campaign ? (<>
+      {campaign&& userReviews ? (<>
         <div class="block-title text-center" style={{ marginBottom: '10rem' }}>
           <h4 class="servicesHeading ngolink" style={{}}>{campaign.campagainname}</h4>
           <div style={{ display: 'flex', justifyContent: "space-evenly" }}>

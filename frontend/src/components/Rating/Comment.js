@@ -7,7 +7,7 @@ const Comment = ({userDetails,username,ngoname,campagainname, users, comments, a
   return (
     <div className="discussion">
       <AddComment userDetails={userDetails} username={username} ngoname={ngoname} campagainname={campagainname} users={users} addComment={addComment} formData={formData} />
-      <AllComments comments={comments} users={users} showStars={true} />
+      <AllComments comments={comments} campagainname={campagainname} users={users} showStars={true} />
     </div>
   );
 };
