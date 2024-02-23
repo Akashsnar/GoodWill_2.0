@@ -15,10 +15,10 @@ const UserReviews = ({ data }) => {
                     <div className='DashReview'>
                         <div>
                         <p>
-                        <img src= '/assets/images/users/u0.png' alt={data.authorname} style={{height: "5rem"}} />
+                        <img src= '/assets/images/users/u0.png' alt={data.author} style={{height: "5rem"}} />
                         </p>
                         <p>
-                        {data.authorname}
+                        {data.author}
                         </p>
                         </div>
                         <div>
