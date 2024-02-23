@@ -6,6 +6,7 @@ const Review = require("../mongoSchema/reviewschema");
 const Contact = require("../mongoSchema/contactSchema");
 const Feedback = require("../mongoSchema/feedbackSchema");
 const Ngomodel = require("../mongoSchema/mongoschemango");
+const Donation = require("../mongoSchema/donationSchema");
 
 // Getting all
 router.get('/', async (req, res) => {
@@ -133,6 +134,14 @@ router.get('/contact', async (req, res) => {
   try {
     const contact = await Contact.find().sort({ _id: -1 });
     res.json(contact)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+router.get('/donations', async (req, res) => {
+  try {
+    const donation = await Donation.find().sort({ _id: -1 });
+    res.json(donation)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

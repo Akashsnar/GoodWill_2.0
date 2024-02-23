@@ -30,6 +30,7 @@ const Donation = () => {
   };
 
   return (
+<<<<<<< Updated upstream
     <div>
       <h2>Donation Form</h2>
       <form onSubmit={handleSubmit}>
@@ -95,6 +96,83 @@ const Donation = () => {
         <button type="submit">Submit Donation</button>
       </form>
     </div>
+=======
+    <div className='container'>
+            <div className="donation-form">
+                <h1 style={{ fontFamily: "cursive", textAlign: 'center' }} className='donate-heading'>Donate to Support Our Cause</h1>
+                <img src={imageUrl} alt="Donate" className="donation-image" />
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formData.username}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="ngoname">Ngoname:</label>
+                        <input
+                            type="text"
+                            id="ngonname"
+                            name="NgoName"
+                            value={formData.ngoname}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="campaign">Campaign Name:</label>
+                        <input
+                            type="text"
+                            id="campaign"
+                            name="campaignName"
+                            value={formData.campaignName}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="amount">Donation Amount:</label>
+                        <input
+                            type="number"
+                            id="amount"
+                            name="donationAmount"
+                            value={formData.donationAmount}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="phone">Phone Number:</label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value={formData.phone}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    <button type="submit" className="bg-blue-400">Submit Donation</button>
+                </form>
+            </div>
+        </div>
+>>>>>>> Stashed changes
   );
 };
 

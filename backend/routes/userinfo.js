@@ -4,12 +4,28 @@ const bodyparser = require("body-parser");
 const { urlencoded } = require("body-parser");
 const User = require("../mongoSchema/userdetails");
 const Ngomodel = require("../mongoSchema/mongoschemango");
+const Donation = require("../mongoSchema/donationSchema");
 const UserAuthLogin = require("../mongoSchema/userModel");
 const middleware = require("../middleware/middleware");
 const multer = require("multer");
 const path = require("path");
 const { log } = require("util");
 
+<<<<<<< Updated upstream
+=======
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // Destination folder for uploaded files
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+  },
+});
+
+// File upload middleware
+const upload = multer({ storage: storage });
+
+>>>>>>> Stashed changes
 router.get("/:name", async (req, res, next) => {
   try {
     const name = req.params.name;
@@ -23,7 +39,7 @@ router.get("/:name", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {  
+router.get("/", async (req, res, next) => {
   try {
     const User_details = await User.find();
     res.json(User_details);
@@ -32,6 +48,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+<<<<<<< Updated upstream
 
 
 
@@ -75,10 +92,56 @@ router.get("/", async(req, res, next) => {
             gender:payload.gender,
             details:payload.details
         });
+=======
+// router.post("/", async (req, res, next) => {
+//   const payload = req.body;
+//   console.log("new mongo",payload);
+//   const UserAuthEmail = payload.UserloginEmail;
+//   try {
+//      const name=req.params.name;
+//     //  console.log(name);
+//      const regex = new RegExp(name, 'i');
+//      const User_details = await User.find({ name : regex});
+//      console.log(User_details[0]);
+//      res.json(User_details[0])
+//    } catch (err) {
+//      res.status(500).json({ message: err.message })
+//    }
+//  })
 
-        await user.save();
-        res.status(201).json({ message: 'User created successfully', user });
+router.post("/", upload.single("image"), async (req, res, next) => {
+  //  try {
+  //     const User_details = await User.find().sort({ _id: -1 });
+  //     res.json(User_details)
+  //   } catch (err) {
+  //     res.status(500).json({ message: err.message })
+  //   }.
+  const payload = req.body;
+  console.log(payload);
+  console.log(req.file);
+  const userExists = await UserAuthLogin.findOne({
+    email: payload.UserloginEmail,
+  });
+  const userid = userExists._id;
+  let user = await User.findOne({ Id: userid });
+  try {
+    if (!user) {
+      user = new User({
+        Id: userExists._id,
+        name: payload.name,
+        Email: payload.email,
+        profilePic: req.file.filename,
+        phone: payload.phone,
+        dob: payload.dob,
+        gender: payload.gender,
+        details: payload.details,
+      });
+>>>>>>> Stashed changes
+
+      await user.save();
+      res.status(201).json({ message: "User created successfully", user });
     } else {
+<<<<<<< Updated upstream
       
       user.name=payload.name,
       user.profilePic=payload.image,
@@ -87,10 +150,20 @@ router.get("/", async(req, res, next) => {
       user.dob=payload.dob,
       user.gender=payload.gender,
       user.details=payload.details
+=======
+      (user.name = payload.name),
+        (user.profilePic = req.file.filename),
+        (user.Email = payload.Email),
+        (user.phone = payload.phone),
+        (user.dob = payload.dob),
+        (user.gender = payload.gender),
+        (user.details = payload.details);
+>>>>>>> Stashed changes
 
-        await user.save();
-        res.json({ message: 'User details updated successfully', user });
+      await user.save();
+      res.json({ message: "User details updated successfully", user });
     }
+<<<<<<< Updated upstream
 } catch (err) {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -108,6 +181,12 @@ router.get("/", async(req, res, next) => {
 
 
  
+=======
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+>>>>>>> Stashed changes
 
   // const userExists = await UserAuthLogin.findOne({ email: UserAuthEmail });
   // if (!userExists) {
@@ -247,7 +326,15 @@ router.post("/donation", async (req, res) => {
   console.log(req.body);
   const { username, NgoName, campaignName, donationAmount, email, phone } =
     req.body;
-
+  try {
+    const DonationData = new Donation(req.body);
+    console.log(DonationData);
+    await DonationData.save();
+    res.status(200).json({ message: "Form data submitted successfully" });
+  } catch (error) {
+    console.error("Error submitting form data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
   const ngos = await Ngomodel.findOne({
     ngoname: NgoName,
     campagainname: campaignName,
