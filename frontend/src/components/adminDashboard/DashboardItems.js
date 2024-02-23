@@ -55,7 +55,7 @@ function DashboardItems() {
                   title="Feedbacks"
                 />
               </Link>
-              <Link to="/adminDashboard">
+              {/* <Link to="/adminDashboard">
                 <DashboardItem
                   iconClass="fa-blog"
                   bgColor="#FFB54D"
@@ -63,7 +63,7 @@ function DashboardItems() {
                   count="8"
                   title="Blog"
                 />
-              </Link>
+              </Link> */}
               {/* <Link to="/adminDashboard/ReportsTable">
                 <DashboardItem
                   iconClass="fa-info-circle"

@@ -35,14 +35,14 @@ console.log(name);
   const imageUrl = "https://img.freepik.com/premium-vector/money-charity-donation-illustration_181313-1014.jpg";
 
   return (
-    <div className='container'>
+    <div className='donationcontainer'>
             <div className="donation-form">
                 <h1 style={{ fontFamily: "cursive", textAlign: 'center' }} className='donate-heading'>Donate to Support Our Cause</h1>
                 <img src={imageUrl} alt="Donate" className="donation-image" />
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
-                        <label htmlFor="username">Username:</label>
-                        <input
+                        <label className="donation_label" htmlFor="username">Username:</label>
+                        <input className="donation_input"
                             type="text"
                             id="username"
                             name="username"
@@ -52,8 +52,8 @@ console.log(name);
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="username">Ngoname:</label>
-                        <input
+                        <label className="donation_label" htmlFor="username">Ngoname:</label>
+                        <input className="donation_input"
                             type="text"
                             id="ngonname"
                             name="NgoName"
@@ -63,8 +63,8 @@ console.log(name);
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="campaign">Campaign Name:</label>
-                        <input
+                        <label className="donation_label" htmlFor="campaign">Campaign Name:</label>
+                        <input className="donation_input"
                             type="text"
                             id="campaign"
                             name="campaignName"
@@ -74,8 +74,8 @@ console.log(name);
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="amount">Donation Amount:</label>
-                        <input
+                        <label className="donation_label" htmlFor="amount">Donation Amount:</label>
+                        <input className="donation_input"
                             type="number"
                             id="amount"
                             name="donationAmount"
@@ -85,8 +85,8 @@ console.log(name);
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="email">Email:</label>
-                        <input
+                        <label className="donation_label" htmlFor="email">Email:</label>
+                        <input className="donation_input"
                             type="email"
                             id="email"
                             name="email"
@@ -96,8 +96,8 @@ console.log(name);
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="phone">Phone Number:</label>
-                        <input
+                        <label className="donation_label" htmlFor="phone">Phone Number:</label>
+                        <input className="donation_input"
                             type="tel"
                             id="phone"
                             name="phone"
@@ -106,7 +106,7 @@ console.log(name);
                             required
                         />
                     </div>
-                    <button type="submit" className="bg-blue-400">Submit Donation</button>
+                    <button type="submit" className="bg-blue-400 donation_btn">Submit Donation</button>
                 </form>
             </div>
         </div>
