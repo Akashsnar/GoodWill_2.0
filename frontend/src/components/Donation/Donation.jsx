@@ -57,7 +57,7 @@ console.log(name);
                             type="text"
                             id="ngonname"
                             name="NgoName"
-                            value={formData.username}
+                            value={formData.NgoName}
                             onChange={handleChange}
                             required
                         />

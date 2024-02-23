@@ -112,8 +112,10 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
                                         borderRadius: "50%",
                                       }}
                                     />
-                                  ) : column.id === "campagain_name" ? (
+                                  ) : column.id === "name" ? (
                                     <Link to={`/userprofile/${value}`}>{value}</Link>
+                                  ) :column.id === "campagain_name" ? (
+                                    <Link to={`/Ngo_dashboard/${value}`}>{value}</Link>
                                   ) : column.format &&
                                     typeof value === "number" ? (
                                     column.format(value)
