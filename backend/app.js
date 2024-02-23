@@ -168,6 +168,11 @@ app.post("/deleteUser", async (req, res) => {
 });
 
 
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
 const Feedback = require("./mongoSchema/feedbackSchema");
 app.post("/deleteFeedback", async (req, res) => {
   const id = req.body.id;
@@ -183,6 +188,7 @@ app.post("/deleteFeedback", async (req, res) => {
 });
 
 const Contact = require("./mongoSchema/contactSchema");
+const Donation = require("./mongoSchema/donationschema.js");
 app.post("/deleteMessage", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -201,6 +207,18 @@ app.post("/deleteReview", async (req, res) => {
 
   try {
     await reviewschema.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteDonation", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Donation.findByIdAndDelete(id);
     res.status(200).json({ message: "Deletion successful" });
   } catch (err) {
     console.error(err);

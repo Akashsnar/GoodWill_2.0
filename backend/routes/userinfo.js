@@ -9,6 +9,7 @@ const middleware = require("../middleware/middleware");
 const multer = require("multer");
 const path = require("path");
 const { log } = require("util");
+const Donation = require("../mongoSchema/donationschema");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -254,11 +255,52 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// router.post("/donation", async (req, res) => {
+//   console.log(req.body);
+//   const { username, NgoName, campaignName, donationAmount, email, phone } =
+//     req.body;
+
+//   const ngos = await Ngomodel.findOne({
+//     ngoname: NgoName,
+//     campagainname: campaignName,
+//   });
+
+//   if (ngos) {
+//     // Document exists, update the goal field
+//     await Ngomodel.updateOne(
+//       {
+//         ngoname: NgoName,
+//         campagainname: campaignName,
+//       },
+//       {
+//         $set: {
+//           raised: ngos.raised + parseInt(donationAmount),
+//         },
+//       }
+//     );
+//   } else console.log("NO such ngo is present");
+
+//   const getngo = await Ngomodel.findOne({
+//     ngoname: NgoName,
+//     campagainname: campaignName,
+//   });
+//   console.log(getngo);
+// });
+
+
 router.post("/donation", async (req, res) => {
   console.log(req.body);
   const { username, NgoName, campaignName, donationAmount, email, phone } =
     req.body;
-
+  try {
+    const DonationData = new Donation(req.body);
+    console.log(DonationData);
+    await DonationData.save();
+    res.status(200).json({ message: "Form data submitted successfully" });
+  } catch (error) {
+    console.error("Error submitting form data:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
   const ngos = await Ngomodel.findOne({
     ngoname: NgoName,
     campagainname: campaignName,
@@ -285,5 +327,6 @@ router.post("/donation", async (req, res) => {
   });
   console.log(getngo);
 });
+
 
 module.exports = router;

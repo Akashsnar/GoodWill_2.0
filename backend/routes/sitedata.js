@@ -6,6 +6,8 @@ const Review = require("../mongoSchema/reviewschema");
 const Contact = require("../mongoSchema/contactSchema");
 const Feedback = require("../mongoSchema/feedbackSchema");
 const Ngomodel = require("../mongoSchema/mongoschemango");
+const Donation = require("../mongoSchema/donationschema");
+
 
 // Getting all
 router.get('/', async (req, res) => {
@@ -137,6 +139,18 @@ router.get('/contact', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+
+router.get('/donations', async (req, res) => {
+  try {
+
+    const donation = await Donation.find().sort({ _id: -1 });
+    console.log("donation data->",donation);
+    res.json(donation)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 
 
 router.get("/campaign/:name", async(req, res, next) => {
@@ -278,6 +292,7 @@ router.patch('/:id', getUser, async (req, res) => {
   }
 })
 
+
 // Deleting One
 router.delete('/:id', getUser, async (req, res) => {
   try {
@@ -315,6 +330,7 @@ router.get('/reviews/:campaignname', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+
 
 
 module.exports = router
