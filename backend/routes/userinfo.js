@@ -13,14 +13,13 @@ const Donation = require("../mongoSchema/donationschema");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Destination folder for uploaded files
+    cb(null, 'uploads/'); 
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname)); // Unique file name
+    cb(null, Date.now() + path.extname(file.originalname)); 
   }
 });
 
-// File upload middleware
 const upload = multer({ storage: storage });
 
 

@@ -140,6 +140,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                 </Link>
                 <Link
                   to={`/donation/${name}`}
+                  state={{ngodata:data, userDetails: userDetails}}
                   className="thm-btn"
                   style={{
                     height: "2rem",

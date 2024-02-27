@@ -14,8 +14,6 @@ const blogRoute = require("./routes/blog");
 const cors = require("cors");
 const { config } = require("dotenv");
 const fs = require('fs');
-
-
 config();
 // app.use(express.static("uploads"));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
@@ -31,9 +29,15 @@ app.use(
     credentials: true,
   })
 );
+const csrf = require('csurf');
+const csrfprotection=csrf({ cookie: true });
+
+const logStream = fs.createWriteStream(`28_log.txt`, { flags: 'a' });
+app.use(morgan('combined', { stream: logStream }));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(express.static("public"));
 app.use(
   express.urlencoded({
@@ -54,18 +58,19 @@ var upload = multer({
     },
   }),
 });
+
+
 const UserRoute = require("./routes/UserRoute.js");
 app.use("/api/users", UserRoute);
 const Group_no = 'Group_28'; 
-const logStream = fs.createWriteStream(`${Group_no}_log.txt`, { flags: 'a' });
-app.use(morgan('combined', { stream: logStream }));
+
 const port = 4000;
 
-app.post("/user", async (req, res) => {
+app.post("/user", csrfprotection, async (req, res) => {
   console.log("/user running");
   try {
     let sear = req.body.payload;
-    const rating = req.body.payloadr;
+    const rating = req.body.payload;
     console.log(rating);
     if (sear == undefined) {
       sear = "";
@@ -168,10 +173,6 @@ app.post("/deleteUser", async (req, res) => {
 });
 
 
-app.use(function (err, req, res, next) {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
 
 const Feedback = require("./mongoSchema/feedbackSchema");
 app.post("/deleteFeedback", async (req, res) => {
@@ -225,3 +226,9 @@ app.post("/deleteDonation", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+

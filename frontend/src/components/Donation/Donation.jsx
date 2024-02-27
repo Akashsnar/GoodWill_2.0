@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { donationinfo } from "../../redux/actions/useractions";
 import { donationInfo } from "../../services/authService";
-import { useParams } from "react-router-dom";
+import { useParams,useLocation } from "react-router-dom";
 import './styles.css';
 
 const Donation = () => {
   const { name } = useParams();
+  const {state} = useLocation()
+  const ngodetail= state.ngodata;
+  const userDetails=state.userDetails;
+  console.log("Donation", ngodetail, userDetails);
+  
+
 console.log(name);
   // State to manage form data
   const [formData, setFormData] = useState({
-    username: "",
-    NgoName: "",
-    campaignName: "",
+    username: userDetails.name,
+    NgoName: ngodetail.ngoname,
+    campaignName: ngodetail.campagainname,
     donationAmount: "",
     email: "",
     phone: "",
@@ -40,39 +46,8 @@ console.log(name);
                 <h1 style={{ fontFamily: "cursive", textAlign: 'center' }} className='donate-heading'>Donate to Support Our Cause</h1>
                 <img src={imageUrl} alt="Donate" className="donation-image" />
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label className="donation_label" htmlFor="username">Username:</label>
-                        <input className="donation_input"
-                            type="text"
-                            id="username"
-                            name="username"
-                            value={formData.username}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label className="donation_label" htmlFor="username">Ngoname:</label>
-                        <input className="donation_input"
-                            type="text"
-                            id="ngonname"
-                            name="NgoName"
-                            value={formData.NgoName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label className="donation_label" htmlFor="campaign">Campaign Name:</label>
-                        <input className="donation_input"
-                            type="text"
-                            id="campaign"
-                            name="campaignName"
-                            value={formData.campaignName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
+                    
+                  
                     <div className="form-group">
                         <label className="donation_label" htmlFor="amount">Donation Amount:</label>
                         <input className="donation_input"
