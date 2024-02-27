@@ -23,6 +23,7 @@ function Userhome() {
 
 
   const props = useParams();
+const [userdata, setuserdata] = useState(null)
 
   const [userDetails, setuserDetails] = useState({
     profilePic: 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg',
@@ -41,7 +42,9 @@ function Userhome() {
       console.log(userid);
       const response = await axios.get(`http://localhost:4000/sitedata/userdetail/${userid}`);
       console.log("data fetched successfully");
-      console.log(response);
+      setuserdata(response.data)
+      
+      // console.log(response, userdata);
 
 
       if (response.data) {
@@ -160,7 +163,7 @@ function Userhome() {
         <div className="col-md-9">
           <div className="profile-content">
             <h2 className="NgosTitle">Our NGOs</h2>
-            <GetUserNGO username={name} userDetails={userDetails}/>
+            <GetUserNGO username={name} userDetails={userdata}/>
           </div>
         </div>
       </div>

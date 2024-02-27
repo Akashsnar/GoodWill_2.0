@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { donationinfo } from "../../redux/actions/useractions";
 import { donationInfo } from "../../services/authService";
 import { useParams,useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 import './styles.css';
 
 const Donation = () => {
@@ -21,6 +22,7 @@ console.log(name);
     donationAmount: "",
     email: "",
     phone: "",
+    userid:userDetails._id
   });
 
   // Handle input changes
@@ -34,8 +36,28 @@ console.log(name);
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
-    await donationInfo(formData);
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes,i am happy to donate!"
+      }).then( async (result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Success!",
+            text: "Your money donated.",
+            icon: "success"
+          });
+           console.log("Form submitted with data:", formData);
+         await donationInfo(formData);
+        }
+      });
+    
+ 
+   
   };
 
   const imageUrl = "https://img.freepik.com/premium-vector/money-charity-donation-illustration_181313-1014.jpg";

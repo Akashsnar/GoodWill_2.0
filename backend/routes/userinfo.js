@@ -289,7 +289,7 @@ router.post("/", async (req, res, next) => {
 
 router.post("/donation", async (req, res) => {
   console.log(req.body);
-  const { username, NgoName, campaignName, donationAmount, email, phone } =
+  const { username, NgoName, campaignName, donationAmount, email, phone,userid } =
     req.body;
   try {
     const DonationData = new Donation(req.body);
@@ -300,6 +300,8 @@ router.post("/donation", async (req, res) => {
     console.error("Error submitting form data:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
+
+
   const ngos = await Ngomodel.findOne({
     ngoname: NgoName,
     campagainname: campaignName,
@@ -319,6 +321,32 @@ router.post("/donation", async (req, res) => {
       }
     );
   } else console.log("NO such ngo is present");
+
+  const user_who_donate = await User.findById(req.body.userid);
+
+  if (!user_who_donate.donatetmoney) {
+    user_who_donate.donatetmoney = [];
+}
+
+  const newDonation = {
+    ngo:ngos.ngoname,
+    campaignname: ngos.campagainname,
+    amount: parseInt(donationAmount),
+};
+
+  if(user_who_donate){
+   
+    user_who_donate.donatetmoney.push(newDonation);
+    user_who_donate.save()
+    .then(savedUser => {
+        console.log('User updated with new donation:', savedUser);
+    })
+    .catch(err => {
+        console.error('Error saving updated user:', err);
+    });
+
+  }else console.log("NO such user is found");
+
 
   const getngo = await Ngomodel.findOne({
     ngoname: NgoName,
