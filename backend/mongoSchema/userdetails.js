@@ -13,12 +13,6 @@ const UserSchema = new Schema({
     dob: {type: String, trim: true},
     gender: {type: String, trim: true},
     details: {type: String, trim: true,  default: "No detail"},
-    donatetmoney: [{
-        ngo: { type: String },
-        campaignname:{type: String},
-        amount: { type: Number},
-       
-    }]
 
 },{timestamps: true});
 

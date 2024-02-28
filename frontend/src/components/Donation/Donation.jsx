@@ -17,12 +17,13 @@ console.log(name);
   // State to manage form data
   const [formData, setFormData] = useState({
     username: userDetails.name,
+    userid:userDetails._id,
     NgoName: ngodetail.ngoname,
     campaignName: ngodetail.campagainname,
+    campaignid:ngodetail._id,
     donationAmount: "",
     email: "",
     phone: "",
-    userid:userDetails._id
   });
 
   // Handle input changes

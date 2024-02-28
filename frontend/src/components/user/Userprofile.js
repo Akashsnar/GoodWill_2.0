@@ -29,6 +29,30 @@ function Userprofile() {
 
     fetchUserDetails();
   }, [username]);
+
+
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:4000/userinfo/donation/${username}`
+        );
+        if (response.ok) {
+          const userData = await response.json();
+          console.log("userdata", userData);
+          setUser(userData);
+        } else {
+          console.error("Error fetching user details:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [username]);
+
   // console.log(user);
   if (user) {
     console.log(user.name);
