@@ -75,7 +75,7 @@ function Userhome() {
   return (
     <div className="body">
       <div className="row profile">
-        {/* <div className="col-md-3">
+        <div className="col-md-3">
           <div className="col-md-3" style={{ position: "fixed" }}>
             <div className="profile-sidebar">
               <div className="profile-userpic">
@@ -154,9 +154,9 @@ function Userhome() {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
-
+{/* 
 <div class="dark:bg-zinc-800">
 
   <header>
@@ -631,7 +631,7 @@ function Userhome() {
   </main>
   <footer></footer>
 
-</div>
+</div> */}
 
 
         <div className="col-md-9">
