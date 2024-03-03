@@ -109,3 +109,35 @@ export const donationInfo = async (formData) => {
     throw new Error(message);
   }
 };
+
+//Events
+export const AddEvents = async (formData) => {
+  try {
+    console.log(formData);
+    await axios.post(`${Backend_URL}/sitedata/events`, formData, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    // toast.error(message);
+    throw new Error(message);
+  }
+};
+export const GetEvents = async () => {
+  try {
+    const response = await axios.get(`${Backend_URL}/sitedata/events`);
+    // console.log(response);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    throw new Error(message);
+  }
+};
