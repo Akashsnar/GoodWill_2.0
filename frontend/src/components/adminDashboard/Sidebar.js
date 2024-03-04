@@ -81,7 +81,13 @@ const Sidebar = () => {
                 <Link to="/adminDashboard/NGOsTable" >NGOs Table</Link>
               </li>
               <li>
+                <Link to="/adminDashboard/NGOsCampaign" >NGOs Campaign</Link>
+              </li>
+              <li>
                 <Link to="/adminDashboard/UserTable" >Users Table</Link>
+              </li>
+              <li>
+                <Link to="/adminDashboard/EventTable" >Event Table</Link>
               </li>
               <li>
                 <Link to="/adminDashboard/ReviewsTable" >Reviews Table</Link>

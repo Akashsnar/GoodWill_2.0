@@ -48,7 +48,6 @@ router.get("/allUsers", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.get("/userlength", async (req, res) => {
   try {
     const user = await User.find();
@@ -135,6 +134,7 @@ router.get("/contact", async (req, res) => {
   }
 });
 
+
 router.get("/donations", async (req, res) => {
   try {
     const donation = await Donation.find().sort({ _id: -1 });
@@ -157,7 +157,6 @@ router.get("/campaign/:name", async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 // Getting One use detail
 router.get("/userdetail/:userid", async (req, res) => {
@@ -243,7 +242,7 @@ router.post("/ngo_details", async (req, res) => {
       //   res.redirect("/users");
     });
 
-    res.status(201).json({ message: "Uploaded Succesfully" });
+    res.status(201).json({ message: "Uploaded Successfully" });
   } catch (err) {
     console.error(err); // Log the error to the console for debugging
     res
@@ -306,12 +305,14 @@ router.get("/reviews/:campaignname", async (req, res) => {
   }
 });
 
-router.post("/getevents", expressAsyncHandler(async (req, res) => {
+router.post(
+  "/getevents",
+  expressAsyncHandler(async (req, res) => {
     console.log("hello");
-    const {NgoName} = req.body;
+    const { NgoName } = req.body;
     console.log(NgoName);
     const eventdetails = await Events.find({
-      NgoName
+      NgoName,
     });
 
     if (eventdetails) {
@@ -325,7 +326,15 @@ router.post("/getevents", expressAsyncHandler(async (req, res) => {
 router.post(
   "/events",
   expressAsyncHandler(async (req, res) => {
-    const { NgoName,campaignName, EventName, Location, Duration, Details, DateRange } = req.body;
+    const {
+      NgoName,
+      campaignName,
+      EventName,
+      Location,
+      Duration,
+      Details,
+      DateRange,
+    } = req.body;
     const { startDate, endDate } = DateRange;
     if (!NgoName || !EventName || !Location || !Duration || !DateRange) {
       res.status(400);
@@ -373,6 +382,7 @@ router.get("/:ngoname", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 
 module.exports = router;
