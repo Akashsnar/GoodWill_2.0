@@ -5,9 +5,10 @@ import { selectName, selectEmail } from "../../redux/features/auth/authSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 
-
 const Campaign = ({ data, mode, username, userDetails }) => {
-  console.log("userNgo", userDetails);
+  console.log("user detail", userDetails);
+  console.log("Ngo detail", data);
+
   const dispatch = useDispatch();
   const name = useSelector(selectName);
   const [percentage, setPercentage] = useState(0);
@@ -37,7 +38,6 @@ const Campaign = ({ data, mode, username, userDetails }) => {
   };
 
   const handleDelete = async (deleteId) => {
-
     try {
       const response = await fetch("http://localhost:4000/deleteNGO", {
         method: "POST",
@@ -56,8 +56,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
     } catch (error) {
       console.error("Error:", error);
     }
-
-  }
+  };
   return (
     <div>
       <section class="feature-one features-service">
@@ -98,35 +97,106 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                 </div>
               </div>
             </div>
-          {mode !== "ngodash" ? (
-          <div className="popular-causes__progress UserNgoProgress">
-            <div className="bar">
-              <div
-                className="bar-inner count-bar"
-                ref={barInnerRef}
-                style={{ width: `${percentage}%` }}
-              >
-                <div className="count-text">{percentage}%</div>
+            {mode !== "ngodash" ? (
+              <div className="popular-causes__progress UserNgoProgress">
+                <div className="bar">
+                  <div
+                    className="bar-inner count-bar"
+                    ref={barInnerRef}
+                    style={{ width: `${percentage}%` }}
+                  >
+                    <div className="count-text">{percentage}%</div>
+                  </div>
+                </div>
+                <div className="popular-causes__progress UserNgoProgress">
+                  <div
+                    className="popular-causes__goals"
+                    style={{ marginBottom: "0", paddingBottom: "0" }}
+                  >
+                    <p>
+                      <span>${data.raised}</span> Raised
+                    </p>
+                    <p>
+                      <span>${data.goal}</span> Goal
+                    </p>
+                  </div>
+                  <div
+                    className="text-center more-post__btn Ngobtn"
+                    style={{ marginTop: "1rem", display: "flex" }}
+                  >
+                    <Link
+                      to="/givereview"
+                      state={{
+                        ngodata: data,
+                        username: username,
+                        userDetails: userDetails,
+                      }}
+                      className="thm-btn"
+                      style={{
+                        height: "2rem",
+                        width: "10rem",
+                        margin: "0px",
+                        marginBottom: "1rem",
+                        padding: "10px",
+                        textAlign: "center",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      {" "}
+                      Give Review
+                    </Link>
+                    <Link
+                      to="/getevents"
+                      state={{
+                        ngodata: data
+                      }}
+                      className="thm-btn"
+                      style={{
+                        height: "2rem",
+                        width: "10rem",
+                        margin: "0px",
+                        marginBottom: "1rem",
+                        padding: "10px",
+                        textAlign: "center",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      {" "}
+                      Show Event
+                    </Link>
+                    <Link
+                      to={`/donation/${name}`}
+                      state={{ ngodata: data, userDetails: userDetails }}
+                      className="thm-btn"
+                      style={{
+                        height: "2rem",
+                        width: "10rem",
+                        margin: "0px",
+                        marginBottom: "1rem",
+                        padding: "10px",
+                        textAlign: "center",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      Donate
+                    </Link>
+                  </div>
+                  <p class="NGOReport" style={{ textAlign: "right" }}>
+                    Report this NGO{" "}
+                    <i
+                      id={data.name}
+                      class="fa-solid fa-thumbs-down thumbsdown"
+                      onClick={(e) => {
+                        reportthis(e);
+                      }}
+                    ></i>
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="popular-causes__progress UserNgoProgress">
-              <div
-                className="popular-causes__goals"
-                style={{ marginBottom: "0", paddingBottom: "0" }}
-              >
-                <p>
-                  <span>${data.raised}</span> Raised
-                </p>
-                <p>
-                  <span>${data.goal}</span> Goal
-                </p>
-              </div>
-              <div
-                className="text-center more-post__btn Ngobtn"
-                style={{ marginTop: "1rem", display: "flex" }}
-              >
-                <Link
-                  to='/givereview' state={{ ngodata: data, username: username, userDetails: userDetails }}
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                {" "}
+                <button
                   className="thm-btn"
                   style={{
                     height: "2rem",
@@ -136,11 +206,19 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                     padding: "10px",
                     textAlign: "center",
                     lineHeight: "10px",
-                  }} > Give Review
-                </Link>
+                  }}
+                  onClick={() => handleDelete(data._id)}
+                >
+                  {" "}
+                  Delete{" "}
+                </button>
                 <Link
-                  to={`/donation/${name}`}
-                  state={{ngodata:data, userDetails: userDetails}}
+                  to="/events"
+                  state={{
+                    ngodata: data,
+                    username: username,
+                    userDetails: userDetails,
+                  }}
                   className="thm-btn"
                   style={{
                     height: "2rem",
@@ -152,38 +230,15 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                     lineHeight: "10px",
                   }}
                 >
-                  Donate
+                  {" "}
+                  Add Event
                 </Link>
               </div>
-              <p class="NGOReport" style={{ textAlign: "right" }}>
-                Report this NGO{" "}
-                <i
-                  id={data.name}
-                  class="fa-solid fa-thumbs-down thumbsdown"
-                  onClick={(e) => {
-                    reportthis(e);
-                  }}
-                ></i>
-              </p>
-            </div>
-          </div>) : (<div style={{ textAlign: 'center' }}>  <button className="thm-btn"
-            style={{
-              height: "2rem",
-              width: "10rem",
-              margin: "0px",
-              marginBottom: "1rem",
-              padding: "10px",
-              textAlign: "center",
-              lineHeight: "10px",
-            }} onClick={() => handleDelete(data._id)}> Delete </button>
-          </div>)}
-
-
-
+            )}
+          </div>
         </div>
-      </div>
-    </section>
-    </div >
+      </section>
+    </div>
   );
 };
 

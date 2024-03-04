@@ -22,7 +22,7 @@ import ReviewsTable from "./components/adminDashboard/tables/ReviewsTable";
 import MessagesTable from "./components/adminDashboard/tables/MessagesTable";
 import DonationsTable from "./components/adminDashboard/tables/DonationsTable";
 import DonationGraphTable from "./components/adminDashboard/DonationGraphTable.js";
-import NgosAndUserChart from './components/adminDashboard/NgosAndUserChart.js';
+import NgosAndUserChart from "./components/adminDashboard/NgosAndUserChart.js";
 import Feedback from "./components/feedback/FeedbackN";
 import Home from "./blogs/Home";
 import AddBlog from "./blogs/AddBlog.js";
@@ -36,7 +36,10 @@ import Became_volunteer from "./components/Services/forms/became_volunteer.js";
 import UserProfile from "./components/user/Userprofile.js";
 import Campaign from "./components/NGO/Campaign_Dashboard.js";
 import NgoProfile from "./components/NgoProfile/NgoProfile.js";
-import './style.css'
+import "./style.css";
+import AddEvents from "./Event/AddEvents.jsx";
+import ShowEvent from "./Event/ShowEvent.js";
+
 
 axios.defaults.withCredentials = true;
 
@@ -59,10 +62,9 @@ function App() {
           <Routes forceRefresh={true}>
             <Route exact path="/" element={<Landing />} />
             <Route exact path="/login" element={<LoginContainer />} />
-
             {/*hide*/}
-             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
-             <Route exact path="/givereview" element={<UserReviews />} />
+            <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
+            <Route exact path="/givereview" element={<UserReviews />} />
             {/*hide*/}
             <Route exact path="/campaign" element={<Campaign />} />
             <Route exact path="/services" element={<SerVices />} />
@@ -71,12 +73,18 @@ function App() {
             <Route exact path="/ngo" element={<NGO_page />} />
             <Route exact path="/userdetails" element={<UserdetailsForm />} />
             <Route exact path="/donation/:name" element={<Donation />} />
-            <Route exact path="/Ngo_dashboard" element={<NGO_Dashboard />} />{" "} {/*hide*/}
+            <Route
+              exact
+              path="/Ngo_dashboard"
+              element={<NGO_Dashboard />}
+            />{" "}
+            {/*hide*/}
             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
-            <Route exact path="/givereview" element={<UserReviews />} />{" "}{/*hide*/}
+            <Route exact path="/givereview" element={<UserReviews />} />{" "}
+            {/*hide*/}
             <Route exact path="/services" element={<SerVices />} />
-            <Route exact path="/ngo_page/:id" element={<NgoProfile/>} />
-            <Route path="/Ngo_dashboard/:campaignname" element={<Campaign/>} />
+            <Route exact path="/ngo_page/:id" element={<NgoProfile />} />
+            <Route path="/Ngo_dashboard/:campaignname" element={<Campaign />} />
             <Route
               exact
               path="/services/volunteer"
@@ -95,8 +103,14 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/adminDashboard" element={<MainDashboard />} />
           <Route path="/adminDashboard/UserTable" element={<UserTable />} />
-          <Route path="/adminDashboard/Graph" element={<DonationGraphTable />} />
-          <Route path="/adminDashboard/PieChart" element={<NgosAndUserChart />} />
+          <Route
+            path="/adminDashboard/Graph"
+            element={<DonationGraphTable />}
+          />
+          <Route
+            path="/adminDashboard/PieChart"
+            element={<NgosAndUserChart />}
+          />
           <Route
             path="/adminDashboard/FeedbackTable"
             element={<FeedbackTable />}
@@ -114,7 +128,14 @@ function App() {
             element={<MessagesTable />}
           />
           <Route path="/adminDashboard/NGOsTable" element={<NGOsTable />} />
-          <Route exact path="/userprofile/:username" element={<UserProfile />} />
+          <Route
+            exact
+            path="/userprofile/:username"
+            element={<UserProfile />}
+          />
+
+          <Route path="/events" element={<AddEvents />} />
+          <Route path="/getevents" element={<ShowEvent />} />
         </Routes>
       </div>
     </Router>
