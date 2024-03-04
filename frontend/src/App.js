@@ -33,6 +33,7 @@ import Layout from "./blogs/Layout.js";
 import Became_volunteer from "./components/Services/forms/became_volunteer.js";
 import UserProfile from "./components/user/Userprofile.js";
 import Campaign from "./components/NGO/Campaign_Dashboard.js";
+import ChatPage from "./components/ChatPage/ChatPage.js";
 
 axios.defaults.withCredentials = true;
 
@@ -105,6 +106,7 @@ function App() {
             element={<MessagesTable />}
           />
           <Route path="/adminDashboard/NGOsTable" element={<NGOsTable />} />
+          <Route path="/chatapp" element={<ChatPage />} />
         </Routes>
       </div>
     </Router>
