@@ -87,6 +87,16 @@ const NavBar = () => {
               <Link
                 class="nav-link customTextColor paddingR_custom paddingL_custom font_custom "
                 aria-current="page"
+                to="/chatapp"
+              >
+                <i class="fas fa-comment-dots"></i>{" "}
+                <span class="displayNone">Home</span>
+              </Link>
+            </li>
+            <li class="nav-item">
+              <Link
+                class="nav-link customTextColor paddingR_custom paddingL_custom font_custom "
+                aria-current="page"
                 to="/"
               >
                 <i class="fa fa-home pla1"></i>
