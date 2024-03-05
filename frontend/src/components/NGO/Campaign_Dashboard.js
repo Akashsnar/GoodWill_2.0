@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import UserDonations from './UserDonations';
 import UserReviews from './UserReview';
+import GraphCampaign from './GraphCampaign';
 import { useParams } from 'react-router-dom';
 
 // import NGO_Dashboard_form from './Ngo_DashboardForm';
@@ -9,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function CampaignDashboard() {
   console.log("hj");
   const { campaignname } = useParams();
-  console.log("cmapgain name",campaignname);
+  console.log("camapgain name",campaignname);
   const [campaign, setCampaign] = useState();
 
   useEffect(() => {
@@ -42,45 +43,45 @@ function CampaignDashboard() {
   const Email = useSelector((state) => state.email)
   console.log(Email)
 
-  const initialUserDonations = [
-    {
-      id: 1,
-      Username: "Swastik",
-      Donated: 5000,
-      profile: "/assets/images/users/u0.png"
-    }, {
-      id: 2,
-      Username: "Aakash",
-      Donated: 6000,
-      profile: "/assets/images/users/u1.png"
+  // const initialUserDonations = [
+  //   {
+  //     id: 1,
+  //     Username: "Swastik",
+  //     Donated: 5000,
+  //     profile: "/assets/images/users/u0.png"
+  //   }, {
+  //     id: 2,
+  //     Username: "Aakash",
+  //     Donated: 6000,
+  //     profile: "/assets/images/users/u1.png"
 
-    }, {
-      id: 3,
-      Username: "Stephen",
-      Donated: 2000,
-      profile: "/assets/images/users/u2.png"
-    },
-    {
-      id: 4,
-      Username: "Johnny",
-      Donated: 1500,
-      profile: "/assets/images/users/u0.png"
-    }
-    , {
-      id: 5,
-      Username: "Raj",
-      Donated: 3200,
-      profile: "/assets/images/users/u1.png"
-    }, {
-      id: 6,
-      Username: "Dhruv",
-      Donated: 4500,
-      profile: "/assets/images/users/u3.png"
-    }
-    // Add more campaigns as needed
-  ];
+  //   }, {
+  //     id: 3,
+  //     Username: "Stephen",
+  //     Donated: 2000,
+  //     profile: "/assets/images/users/u2.png"
+  //   },
+  //   {
+  //     id: 4,
+  //     Username: "Johnny",
+  //     Donated: 1500,
+  //     profile: "/assets/images/users/u0.png"
+  //   }
+  //   , {
+  //     id: 5,
+  //     Username: "Raj",
+  //     Donated: 3200,
+  //     profile: "/assets/images/users/u1.png"
+  //   }, {
+  //     id: 6,
+  //     Username: "Dhruv",
+  //     Donated: 4500,
+  //     profile: "/assets/images/users/u3.png"
+  //   }
+  //   // Add more campaigns as needed
+  // ];
   
-  const [userDonations, setUserDonations] = useState(initialUserDonations);
+  const [userDonations, setUserDonations] = useState();
   const [userReviews, setUserReviews] = useState();
   const [percentage, setPercentage] = useState(0);
 
@@ -106,6 +107,31 @@ function CampaignDashboard() {
 
     fetchReviewDetails();
   }, []);
+
+
+  useEffect(() => {
+    const fetchUserDonations = async () => {
+      try {
+        const response = await fetch('http://localhost:4000/sitedata/donationsCampaign', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({campaignname })
+        });
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const responseData = await response.json();
+        setUserDonations(responseData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchUserDonations();
+  }, []);
+
 
   useEffect(() => {
     if (campaign) {
@@ -204,6 +230,7 @@ function CampaignDashboard() {
           </section>
 
         </div>
+        <GraphCampaign CampaignName = {campaign.campagainname} />
 
         {/* <NGO_Dashboard_form Ngoname={Ngoname}/> */} </>) : (
         <p>Loading ...</p>

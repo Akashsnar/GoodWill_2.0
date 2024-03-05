@@ -37,14 +37,35 @@ const Campaign = ({ data, mode, username, userDetails }) => {
     console.log();
   };
 
-  const handleDelete = async (deleteId) => {
+  const handleClose = async (CloseId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteNGO", {
+      const response = await fetch("http://localhost:4000/sitedata/closecamp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: deleteId }),
+        body: JSON.stringify({ CloseId }),
+      });
+
+      console.log("Server response:", response);
+
+      if (!response.ok) {
+        console.error("Server error:", response.statusText);
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleOpen = async (OpenId) => {
+    try {
+      const response = await fetch("http://localhost:4000/sitedata/opencamp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ OpenId }),
       });
 
       console.log("Server response:", response);
@@ -223,7 +244,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
 
                 </div>
               </div>
-            ) : (
+            ) : data.status !== "closed" ? (
               <div style={{ textAlign: "center" }}>
                 {" "}
                 <button
@@ -237,10 +258,10 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                     textAlign: "center",
                     lineHeight: "10px",
                   }}
-                  onClick={() => handleDelete(data._id)}
+                  onClick={() => handleClose(data._id)}
                 >
                   {" "}
-                  Delete{" "}
+                  Close{" "}
                 </button>
                 <Link
                   to="/events"
@@ -264,6 +285,22 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                   Add Event
                 </Link>
               </div>
+            ): (
+              <button
+              className="thm-btn"
+              style={{
+                height: "2rem",
+                width: "10rem",
+                margin: "0px",
+                marginBottom: "1rem",
+                padding: "10px",
+                textAlign: "center",
+                lineHeight: "10px",
+              }}
+              onClick={() => handleOpen(data._id)}
+            >
+              Open
+            </button>
             )}
           </div>
         </div>

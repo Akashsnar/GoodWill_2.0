@@ -14,6 +14,7 @@ const ngoSchema = new Schema(
     category: String,
     goal: Number,
     raised: Number,
+    status: String,
     volunteers:  [{type: String}]
   },
   { timestamps: true }
