@@ -37,12 +37,12 @@ import Layout from "./blogs/Layout.js";
 import Became_volunteer from "./components/Services/forms/became_volunteer.js";
 import UserProfile from "./components/user/Userprofile.js";
 import Campaign from "./components/NGO/Campaign_Dashboard.js";
+import ChatPage from "./components/ChatPage/ChatPage.js";
 import NgoProfile from "./components/NgoProfile/NgoProfile.js";
 import "./style.css";
 import AddEvents from "./Event/AddEvents.jsx";
 import ShowEvent from "./Event/ShowEvent.js";
 import Eventpage from "./Event/Eventpage.js";
-
 
 axios.defaults.withCredentials = true;
 
@@ -132,6 +132,9 @@ function App() {
           />
           <Route path="/adminDashboard/NGOsCampaign" element={<NGOsCampaign />} />
           <Route path="/adminDashboard/NGOsTable" element={<NGOsTable />} />
+
+          <Route path="/chatapp" element={<ChatPage />} />
+
           <Route path="/adminDashboard/EventTable" element={<EventTable />} />
           <Route
             exact
@@ -142,6 +145,7 @@ function App() {
           <Route path="/getevents/user/:eventname" element={<Eventpage />} />
           <Route path="/events" element={<AddEvents />} />
           <Route path="/getevents" element={<ShowEvent />} />
+
         </Routes>
       </div>
     </Router>
