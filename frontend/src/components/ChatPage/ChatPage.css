@@ -159,8 +159,9 @@
 }
 
 .chat-window .chat-footer input {
-  height: 100%;
-  flex: 85%;
+  height: auto;
+  /* flex: 85%; */
+  width: 12rem;
   border: 0;
   padding: 0 0.7em;
   font-size: 1em;
@@ -172,11 +173,11 @@
 
 .chat-window .chat-footer button {
   border: 0;
-  display: grid;
-  place-items: center;
+position: absolute;
+top: 31.5rem;
+left: 52rem;
   cursor: pointer;
-  flex: 15%;
-  height: 100%;
+  height: auto;
   background: transparent;
   outline: none;
   font-size: 25px;

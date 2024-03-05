@@ -398,10 +398,23 @@ router.post(
   })
 );
 
-// router.post("/ngodetails/campns", async (req, res) => {
-//   const ngoname = req.body.ngoname;
-//   const status = req.body.status;
 
+
+router.post("/ngodetails/campns", async (req, res) => {
+  const ngoname = req.body.ngoname;
+  const status = req.body.status;
+
+  console.log(ngoname);
+  console.log(status)
+  try {
+    let query = { ngoname: ngoname, status: status };
+    const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
+    console.log(ngomodel);
+    res.json(ngomodel);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
   router.post("/user/volunteer", async (req, res) => {
     try {
