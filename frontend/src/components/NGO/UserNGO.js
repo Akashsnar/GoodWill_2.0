@@ -117,6 +117,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                     alt={data.name}
                     srcset=""
                     style={{ width: "25rem", height: "15rem" }}
+                    className="ml-3 rounded-4"
                   />
                 </div>
                 <div style={{ textAlign: "center" }}>

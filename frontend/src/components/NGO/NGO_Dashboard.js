@@ -12,6 +12,7 @@ function NGODashboard() {
   const [status, setStatus] = useState('ongoing'); // Default status is 'ongoing'
 
   const handleStatusChange = (newStatus) => {
+    // console.log(newStatus);
     setStatus(prevStatus => prevStatus === newStatus ? 'ongoing' : newStatus);
     // console.log(status);
   };
@@ -33,7 +34,7 @@ function NGODashboard() {
         </ul>
       </div>
 
-      <div>
+      <div className='ml-[8rem]'>
         <div className="block-title text-center">
           <h4 className="ngolink" style={{ marginBottom: "10px" }}>Ngoname</h4>
           <h2>Campaigns</h2>
