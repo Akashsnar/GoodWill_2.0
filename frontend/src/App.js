@@ -39,6 +39,7 @@ import NgoProfile from "./components/NgoProfile/NgoProfile.js";
 import "./style.css";
 import AddEvents from "./Event/AddEvents.jsx";
 import ShowEvent from "./Event/ShowEvent.js";
+import Eventpage from "./Event/Eventpage.js";
 
 
 axios.defaults.withCredentials = true;
@@ -134,6 +135,7 @@ function App() {
             element={<UserProfile />}
           />
 
+          <Route path="/getevents/user/:eventname" element={<Eventpage />} />
           <Route path="/events" element={<AddEvents />} />
           <Route path="/getevents" element={<ShowEvent />} />
         </Routes>
