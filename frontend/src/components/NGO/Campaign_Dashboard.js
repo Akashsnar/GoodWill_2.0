@@ -187,10 +187,10 @@ function CampaignDashboard() {
                   </div>
                   <div className="popular-causes__goals" style={{ marginBottom: "0", paddingBottom: "0" }}>
                     <p>
-                      <span>${campaign.raised}</span> Raised
+                      <span>Rs {campaign.raised}</span> Raised
                     </p>
                     <p>
-                      <span>${campaign.goal}</span> Goal
+                      <span>Rs{campaign.goal}</span> Goal
                     </p>
                   </div>
 
@@ -230,8 +230,9 @@ function CampaignDashboard() {
           </section>
 
         </div>
+        <center>
         <GraphCampaign CampaignName = {campaign.campagainname} />
-
+        </center>
         {/* <NGO_Dashboard_form Ngoname={Ngoname}/> */} </>) : (
         <p>Loading ...</p>
       )}

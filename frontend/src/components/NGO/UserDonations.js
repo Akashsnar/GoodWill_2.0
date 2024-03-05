@@ -24,10 +24,10 @@ const UserDonations = ({ data, goal }) => {
             </div>
             <div className="popular-causes__goals" style={{marginBottom: "0" , paddingBottom: "0"}}>
               <p>
-                <span>${data.donationAmount}</span> Raised
+                <span>Rs {data.donationAmount}</span> Raised
               </p>
               <p>
-                <span>${goal}</span> Goal
+                <span>Rs {goal}</span> Goal
               </p>
             </div>
 
