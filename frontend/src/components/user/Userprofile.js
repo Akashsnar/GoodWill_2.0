@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 // import './onlystyle.css'
 import { useParams } from "react-router-dom";
 import NavBar from "../navbar/Navbar";
+import UserdonationCampaigns from './UserdonationCampaigns' ;
 /* Example CSS import with relative path */
 
 function Userprofile() {
   const { username } = useParams();
   console.log(username);
   const [user, setUser] = useState();
-
+  const [userDonations, setUserDonations] = useState();
+  const [totalDonation ,setTotalDonations]=useState();
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -32,26 +34,57 @@ function Userprofile() {
 
 
 
+  // useEffect(() => {
+  //   const fetchUserDetails = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `http://localhost:4000/userinfo/donation/${username}`
+  //       );
+  //       if (response.ok) {
+  //         const userData = await response.json();
+  //         console.log("userdata", userData);
+  //         setUser(userData);
+  //       } else {
+  //         console.error("Error fetching user details:", response.statusText);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching user details:", error);
+  //     }
+  //   };
+
+  //   fetchUserDetails();
+  // }, [username]);
   useEffect(() => {
-    const fetchUserDetails = async () => {
+    const fetchUserDonations = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:4000/userinfo/donation/${username}`
-        );
-        if (response.ok) {
-          const userData = await response.json();
-          console.log("userdata", userData);
-          setUser(userData);
-        } else {
-          console.error("Error fetching user details:", response.statusText);
+        console.log("Inside userDonation fetch");
+        const response = await fetch('http://localhost:4000/userinfo/donationsUsername', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username })
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
+        // console.log("UserDo")
+        const data = await response.json();
+        console.log(data);
+        const { donations, totaldonation } = data;
+        console.log('Donations:', donations);
+        setUserDonations(donations);
+        console.log('Total Donation:', totaldonation);
+        setTotalDonations(totaldonation)
       } catch (error) {
-        console.error("Error fetching user details:", error);
+        console.error('Error fetching data:', error);
       }
     };
-
-    fetchUserDetails();
-  }, [username]);
+  
+    fetchUserDonations();
+  }, []);
+  
 
   // console.log(user);
   if (user) {
@@ -61,11 +94,11 @@ function Userprofile() {
   }
 
   return (
-    
+
     <div style={{ margin: "20vh" }}>
     <NavBar />
 
-      {user ? (
+      {user && userDonations ? (
         <section class="feature-one features-service">
           <div class="container">
             <div class="feature-one__inner" style={{ padding: "20px" }}>
@@ -120,7 +153,7 @@ function Userprofile() {
                       </div>
                       <div class="text" style={{ color: "black" }}>
                         <p></p>
-                        <h2 class="counter">$10000</h2>
+                        <h2 class="counter">Rs {totalDonation}</h2>
                         <p>Total Donations</p>
                       </div>
                     </div>
@@ -128,6 +161,13 @@ function Userprofile() {
                 </div>
               </div>
             </div>
+          </div>
+          <div>
+            <h2>Campaigns Donated</h2>
+            {userDonations.map(UserDonation => (
+              // <div>hello</div>
+              <UserdonationCampaigns key={UserDonation.id} data={UserDonation} />
+                ))}
           </div>
         </section>
       ) : (
