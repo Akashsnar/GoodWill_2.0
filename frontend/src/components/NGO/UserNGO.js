@@ -154,10 +154,10 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                     style={{ marginBottom: "0", paddingBottom: "0" }}
                   >
                     <p>
-                      <span>${data.raised}</span> Raised
+                      <span>Rs {data.raised}</span> Raised
                     </p>
                     <p>
-                      <span>${data.goal}</span> Goal
+                      <span>Rs {data.goal}</span> Goal
                     </p>
                   </div>
                   <div
