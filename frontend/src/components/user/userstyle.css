@@ -1,11 +1,7 @@
-
-
-/* Profile container */
-.profile {
+/* .profile {
     padding: 20px 0;
 }
 
-/* Profile sidebar */
 .profile-sidebar {
     padding: 20px 0 10px 0;
     background: #fff;
@@ -99,7 +95,6 @@
     margin-left: -2px;
 }
 
-/* Profile Content */
 .profile-content {
     padding: 20px;
     background: #fff;
@@ -204,4 +199,4 @@
     color: var(--thm-primary);;
     font-size: 50px;
     margin-top: 3.5%;
-}
+} */

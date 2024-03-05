@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { selectName, selectEmail } from "../../redux/features/auth/authSlice";
-
+import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
 const Campaign = ({ data, mode, username, userDetails }) => {
@@ -57,6 +57,25 @@ const Campaign = ({ data, mode, username, userDetails }) => {
       console.error("Error:", error);
     }
   };
+
+
+  const addvolunteer=async (campaignid)=>{
+    try {
+      console.log("ids=>", campaignid, userDetails._id);
+      const formDatas = { campaignid: campaignid, userid:userDetails._id}
+      const response = await axios.post(
+        "http://localhost:4000/sitedata/user/volunteer",
+        formDatas, {
+          withCredentials:true,
+      }
+      );
+      console.log("data saved", response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return (
     <div>
       <section class="feature-one features-service">
@@ -148,7 +167,8 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                     <Link
                       to="/getevents"
                       state={{
-                        ngodata: data
+                        ngodata: data,
+                        userDetails: userDetails
                       }}
                       className="thm-btn"
                       style={{
@@ -181,7 +201,15 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                       Donate
                     </Link>
                   </div>
-                  <p class="NGOReport" style={{ textAlign: "right" }}>
+                 
+                 <div className="flex justify-between">
+                 <button class="NGOReport" style={{ textAlign: "right" }}
+                onClick={() => (addvolunteer(data._id))}
+                 >
+                    Apply for Volunteer{" "}
+                   
+                  </button>
+                 <p class="NGOReport" style={{ textAlign: "right" }}>
                     Report this NGO{" "}
                     <i
                       id={data.name}
@@ -191,6 +219,8 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                       }}
                     ></i>
                   </p>
+                 </div>
+
                 </div>
               </div>
             ) : (
