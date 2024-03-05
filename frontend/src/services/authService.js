@@ -96,7 +96,6 @@ export const getLoginStatus = async () => {
 export const donationInfo = async (formData) => {
   try {
     console.log("donationInfo");
-
     await axios.post(`${Backend_URL}/userinfo/donation`, formData, {
       withCredentials: true,
     });
@@ -107,6 +106,42 @@ export const donationInfo = async (formData) => {
       error.toString();
 
     // toast.error(message);
+    throw new Error(message);
+  }
+};
+
+//Events
+export const AddEvents = async (formData) => {
+  try {
+    console.log(formData);
+    await axios.post(`${Backend_URL}/sitedata/events`, formData, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    // toast.error(message);
+    throw new Error(message);
+  }
+};
+export const GetEvents = async (formData) => {
+  try {
+
+    console.log("Getevent", formData)
+    const response = await axios.post(`${Backend_URL}/sitedata/getevents`,formData,{
+      withCredentials:true,
+    });
+    // console.log(response);
+    return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
     throw new Error(message);
   }
 };

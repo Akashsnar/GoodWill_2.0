@@ -184,6 +184,7 @@ b {
   cursor: pointer;
 }
 .ratingFeedback .fas {
+  padding-top: 1rem ;
   font-size: 2.5rem;
   color: #e4e4e4;
   cursor: pointer;

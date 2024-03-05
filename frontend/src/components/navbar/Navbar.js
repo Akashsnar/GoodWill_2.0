@@ -173,7 +173,7 @@ const NavBar = () => {
                 <span class="displayNone">&nbsp; Feedback</span>
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link
                 class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer "
                 to="/blogs"
@@ -181,7 +181,7 @@ const NavBar = () => {
                 <i class="fa-solid fa-newspaper"></i>
                 <span class="displayNone">&nbsp; Blog</span>
               </Link>
-            </li>
+            </li> */}
             <li class="nav-item">
               <button
                 class="donateBtn nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"

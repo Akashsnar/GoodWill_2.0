@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 
 const UserReviews = ({ data }) => {
     const stars=[];
-    for(let i=0;i<data.Review;i++){
+    for(let i=0;i<data.rating;i++){
         stars.push(<i className="fas fa-star"></i>);
     }
-    for(let i=0;i<(5-data.Review);i++){
+    for(let i=0;i<(5-data.rating);i++){
         stars.push(<i className="far fa-star"></i>)
     }
 
@@ -15,16 +15,16 @@ const UserReviews = ({ data }) => {
                     <div className='DashReview'>
                         <div>
                         <p>
-                        <img src= {data.src} alt={data.name} style={{height: "5rem"}} />
+                        <img src= '/assets/images/users/u0.png' alt={data.author} style={{height: "5rem"}} />
                         </p>
                         <p>
-                        {data.name}
+                        {data.author}
                         </p>
                         </div>
                         <div>
                         <p>{stars}</p>
                         <p>
-                        {data.Comment}
+                        {data.text}
                         </p>
                         </div>
                     </div>

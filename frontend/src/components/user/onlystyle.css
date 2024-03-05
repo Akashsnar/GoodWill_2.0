@@ -26,9 +26,9 @@
       height: 100%;
   }
   
-.card:hover{
+/* .card:hover{
     background-color: #4CAF50;
-}
+} */
 .button {
     display: inline-block;
     padding: 5px 15px;

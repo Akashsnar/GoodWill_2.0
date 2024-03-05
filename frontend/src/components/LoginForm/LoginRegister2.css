@@ -14,6 +14,7 @@
 }
 
 .shadow_container {
+  margin-top:5rem;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
@@ -95,11 +96,7 @@ form {
   right: 0;
 }
 
-h1 {
-  font-weight: bold;
-  margin: 0;
-  text-align: left;
-}
+
 
 h2 {
   text-align: center;

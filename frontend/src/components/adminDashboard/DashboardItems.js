@@ -29,12 +29,30 @@ function DashboardItems() {
                   title="NGOs"
                 />
               </Link>
+              <Link to="/adminDashboard/NGOsCampaign">
+                <DashboardItem
+                  iconClass=" 	fas fa-bullhorn"
+                  bgColor="#66d6e5"
+                  link="#"
+                  count="10"
+                  title="NGOs Campaign"
+                />
+              </Link>
               <Link to="/adminDashboard/UserTable">
                 <DashboardItem
                   iconClass="fa-regular fa-user"
                   bgColor="#00B8ED"
                   count="20"
                   title="Users"
+                />
+              </Link>
+              <Link to="/adminDashboard/EventTable">
+                <DashboardItem
+                  iconClass="fa fa-calendar"
+                  bgColor="#6c9acf"
+                  link="#"
+                  count="8"
+                  title="Events"
                 />
               </Link>
               <Link to="/adminDashboard/ReviewsTable">
@@ -49,21 +67,13 @@ function DashboardItems() {
               <Link to="/adminDashboard/FeedbackTable">
                 <DashboardItem
                   iconClass="fa-regular fa-message"
-                  bgColor="#9e0740"
+                  bgColor="#ff9a7a"
                   link="#"
                   count="8"
                   title="Feedbacks"
                 />
               </Link>
-              <Link to="/adminDashboard">
-                <DashboardItem
-                  iconClass="fa-blog"
-                  bgColor="#FFB54D"
-                  link="#"
-                  count="8"
-                  title="Blog"
-                />
-              </Link>
+
               {/* <Link to="/adminDashboard/ReportsTable">
                 <DashboardItem
                   iconClass="fa-info-circle"

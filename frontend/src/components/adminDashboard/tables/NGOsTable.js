@@ -11,7 +11,7 @@ function NGOsTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/sitedata/ngodetails");
+        const response = await fetch("http://localhost:4000/ngosData");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -30,24 +30,20 @@ function NGOsTable() {
     if (customRowsX.length > 0) {
       const newRows = [];
       for (let i = 0; i < customRowsX.length; i++) {
-        // const createdAtDate = new Date(customRowsX[i].createdAt);
-        // const updatedAtDate = new Date(customRowsX[i].updatedAt);
+        const createdAtDate = new Date(customRowsX[i].createdAt);
+        const updatedAtDate = new Date(customRowsX[i].updatedAt);
         newRows[i] = {
           id: customRowsX[i]._id,
-          image: customRowsX[i].image,
-          name: customRowsX[i].campagainname,
-          desc: customRowsX[i].desc,
-          category: customRowsX[i].category,
-          goal: customRowsX[i].goal,
-          raised: customRowsX[i].raised,
-          // createdAt: new Intl.DateTimeFormat("en-US", {
-          //   dateStyle: "medium",
-          //   timeStyle: "short",
-          // }).format(createdAtDate),
-          // updatedAt: new Intl.DateTimeFormat("en-US", {
-          //   dateStyle: "medium",
-          //   timeStyle: "short",
-          // }).format(updatedAtDate),
+          name: customRowsX[i].name,
+          email: customRowsX[i].email,
+          createdAt: new Intl.DateTimeFormat("en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }).format(createdAtDate),
+          updatedAt: new Intl.DateTimeFormat("en-US", {
+            dateStyle: "medium",
+            timeStyle: "short",
+          }).format(updatedAtDate),
         };
       }
       setRows(newRows);
@@ -72,7 +68,7 @@ function NGOsTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteNgo", {
+      const response = await fetch("http://localhost:4000/deleteNGOData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +97,8 @@ function NGOsTable() {
         columns={customColumns}
         rows={rows}
         onDelete={handleDelete}
-        props={{ heading: "NGOs' Campaign" }}
+        props={{ heading: "NGOs' Data" }}
+        showSidebar={true}
         confirmDeleteIndex={confirmDeleteIndex}
       />
     </>

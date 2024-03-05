@@ -10,9 +10,9 @@ const RegisterForm = ({
 }) => {
   return (
     <>
-      <h1>Create Account</h1>
+      <h1 className="mt-5">Create Account</h1>
       <p>{errormessage}</p>
-      <form onSubmit={register}>
+      <form className='loginform' onSubmit={register}>
         <Roles formData={formData} setFormData={setFormData} />
         <input
           type="text"

@@ -211,7 +211,7 @@ function UserTable() {
           profilePic: customRowsX[i].profilePic,
           name: customRowsX[i].name,
           phone: customRowsX[i].phone,
-          email: customRowsX[i].email,
+          email: customRowsX[i].Email,
           dob: customRowsX[i].dob,
           createdAt: new Intl.DateTimeFormat("en-US", {
             dateStyle: "medium",
@@ -274,11 +274,12 @@ function UserTable() {
         columns={customColumns}
         rows={rows}
         onDelete={handleDelete}
-        props={{ heading: "NGOs" }}
-        confirmDeleteIndex={confirmDeleteIndex} renderCell={(row, column) => {
+        showSidebar={true}
+        props={{ heading: "Users" }}
+        confirmDeleteIndex={confirmDeleteIndex}
+        renderCell={(row, column) => {
           return row[column.id];
         }}
-
       />
     </>
   );

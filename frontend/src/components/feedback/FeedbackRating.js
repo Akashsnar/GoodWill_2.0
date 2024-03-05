@@ -43,6 +43,7 @@ const FeedbackRating = ({ title, onChange }) => {
                 alt="Very Good"
                 border="0"
               />
+              <br />
             </div>
           </div>
           <p id="p">{feedbackText}</p>
@@ -62,6 +63,7 @@ const FeedbackRating = ({ title, onChange }) => {
                 }
               ></i>
             ))}
+            <br />
           </div>
         </div>
       </fieldset>

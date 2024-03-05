@@ -1,13 +1,21 @@
 // Campaign.js
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { selectName, selectEmail } from "../../redux/features/auth/authSlice";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
-const Campaign = ({ data, mode }) => {
+const Campaign = ({ data, mode, username, userDetails }) => {
+  console.log("user detail", userDetails);
+  console.log("Ngo detail", data);
+
+  const dispatch = useDispatch();
+  const name = useSelector(selectName);
   const [percentage, setPercentage] = useState(0);
   const barInnerRef = useRef(null);
 
   useEffect(() => {
-    console.log(data);
+    console.log("ngo page data->", data, username);
     const calculatedPercentage = Math.floor((data.raised / data.goal) * 100);
     setPercentage(calculatedPercentage);
 
@@ -28,6 +36,66 @@ const Campaign = ({ data, mode }) => {
     }
     console.log();
   };
+
+  const handleClose = async (CloseId) => {
+    try {
+      const response = await fetch("http://localhost:4000/sitedata/closecamp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ CloseId }),
+      });
+
+      console.log("Server response:", response);
+
+      if (!response.ok) {
+        console.error("Server error:", response.statusText);
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleOpen = async (OpenId) => {
+    try {
+      const response = await fetch("http://localhost:4000/sitedata/opencamp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ OpenId }),
+      });
+
+      console.log("Server response:", response);
+
+      if (!response.ok) {
+        console.error("Server error:", response.statusText);
+        throw new Error("Network response was not ok");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+
+  const addvolunteer=async (campaignid)=>{
+    try {
+      console.log("ids=>", campaignid, userDetails._id);
+      const formDatas = { campaignid: campaignid, userid:userDetails._id}
+      const response = await axios.post(
+        "http://localhost:4000/sitedata/user/volunteer",
+        formDatas, {
+          withCredentials:true,
+      }
+      );
+      console.log("data saved", response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <div>
@@ -59,7 +127,7 @@ const Campaign = ({ data, mode }) => {
                       </h4>
                     </a>
                   ) : (
-                    <Link to={"/Campaign"}>
+                    <Link to={`/Ngo_dashboard/${data.campagainname}`}>
                       <h4 style={{ paddingLeft: "5rem" }} className="ngolink">
                         {data.campagainname}
                       </h4>
@@ -69,75 +137,171 @@ const Campaign = ({ data, mode }) => {
                 </div>
               </div>
             </div>
-            <div className="popular-causes__progress UserNgoProgress">
-              <div className="bar">
-                <div
-                  className="bar-inner count-bar"
-                  ref={barInnerRef}
-                  style={{ width: `${percentage}%` }}
-                >
-                  <div className="count-text">{percentage}%</div>
-                </div>
-              </div>
+            {mode !== "ngodash" ? (
               <div className="popular-causes__progress UserNgoProgress">
-                <div
-                  className="popular-causes__goals"
-                  style={{ marginBottom: "0", paddingBottom: "0" }}
-                >
-                  <p>
-                    <span>${data.raised}</span> Raised
-                  </p>
-                  <p>
-                    <span>${data.goal}</span> Goal
-                  </p>
-                </div>
-                <div
-                  className="text-center more-post__btn Ngobtn"
-                  style={{ marginTop: "1rem", display: "flex" }}
-                >
-                  <Link
-                    to="/givereview"
-                    className="thm-btn"
-                    style={{
-                      height: "2rem",
-                      width: "10rem",
-                      margin: "0px",
-                      marginBottom: "1rem",
-                      padding: "10px",
-                      textAlign: "center",
-                      lineHeight: "10px",
-                    }}
+                <div className="bar">
+                  <div
+                    className="bar-inner count-bar"
+                    ref={barInnerRef}
+                    style={{ width: `${percentage}%` }}
                   >
-                    Give Review
-                  </Link>
-                  <Link
-                    to="/donation"
-                    className="thm-btn"
-                    style={{
-                      height: "2rem",
-                      width: "10rem",
-                      margin: "0px",
-                      marginBottom: "1rem",
-                      padding: "10px",
-                      textAlign: "center",
-                      lineHeight: "10px",
-                    }}
-                  >
-                    Donate
-                  </Link>
+                    <div className="count-text">{percentage}%</div>
+                  </div>
                 </div>
-                <p class="NGOReport" style={{ textAlign: "right" }}>
-                  Report this NGO{" "}
-                  <i
-                    id={data.name}
-                    class="fa-solid fa-thumbs-down thumbsdown"
-                    onClick={(e) => {
-                      reportthis(e);
-                    }}
-                  ></i>
-                </p>
+                <div className="popular-causes__progress UserNgoProgress">
+                  <div
+                    className="popular-causes__goals"
+                    style={{ marginBottom: "0", paddingBottom: "0" }}
+                  >
+                    <p>
+                      <span>${data.raised}</span> Raised
+                    </p>
+                    <p>
+                      <span>${data.goal}</span> Goal
+                    </p>
+                  </div>
+                  <div
+                    className="text-center more-post__btn Ngobtn"
+                    style={{ marginTop: "1rem", display: "flex" }}
+                  >
+                    <Link
+                      to="/givereview"
+                      state={{
+                        ngodata: data,
+                        username: username,
+                        userDetails: userDetails,
+                      }}
+                      className="thm-btn"
+                      style={{
+                        height: "2rem",
+                        width: "10rem",
+                        margin: "0px",
+                        marginBottom: "1rem",
+                        padding: "10px",
+                        textAlign: "center",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      {" "}
+                      Give Review
+                    </Link>
+                    <Link
+                      to="/getevents"
+                      state={{
+                        ngodata: data,
+                        userDetails: userDetails
+                      }}
+                      className="thm-btn"
+                      style={{
+                        height: "2rem",
+                        width: "10rem",
+                        margin: "0px",
+                        marginBottom: "1rem",
+                        padding: "10px",
+                        textAlign: "center",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      {" "}
+                      Show Event
+                    </Link>
+                    <Link
+                      to={`/donation/${name}`}
+                      state={{ ngodata: data, userDetails: userDetails }}
+                      className="thm-btn"
+                      style={{
+                        height: "2rem",
+                        width: "10rem",
+                        margin: "0px",
+                        marginBottom: "1rem",
+                        padding: "10px",
+                        textAlign: "center",
+                        lineHeight: "10px",
+                      }}
+                    >
+                      Donate
+                    </Link>
+                  </div>
+                 
+                 <div className="flex justify-between">
+                 <button class="NGOReport" style={{ textAlign: "right" }}
+                onClick={() => (addvolunteer(data._id))}
+                 >
+                    Apply for Volunteer{" "}
+                   
+                  </button>
+                 <p class="NGOReport" style={{ textAlign: "right" }}>
+                    Report this NGO{" "}
+                    <i
+                      id={data.name}
+                      class="fa-solid fa-thumbs-down thumbsdown"
+                      onClick={(e) => {
+                        reportthis(e);
+                      }}
+                    ></i>
+                  </p>
+                 </div>
+
+                </div>
               </div>
-            </div>
+            ) : data.status !== "closed" ? (
+              <div style={{ textAlign: "center" }}>
+                {" "}
+                <button
+                  className="thm-btn"
+                  style={{
+                    height: "2rem",
+                    width: "10rem",
+                    margin: "0px",
+                    marginBottom: "1rem",
+                    padding: "10px",
+                    textAlign: "center",
+                    lineHeight: "10px",
+                  }}
+                  onClick={() => handleClose(data._id)}
+                >
+                  {" "}
+                  Close{" "}
+                </button>
+                <Link
+                  to="/events"
+                  state={{
+                    ngodata: data,
+                    username: username,
+                    userDetails: userDetails,
+                  }}
+                  className="thm-btn"
+                  style={{
+                    height: "2rem",
+                    width: "10rem",
+                    margin: "0px",
+                    marginBottom: "1rem",
+                    padding: "10px",
+                    textAlign: "center",
+                    lineHeight: "10px",
+                  }}
+                >
+                  {" "}
+                  Add Event
+                </Link>
+              </div>
+            ): (
+              <button
+              className="thm-btn"
+              style={{
+                height: "2rem",
+                width: "10rem",
+                margin: "0px",
+                marginBottom: "1rem",
+                padding: "10px",
+                textAlign: "center",
+                lineHeight: "10px",
+              }}
+              onClick={() => handleOpen(data._id)}
+            >
+              Open
+            </button>
+            )}
           </div>
         </div>
       </section>

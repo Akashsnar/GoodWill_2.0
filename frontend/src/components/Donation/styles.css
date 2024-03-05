@@ -1,0 +1,76 @@
+.donationcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-top: 5rem;
+  background-image: url("https://cdn.photoroom.com/v1/assets-cached.jpg?path=backgrounds_v3/white/Photoroom_white_background_extremely_fine_texture_only_white_co_d4d69c25-6b87-414c-9d1b-83a4f5cbf52d.jpg");
+  background-size: cover;
+}
+
+.donation-form {
+  background-color: #f0f8ea;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  box-shadow: 0 0 10px rgba(233, 117, 2, 0.5);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.donate-heading {
+  width: 100%;
+}
+
+.donation-image {
+  width: 50%;
+  max-height: 80%;
+  border-radius: 5%;
+}
+.donation-form form {
+  width: 40%;
+}
+.form-group {
+  margin-bottom: 15px;
+}
+
+.donation_label {
+  display: block;
+  font-weight: bold;
+}
+
+.donation_input{
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.donation_btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.donation_btn:hover {
+  background-color: #45a049;
+}
+
+@media screen and (max-width: 600px) {
+  .donation-image {
+    display: none;
+  }
+  .donation-form {
+    justify-content: center;
+  }
+  .donation-form form {
+    width: 70%;
+  }
+}

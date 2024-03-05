@@ -1,5 +1,6 @@
 // FeedbackRadioButtons.js
 import React, { useState } from "react";
+import "./FeedbackRadioButtons.css"; // Import CSS file
 
 const FeedbackRadioButtons = ({ legend, options, name, onChange }) => {
   const [selectedOption, setSelectedOption] = useState(options[0]);
@@ -11,13 +12,13 @@ const FeedbackRadioButtons = ({ legend, options, name, onChange }) => {
   };
 
   return (
-    <div>
+    <div className="feedback-radio-buttons-container">
       <fieldset>
         <legend>
           <b>{legend}</b>
         </legend>
         {options.map((option, index) => (
-          <div key={index}>
+          <div key={index} className="radio-button-option">
             <input
               id={`${name}-${index + 1}`}
               name={name}

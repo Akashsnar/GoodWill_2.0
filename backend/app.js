@@ -4,17 +4,21 @@ const app = express();
 const path = require("path");
 const ngoschema = require("./mongoSchema/mongoschemango");
 const reviewschema = require("./mongoSchema/reviewschema");
+const Events = require("./mongoSchema/EventSchema");
+const UserNgo = require("./mongoSchema/userModel");
 const reportschema = require("./mongoSchema/reportschema");
 const cookieParser = require("cookie-parser");
 const db = require("./mongoSchema/database");
 const multer = require("multer");
-
+const morgan = require("morgan");
 const userRoute = require("./routes/user");
 const blogRoute = require("./routes/blog");
 const cors = require("cors");
 const { config } = require("dotenv");
+const fs = require('fs');
 config();
-app.use(express.static("uploads"));
+// app.use(express.static("uploads"));
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(express.static("registrationproof"));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -27,9 +31,15 @@ app.use(
     credentials: true,
   })
 );
+const csrf = require('csurf');
+const csrfprotection=csrf({ cookie: true });
+
+const logStream = fs.createWriteStream(`28_log.txt`, { flags: 'a' });
+app.use(morgan('combined', { stream: logStream }));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 app.use(express.static("public"));
 app.use(
   express.urlencoded({
@@ -50,19 +60,19 @@ var upload = multer({
     },
   }),
 });
+
+
 const UserRoute = require("./routes/UserRoute.js");
 app.use("/api/users", UserRoute);
+const Group_no = 'Group_28'; 
+
 const port = 4000;
 
-// app.post('/contact', async (req, res) => in services
-// app.post('/deleteContact', async (req, res) => in services
-////searching
-
-app.post("/user", async (req, res) => {
+app.post("/user", csrfprotection, async (req, res) => {
   console.log("/user running");
   try {
     let sear = req.body.payload;
-    const rating = req.body.payloadr;
+    const rating = req.body.payload;
     console.log(rating);
     if (sear == undefined) {
       sear = "";
@@ -135,64 +145,6 @@ const userdataRouter = require("./routes/sitedata");
 app.use("/sitedata", userdataRouter);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-// dcheckout -> ngo_route
-
-// app.post('/getreviews', async (req, res) =>   AdminRoute
-
-//ngdetails-> adminRoute
-//userdetail -> adminRoute
-//reviewdetails-> adminRoute
-//reportdetails-> adminRoute
-//ngos
-// app.post("/reportdata", async (req, res) =>  Services
-
-//ngos
-// app.post('/getrating', async (req, res) => Services
-
-// app.post("/feedback", async (req, res) => {
-//   res.redirect("feedback");
-// });
-
-// post
-// app.post('/post', upload.single('image'), async (req, res) => {
-//   var x = new ngoschema();
-//   x.username = req.session.ngo;
-//   x.name = req.body.name;
-//   x.image = req.file.filename;
-//   x.desc = req.body.desc;
-//   console.log(x.name);
-//   console.log(x.username);
-//   console.log(x.desc);
-//   console.log(req.body.desc);
-//   x.save()
-//     .then((doc) => {
-//       console.log("bloody pass");
-//       res.redirect("/users");
-//     })
-//     .catch(function (err) {
-//       console.log(err);
-
-//     })
-// });
-
-// app.post("/delete", function (req, res) {
-//   const it = req.body.checkbox;
-//   ngoschema.findByIdAndDelete(it)
-//     .then(function (it) {
-//       console.log("bloody pass");
-//       res.redirect("/users");
-//     })
-//     .catch(function (err) {
-//       console.log(err);
-
-//     })
-
-// });
-
-// app.post("/images", function (req, res) {
-//   res.redirect("/users");
-// });
-
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -219,5 +171,124 @@ app.post("/deleteUser", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
+
+const Feedback = require("./mongoSchema/feedbackSchema");
+app.post("/deleteFeedback", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Feedback.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+const Contact = require("./mongoSchema/contactSchema");
+const Donation = require("./mongoSchema/donationschema.js");
+app.post("/deleteMessage", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Contact.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteReview", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await reviewschema.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteDonation", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Donation.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteEvent", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Events.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteNGOData", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await UserNgo.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+});
+
+
+app.get("/eventsData", async (req, res) => {
+  try {
+    const event = await Events.find().sort({ _id: -1 });
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+app.get("/eventsLength", async (req, res) => {
+  try {
+    const event = await Events.find();
+    res.json(event.length);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get("/ngosData", async (req, res) => {
+  try {
+    const ngo = await UserNgo.find({ mode: "Ngo" }).sort({ _id: -1 });
+    res.json(ngo);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+app.get("/NGOsLength", async (req, res) => {
+  try {
+    const ngo = await UserNgo.find({ mode: "Ngo" });
+    res.json(ngo.length);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
