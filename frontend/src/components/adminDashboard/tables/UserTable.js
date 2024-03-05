@@ -211,7 +211,7 @@ function UserTable() {
           profilePic: customRowsX[i].profilePic,
           name: customRowsX[i].name,
           phone: customRowsX[i].phone,
-          email: customRowsX[i].email,
+          email: customRowsX[i].Email,
           dob: customRowsX[i].dob,
           createdAt: new Intl.DateTimeFormat("en-US", {
             dateStyle: "medium",

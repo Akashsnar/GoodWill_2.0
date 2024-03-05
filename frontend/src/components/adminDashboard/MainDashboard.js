@@ -5,7 +5,7 @@ import NavAdmin from "./NavAdmin";
 import DashboardItems from "./DashboardItems";
 import AllComments from "../Rating/AllComments";
 import { Link } from "react-router-dom";
-import Graph from "./Graph"
+import Graph from "./Graph";
 // import SideMenu from "./Sidebar";
 import Sidebar from "./Sidebar";
 function MainDashboard() {
@@ -115,7 +115,7 @@ function MainDashboard() {
   return (
     <>
       <NavAdmin />
-      <div className="mainContainer" >
+      <div className="mainContainer">
         <div className="sidebar">
           <Sidebar />
         </div>
@@ -129,7 +129,7 @@ function MainDashboard() {
               <Link to="/adminDashboard/DonationsTable">
                 <i class="fa-solid fa-arrow-up-right-from-square shiftIcon"></i>
               </Link>
-              <Graph />
+              <Graph className="centerGraph" />
             </div>
             <div className="messagesArea">
               <center>

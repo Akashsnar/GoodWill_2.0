@@ -94,7 +94,7 @@ function NGO_Dashboard_form(props) {
     }
   };
   return (
-    <div>
+    <div style={{marginTop:'6rem'}}>
       <center>
 
         {/* <CloudinaryUploadWidget uwConfig={uwConfig} setPublicId={setPublicId} /> */}

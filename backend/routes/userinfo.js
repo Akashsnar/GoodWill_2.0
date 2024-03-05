@@ -36,6 +36,47 @@ router.get("/:name", async (req, res, next) => {
   }
 });
 
+// router.post("/donationsUsername", async (req, res) => {
+//   try {
+//     console.log("Hello Donation User")
+//     // const username = req.body.username;
+//     const username = "Swastik";
+//     console.log(username)
+//     const donations = await Donation.find({username : username}).sort({ _id: -1 });
+//     console.log("donation data->", donation);
+//     let totaldonation=0;
+
+//     for (const donation of donations) {
+//       totaldonation += parseInt(donation.donationAmount);
+//     }
+//     console.log("Hello "+totaldonation);
+//     res.json(donations);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+router.post("/donationsUsername", async (req, res) => {
+  try {
+    console.log("Hello Donation User")
+    const username = req.body.username;
+    // const username = "Swastik";
+    console.log(username)
+    const donations = await Donation.find({username: username}).sort({ _id: -1 });
+    console.log("donation data->", donations);
+    let totaldonation = 0;
+
+    for (const donation of donations) {
+      totaldonation += parseInt(donation.donationAmount);
+    }
+    console.log("Total Donation:", totaldonation);
+    res.json({donations,totaldonation});
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 router.get("/", async (req, res, next) => {  
   try {
     const User_details = await User.find();

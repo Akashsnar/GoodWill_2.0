@@ -48,7 +48,6 @@ router.get("/allUsers", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.get("/userlength", async (req, res) => {
   try {
     const user = await User.find();
@@ -135,6 +134,7 @@ router.get("/contact", async (req, res) => {
   }
 });
 
+
 router.get("/donations", async (req, res) => {
   try {
     const donation = await Donation.find().sort({ _id: -1 });
@@ -144,6 +144,37 @@ router.get("/donations", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
+router.post("/donationsCampaign", async (req, res) => {
+  try {
+    // console.log("Hello")
+    const campaignname = req.body.campaignname;
+    console.log(campaignname)
+    const donation = await Donation.find({campaignName : campaignname}).sort({ _id: -1 });
+    console.log("donation data->", donation);
+    res.json(donation);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/donationsNGO", async (req, res) => {
+  try {
+    // console.log("Hello")
+    const NgoName = req.body.Ngoname;
+    console.log(NgoName);
+    // console.log(campaignname)
+    const donation = await Donation.find({NgoName : NgoName}).sort({ _id: -1 });
+    console.log("donation data->", donation);
+    res.json(donation);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
 
 router.get("/campaign/:name", async (req, res, next) => {
   try {
@@ -157,7 +188,6 @@ router.get("/campaign/:name", async (req, res, next) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 // Getting One use detail
 router.get("/userdetail/:userid", async (req, res) => {
@@ -232,7 +262,7 @@ router.post("/ngo_details", async (req, res) => {
       (newngomodel.desc = payload.desc),
       (newngomodel.image = payload.image);
     newngomodel.raised = payload.raised;
-
+    newngomodel.status = "ongoing";
     //  profilePic: req.file.filename
 
     // let filter = {username : req.session.user.username};
@@ -243,7 +273,7 @@ router.post("/ngo_details", async (req, res) => {
       //   res.redirect("/users");
     });
 
-    res.status(201).json({ message: "Uploaded Succesfully" });
+    res.status(201).json({ message: "Uploaded Successfully" });
   } catch (err) {
     console.error(err); // Log the error to the console for debugging
     res
@@ -306,12 +336,14 @@ router.get("/reviews/:campaignname", async (req, res) => {
   }
 });
 
-router.post("/getevents", expressAsyncHandler(async (req, res) => {
+router.post(
+  "/getevents",
+  expressAsyncHandler(async (req, res) => {
     console.log("hello");
-    const {NgoName} = req.body;
+    const { NgoName } = req.body;
     console.log(NgoName);
     const eventdetails = await Events.find({
-      NgoName
+      NgoName,
     });
 
     if (eventdetails) {
@@ -325,8 +357,10 @@ router.post("/getevents", expressAsyncHandler(async (req, res) => {
 router.post(
   "/events",
   expressAsyncHandler(async (req, res) => {
+
     const { NgoName,campaignName,EventPic, EventName, Location, Duration, Details, DateRange } = req.body;
     console.log("image", campaignName, EventPic);
+
     const { startDate, endDate } = DateRange;
     if (!NgoName || !EventName || !Location || !Duration || !DateRange) {
       res.status(400);
@@ -363,6 +397,10 @@ router.post(
     }
   })
 );
+
+router.post("/ngodetails/campns", async (req, res) => {
+  const ngoname = req.body.ngoname;
+  const status = req.body.status;
 
 
 router.post("/user/volunteer", async(req, res)=>{
@@ -427,15 +465,57 @@ try {
 
 router.get("/:ngoname", async (req, res) => {
   const ngoname = req.params.ngoname;
+
   console.log(ngoname);
+  console.log(status)
   try {
-    let query = { ngoname: ngoname };
+    let query = { ngoname: ngoname, status: status };
     const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
+    console.log(ngomodel);
     res.json(ngomodel);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
+router.post("/closecamp", async (req,res) => {
+  const CloseId=req.body.CloseId;
+  console.log(CloseId);
+  try {
+
+    const result = await Ngomodel.findByIdAndUpdate(CloseId, { $set: { status: "closed" } });
+
+    if (!result) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+    res.json(result);
+  } catch (err) {
+
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/opencamp", async (req,res) => {
+  const OpenId=req.body.OpenId;
+  console.log(OpenId);
+  try {
+
+    const result = await Ngomodel.findByIdAndUpdate(OpenId, { $set: { status: "ongoing" } });
+
+
+    if (!result) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 
 
 module.exports = router;
