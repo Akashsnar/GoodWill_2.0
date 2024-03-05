@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios'
 import { GetEvents } from '../services/authService'
-
 
 const ShowEvent = () => {
     const [eventdata, seteventdata] = useState()
     const { state } = useLocation();
-    console.log(state);
+    console.log("Show event", state);
+     const userdata=state.userDetails;
 
     // ngoname, campagainname
 
@@ -31,14 +31,13 @@ const ShowEvent = () => {
 
     return (
         <div>
-
             <div className="container mt-2">
                 <div className="row">
                     {eventdata?eventdata.map((event) =>
 
-                        <div className="col-md-4 col-sm-6 item">
+                        <Link className="col-md-4 col-sm-6 item" to={`user/${event.EventName}`}  state={{event: event, userid: userdata._id}} >
                             <div className="card item-card card-block">
-                                <img src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" alt="Photo of sunset" />
+                                <img src={event.EventPic} className='h-[20rem] w-[20rem]' alt="Photo of sunset" />
                                 <h3 className="item-card-title mt-3 mb-1">{event.EventName}</h3>
                                 <p className="mb-3">campaign : {event.campaignName}</p>
                                 <div className='flex justify-between'>
@@ -51,7 +50,7 @@ const ShowEvent = () => {
                                <p> To: {event.DateRange.endDate.slice(0, 10)}</p>
                                 </div>
                             </div> 
-                        </div>
+                        </Link>
 
                     ):  <h1>No event</h1>}
                 </div>

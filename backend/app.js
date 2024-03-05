@@ -4,6 +4,8 @@ const app = express();
 const path = require("path");
 const ngoschema = require("./mongoSchema/mongoschemango");
 const reviewschema = require("./mongoSchema/reviewschema");
+const Events = require("./mongoSchema/EventSchema");
+const UserNgo = require("./mongoSchema/userModel");
 const reportschema = require("./mongoSchema/reportschema");
 const cookieParser = require("cookie-parser");
 const db = require("./mongoSchema/database");
@@ -226,9 +228,67 @@ app.post("/deleteDonation", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+app.post("/deleteEvent", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await Events.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+app.post("/deleteNGOData", async (req, res) => {
+  const id = req.body.id;
+  console.log("confirmDeleteIndex:", id);
+
+  try {
+    await UserNgo.findByIdAndDelete(id);
+    res.status(200).json({ message: "Deletion successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
+
+app.get("/eventsData", async (req, res) => {
+  try {
+    const event = await Events.find().sort({ _id: -1 });
+    res.json(event);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+app.get("/eventsLength", async (req, res) => {
+  try {
+    const event = await Events.find();
+    res.json(event.length);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+app.get("/ngosData", async (req, res) => {
+  try {
+    const ngo = await UserNgo.find({ mode: "Ngo" }).sort({ _id: -1 });
+    res.json(ngo);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+app.get("/NGOsLength", async (req, res) => {
+  try {
+    const ngo = await UserNgo.find({ mode: "Ngo" });
+    res.json(ngo.length);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});

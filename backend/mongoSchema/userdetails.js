@@ -13,6 +13,7 @@ const UserSchema = new Schema({
     dob: {type: String, trim: true},
     gender: {type: String, trim: true},
     details: {type: String, trim: true,  default: "No detail"},
+    volunteerNgosCampaign:  [String]
 
 },{timestamps: true});
 

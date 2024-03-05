@@ -9,6 +9,7 @@
 #mainContainerDashBoard {
   background-image: "url(assets/images/backgrounds/welcome_one_hands.jpg)";
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 #mainContainerDashBoard h2 {
@@ -343,7 +344,7 @@
 
   .navbar-default.sidebar.collapsed {
     display: block;
-    width: 50px; /* Adjust the width as needed */
+    width: 50px;
   }
 }
 
@@ -351,4 +352,83 @@
   margin-left: auto;
   font-size: 0.8rem;
   transform: rotate(0deg);
+}
+
+
+/* .mainContainer {
+  display: flex;
+  flex-wrap: wrap;
+} */
+
+.mainContent {
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 250px;
+}
+
+.mainArea {
+  flex: 1;
+  display: flex;
+  /* flex-direction: column;  */
+}
+
+.graphArea,
+.messagesArea {
+  width: 100%;
+  margin-right: 0;
+}
+
+.graphArea {
+  flex: 1;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  box-shadow: 0px 0px 1rem #999;
+  border: 0.563rem double #eff;
+  border-radius: 5%;
+  -webkit-border-radius: 5%;
+  -moz-border-radius: 5%;
+  -ms-border-radius: 5%;
+  -o-border-radius: 5%;
+}
+
+.graphArea:hover {
+  box-shadow: 0px 0px 1.563rem #888;
+}
+
+/* Add this class to the Graph component for better positioning */
+.centerGraph {
+  max-width: 100%; /* Ensure the graph doesn't exceed the container width */
+  max-height: 100%; /* Ensure the graph doesn't exceed the container height */
+}
+
+.graphArea {
+  position: relative; /* Set the container to a relative position */
+  flex: 1;
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  box-shadow: 0px 0px 1rem #999;
+  border: 0.563rem double #eff;
+  border-radius: 5%;
+  -webkit-border-radius: 5%;
+  -moz-border-radius: 5%;
+  -ms-border-radius: 5%;
+  -o-border-radius: 5%;
+}
+
+.graphArea:hover {
+  box-shadow: 0px 0px 1.563rem #888;
+}
+
+/* Position the arrow icon at the top-right corner */
+.shiftIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1rem; /* Add margin as needed */
 }

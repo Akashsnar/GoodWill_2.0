@@ -40,7 +40,13 @@ const EventSchema = new Schema(
       },
       required: [true, "Please add "],
     },
-  },
+    EventPic: { type: String, 
+      default: "https://www.indiafilings.com/learn/wp-content/uploads/2023/03/What-is-difference-between-NGO-and-Section-8-company.jpg"},
+  
+      ParticipatedUser:  [String]
+      
+    },
+  
   { timestamps: true }
 );
 

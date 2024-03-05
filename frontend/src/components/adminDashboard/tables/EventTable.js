@@ -1,17 +1,18 @@
-// NGOsTable.js
+// EventTable.js
 import React, { useEffect, useState } from "react";
 import TableComponent from "./TableComponent";
 
-function NGOsTable() {
+function EventTable() {
   const [customRowsX, setCustomRowsX] = useState([]);
   const [rows, setRows] = useState([]);
   const [confirmDeleteIndex, setConfirmDeleteIndex] = useState(null);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/ngosData");
+        const response = await fetch(
+          "http://localhost:4000/eventsData"
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -34,8 +35,13 @@ function NGOsTable() {
         const updatedAtDate = new Date(customRowsX[i].updatedAt);
         newRows[i] = {
           id: customRowsX[i]._id,
-          name: customRowsX[i].name,
-          email: customRowsX[i].email,
+          NgoName: customRowsX[i].NgoName,
+          campaign_name: customRowsX[i].campaignName,
+          Event_Name: customRowsX[i].EventName,
+          Location: customRowsX[i].Location,
+          Description: customRowsX[i].Description,
+          Duration: customRowsX[i].Duration,
+          // DateRange: customRowsX[i].DateRange,
           createdAt: new Intl.DateTimeFormat("en-US", {
             dateStyle: "medium",
             timeStyle: "short",
@@ -68,7 +74,7 @@ function NGOsTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteNGOData", {
+      const response = await fetch("http://localhost:4000/deleteEvent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +103,7 @@ function NGOsTable() {
         columns={customColumns}
         rows={rows}
         onDelete={handleDelete}
-        props={{ heading: "NGOs' Data" }}
+        props={{ heading: "NGOs' Events" }}
         showSidebar={true}
         confirmDeleteIndex={confirmDeleteIndex}
       />
@@ -105,4 +111,4 @@ function NGOsTable() {
   );
 }
 
-export default NGOsTable;
+export default EventTable;
