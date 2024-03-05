@@ -463,8 +463,11 @@ router.post(
 
   })
 
-  router.get("/:ngoname", async (req, res) => {
-    const ngoname = req.params.ngoname;
+  // router.get("/ngodetails/campns", async (req, res) => {
+  //   const ngoname = req.params.ngoname;
+  router.post("/ngodetails/campns", async (req, res) => {
+  const ngoname = req.body.ngoname;
+  const status = req.body.status;
 
     console.log(ngoname);
     // console.log(status)
