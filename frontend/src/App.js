@@ -16,11 +16,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MainDashboard from "./components/adminDashboard/MainDashboard.js";
 import UserReviews from "./components/Rating/Ratings.js";
 import UserTable from "./components/adminDashboard/tables/UserTable";
-import NGOsTable from "./components/adminDashboard/tables/NGOsTable";
+import NGOsCampaign from "./components/adminDashboard/tables/NgosCampaign";
 import FeedbackTable from "./components/adminDashboard/tables/FeedbackTable";
 import ReviewsTable from "./components/adminDashboard/tables/ReviewsTable";
 import MessagesTable from "./components/adminDashboard/tables/MessagesTable";
 import DonationsTable from "./components/adminDashboard/tables/DonationsTable";
+import NGOsTable from "./components/adminDashboard/tables/NGOsTable";
+import EventTable from "./components/adminDashboard/tables/EventTable";
 import DonationGraphTable from "./components/adminDashboard/DonationGraphTable.js";
 import NgosAndUserChart from "./components/adminDashboard/NgosAndUserChart.js";
 import Feedback from "./components/feedback/FeedbackN";
@@ -128,7 +130,9 @@ function App() {
             path="/adminDashboard/MessagesTable"
             element={<MessagesTable />}
           />
+          <Route path="/adminDashboard/NGOsCampaign" element={<NGOsCampaign />} />
           <Route path="/adminDashboard/NGOsTable" element={<NGOsTable />} />
+          <Route path="/adminDashboard/EventTable" element={<EventTable />} />
           <Route
             exact
             path="/userprofile/:username"
