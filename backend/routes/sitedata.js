@@ -151,7 +151,7 @@ router.post("/donationsCampaign", async (req, res) => {
     // console.log("Hello")
     const campaignname = req.body.campaignname;
     console.log(campaignname)
-    const donation = await Donation.find({campaignName : campaignname}).sort({ _id: -1 });
+    const donation = await Donation.find({ campaignName: campaignname }).sort({ _id: -1 });
     console.log("donation data->", donation);
     res.json(donation);
   } catch (err) {
@@ -165,7 +165,7 @@ router.post("/donationsNGO", async (req, res) => {
     const NgoName = req.body.Ngoname;
     console.log(NgoName);
     // console.log(campaignname)
-    const donation = await Donation.find({NgoName : NgoName}).sort({ _id: -1 });
+    const donation = await Donation.find({ NgoName: NgoName }).sort({ _id: -1 });
     console.log("donation data->", donation);
     res.json(donation);
   } catch (err) {
@@ -233,7 +233,7 @@ router.post("/submitmessage", async (req, res) => {
     res.status(200).json({ message: "Form data submitted successfully" });
   } catch (error) {
     console.error("Error submitting form data:", error);
-    res.status(500).json({ error: "Internal Server Error"});
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 router.post("/feedback", async (req, res) => {
@@ -358,7 +358,7 @@ router.post(
   "/events",
   expressAsyncHandler(async (req, res) => {
 
-    const { NgoName,campaignName,EventPic, EventName, Location, Duration, Details, DateRange } = req.body;
+    const { NgoName, campaignName, EventPic, EventName, Location, Duration, Details, DateRange } = req.body;
     console.log("image", campaignName, EventPic);
 
     const { startDate, endDate } = DateRange;
@@ -398,124 +398,124 @@ router.post(
   })
 );
 
-router.post("/ngodetails/campns", async (req, res) => {
-  const ngoname = req.body.ngoname;
-  const status = req.body.status;
+// router.post("/ngodetails/campns", async (req, res) => {
+//   const ngoname = req.body.ngoname;
+//   const status = req.body.status;
 
 
-router.post("/user/volunteer", async(req, res)=>{
-try {
-  console.log("this is volunteer");
-  const {campaignid, userid} = req.body;
-  console.log(req.body);
-  const users = await User.updateOne(
-    { _id: userid },
-    { $push: { volunteerNgosCampaign: campaignid } }
- );
+  router.post("/user/volunteer", async (req, res) => {
+    try {
+      console.log("this is volunteer");
+      const { campaignid, userid } = req.body;
+      console.log(req.body);
+      const users = await User.updateOne(
+        { _id: userid },
+        { $push: { volunteerNgosCampaign: campaignid } }
+      );
 
- if (users.matchedCount === 0) {
-  console.log('User not found');
-} else {
-  console.log('NGO added for user successfully');
-}
+      if (users.matchedCount === 0) {
+        console.log('User not found');
+      } else {
+        console.log('NGO added for user successfully');
+      }
 
-//campagians
+      //campagians
 
-const ngos = await Ngomodel.updateOne(
-  { _id: campaignid },
-  { $push: { volunteers: userid } }
-);
+      const ngos = await Ngomodel.updateOne(
+        { _id: campaignid },
+        { $push: { volunteers: userid } }
+      );
 
-if (ngos.matchedCount === 0) {
-console.log('User not found');
-} else {
-console.log('NGO added for user successfully');
-}
+      if (ngos.matchedCount === 0) {
+        console.log('User not found');
+      } else {
+        console.log('NGO added for user successfully');
+      }
 
- res.status(200).send({users, ngos});
-} catch (error) {
-  res.status(500).json({ message: err.message });
-}
-
-})
-
-router.post("/event/addusers", async(req, res)=>{
-try {
-  const {eventid, userid} = req.body;
-  console.log(req.body);
-  const Eventsupdate = await Events.updateOne(
-    { _id: eventid },
-    { $push: { ParticipatedUser: userid } }
- );
-
- if (Eventsupdate.matchedCount === 0) {
-  console.log('Events not found');
-  } else {
-  console.log('User participated successfully');
-  
-  }
-  res.status(200).send(Eventsupdate);
-
-} catch (error) {
-  res.status(500).json({ message: err.message });
-}
-
-
-})
-
-router.get("/:ngoname", async (req, res) => {
-  const ngoname = req.params.ngoname;
-
-  console.log(ngoname);
-  console.log(status)
-  try {
-    let query = { ngoname: ngoname, status: status };
-    const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
-    console.log(ngomodel);
-    res.json(ngomodel);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-router.post("/closecamp", async (req,res) => {
-  const CloseId=req.body.CloseId;
-  console.log(CloseId);
-  try {
-
-    const result = await Ngomodel.findByIdAndUpdate(CloseId, { $set: { status: "closed" } });
-
-    if (!result) {
-      return res.status(404).json({ message: "Document not found" });
+      res.status(200).send({ users, ngos });
+    } catch (error) {
+      res.status(500).json({ message: err.message });
     }
 
-    res.json(result);
-  } catch (err) {
+  })
 
-    res.status(500).json({ message: err.message });
-  }
-});
+  router.post("/event/addusers", async (req, res) => {
+    try {
+      const { eventid, userid } = req.body;
+      console.log(req.body);
+      const Eventsupdate = await Events.updateOne(
+        { _id: eventid },
+        { $push: { ParticipatedUser: userid } }
+      );
 
-router.post("/opencamp", async (req,res) => {
-  const OpenId=req.body.OpenId;
-  console.log(OpenId);
-  try {
+      if (Eventsupdate.matchedCount === 0) {
+        console.log('Events not found');
+      } else {
+        console.log('User participated successfully');
 
-    const result = await Ngomodel.findByIdAndUpdate(OpenId, { $set: { status: "ongoing" } });
+      }
+      res.status(200).send(Eventsupdate);
 
-
-    if (!result) {
-      return res.status(404).json({ message: "Document not found" });
+    } catch (error) {
+      res.status(500).json({ message: err.message });
     }
 
 
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+  })
+
+  router.get("/:ngoname", async (req, res) => {
+    const ngoname = req.params.ngoname;
+
+    console.log(ngoname);
+    // console.log(status)
+    try {
+      let query = { ngoname: ngoname, status: status };
+      const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
+      console.log(ngomodel);
+      res.json(ngomodel);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+  router.post("/closecamp", async (req, res) => {
+    const CloseId = req.body.CloseId;
+    console.log(CloseId);
+    try {
+
+      const result = await Ngomodel.findByIdAndUpdate(CloseId, { $set: { status: "closed" } });
+
+      if (!result) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+
+      res.json(result);
+    } catch (err) {
+
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+  router.post("/opencamp", async (req, res) => {
+    const OpenId = req.body.OpenId;
+    console.log(OpenId);
+    try {
+
+      const result = await Ngomodel.findByIdAndUpdate(OpenId, { $set: { status: "ongoing" } });
+
+
+      if (!result) {
+        return res.status(404).json({ message: "Document not found" });
+      }
+
+
+      res.json(result);
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  });
 
 
 
 
-module.exports = router;
+  module.exports = router;

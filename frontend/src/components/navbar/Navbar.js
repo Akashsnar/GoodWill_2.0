@@ -83,16 +83,7 @@ const NavBar = () => {
         </Link>
         <div id="lists">
           <ul class="navbar-nav flex-row justify-content-end">
-            <li class="nav-item">
-              <Link
-                class="nav-link customTextColor paddingR_custom paddingL_custom font_custom "
-                aria-current="page"
-                to="/chatapp"
-              >
-                <i class="fas fa-comment-dots"></i>{" "}
-                <span class="displayNone">Home</span>
-              </Link>
-            </li>
+            
             <li class="nav-item">
               <Link
                 class="nav-link customTextColor paddingR_custom paddingL_custom font_custom "
@@ -155,6 +146,17 @@ const NavBar = () => {
                 <span class="displayNone">Contact</span>
               </Link>
             </li>
+            <li class="nav-item">
+              <Link
+                class="nav-link customTextColor paddingR_custom font_custom "
+                aria-current="page"
+                to="/chatapp"
+              >
+                <i class="fas fa-comment-dots"></i>{" "}
+                <span class="displayNone">Chat</span>
+              </Link>
+            </li>
+            
             <li class="nav-item">
               <Link
                 class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"

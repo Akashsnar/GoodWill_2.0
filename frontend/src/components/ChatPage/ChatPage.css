@@ -1,4 +1,4 @@
-.App {
+.ChatPage {
   width: 100vw;
   height: 100vh;
   background: #fff;
@@ -7,7 +7,7 @@
   display: grid;
   place-items: center;
 }
-body {
+.ChatPage {
   margin: 0%;
   padding: 0%;
 }
