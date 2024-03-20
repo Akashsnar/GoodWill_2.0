@@ -18,6 +18,7 @@ function GetUserNGO(props){
   
           const data = await response.json();
           setCampaigns(data);
+          // console.log(data);
         } catch (error) {
           console.error('Error:', error);
         }

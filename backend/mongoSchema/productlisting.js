@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const productschema =new Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        },
+const productlistingschema =new Schema({
         ngoId: {
             type: mongoose.Schema.Types.ObjectId
             },
@@ -14,14 +11,17 @@ const productschema =new Schema({
             productname:{
              type: String
             },
+            productimage:{
+                type:string
+            },
             amount:{
                 type: Number
             },
-            quantity:{
-                type: Number
+            details:{
+                type:String
             }
             
 }, {timestamps: true})
 
-const product = mongoose.model('product', productschema)
-module.exports= product;
+const productlisting = mongoose.model('productlisting', productlistingschema)
+module.exports= productlisting;

@@ -127,6 +127,22 @@ export const AddEvents = async (formData) => {
     throw new Error(message);
   }
 };
+
+export const Addproducts = async (formData) => {
+  try {
+    console.log(formData);
+    await axios.post(`${Backend_URL}/sitedata/products`, formData, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    throw new Error(message);
+  }
+};
+
 export const GetEvents = async (formData) => {
   try {
 

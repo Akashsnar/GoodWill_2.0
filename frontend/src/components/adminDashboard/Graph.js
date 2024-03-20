@@ -84,7 +84,7 @@ const App = () => {
   };
   const chartContainerStyle = {
     width: "60vw",
-    height: "35vh",
+    height: "50vh",
   };
 
   return (

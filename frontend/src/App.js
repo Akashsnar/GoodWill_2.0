@@ -43,6 +43,9 @@ import "./style.css";
 import AddEvents from "./Event/AddEvents.jsx";
 import ShowEvent from "./Event/ShowEvent.js";
 import Eventpage from "./Event/Eventpage.js";
+import Navbar from "./components/navbar/Navbar.js";
+import Products from "./components/Products/Productitems.js";
+import ProductsForm from "./components/Products/Productsform.js";
 
 axios.defaults.withCredentials = true;
 
@@ -60,6 +63,8 @@ function App() {
 
   return (
     <Router>
+      <Navbar />
+
       <div className="App">
         <div style={{ backgroundColor: "white" }}>
           <Routes forceRefresh={true}>
@@ -72,15 +77,14 @@ function App() {
             <Route exact path="/campaign" element={<Campaign />} />
             <Route exact path="/services" element={<SerVices />} />
             <Route exact path="/user/:id" element={<Userhome />} /> {/*hide*/}
+            <Route exact path="/user/:id/products" element={<Products />} />
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="/ngo" element={<NGO_page />} />
             <Route exact path="/userdetails" element={<UserdetailsForm />} />
             <Route exact path="/donation/:name" element={<Donation />} />
-            <Route
-              exact
-              path="/Ngo_dashboard"
-              element={<NGO_Dashboard />}
-            />{" "}
+            <Route exact path="/Ngo_dashboard"element={<NGO_Dashboard />}/>
+            <Route exact path="/Ngo_dashboard/needsform"element={<ProductsForm />}/>
+
             {/*hide*/}
             <Route exact path="/Admin" element={<MainDashboard />} /> {/*hide*/}
             <Route exact path="/givereview" element={<UserReviews />} />{" "}

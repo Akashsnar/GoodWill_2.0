@@ -1,4 +1,3 @@
-import Navbar from '../navbar/Navbar';
 import NGOHeader  from './NGO_header';
 import NGOContent from './api_NGO_Content';
 // import NGOContent from './NGO_Content';
@@ -10,9 +9,7 @@ function NGOPage() {
     page:"NGO"
   }
     return (
-      <>
-      <Navbar/>
-      
+      <>      
         <NGOHeader props = { headerProps } />
         <NGOContent />
       </>

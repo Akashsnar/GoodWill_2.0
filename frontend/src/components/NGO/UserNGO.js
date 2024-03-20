@@ -4,10 +4,21 @@ import { Link } from "react-router-dom";
 import { selectName, selectEmail } from "../../redux/features/auth/authSlice";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { addCartItems } from "../../redux/features/auth/cartSlice";
+
+
 
 const Campaign = ({ data, mode, username, userDetails }) => {
   console.log("user detail", userDetails);
   console.log("Ngo detail", data);
+  const checkcartdata=useSelector((state) => state.cart)
+console.log(checkcartdata);
+// const cart={
+//   productname: "",
+//   quantity:"",
+//   Campaignname:"",
+//   username:"",
+// }
 
   const dispatch = useDispatch();
   const name = useSelector(selectName);
@@ -99,6 +110,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
 
   return (
     <div>
+ 
       <section class="feature-one features-service">
         <div class="container">
           <div class="feature-one__inner" style={{ padding: "0" }}>
@@ -241,6 +253,10 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                       }}
                     ></i>
                   </p>
+                
+                <Link to='products'>Donate Needs</Link>
+                  {/* <button className="bg-green-400" onClick={()=>{dispatch(addCartItems({"productname":"milk", "campagainname":data.name}));}}>cartAdd</button>
+                 {checkcartdata.cartitems.map((item)=>item.productname)} */}
                  </div>
 
                 </div>
@@ -267,9 +283,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                 <Link
                   to="/events"
                   state={{
-                    ngodata: data,
-                    username: username,
-                    userDetails: userDetails,
+                    ngodata: data
                   }}
                   className="thm-btn"
                   style={{
@@ -284,6 +298,26 @@ const Campaign = ({ data, mode, username, userDetails }) => {
                 >
                   {" "}
                   Add Event
+                </Link>
+
+                <Link
+                  to="needsform"
+                  state={{
+                    ngodata: data
+                  }}
+                  className="thm-btn"
+                  style={{
+                    height: "2rem",
+                    width: "10rem",
+                    margin: "0px",
+                    marginBottom: "1rem",
+                    padding: "10px",
+                    textAlign: "center",
+                    lineHeight: "10px",
+                  }}
+                >
+                  {" "}
+                  Add your needs
                 </Link>
               </div>
             ): (

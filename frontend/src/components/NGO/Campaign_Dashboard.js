@@ -43,44 +43,6 @@ function CampaignDashboard() {
   const Email = useSelector((state) => state.email)
   console.log(Email)
 
-  // const initialUserDonations = [
-  //   {
-  //     id: 1,
-  //     Username: "Swastik",
-  //     Donated: 5000,
-  //     profile: "/assets/images/users/u0.png"
-  //   }, {
-  //     id: 2,
-  //     Username: "Aakash",
-  //     Donated: 6000,
-  //     profile: "/assets/images/users/u1.png"
-
-  //   }, {
-  //     id: 3,
-  //     Username: "Stephen",
-  //     Donated: 2000,
-  //     profile: "/assets/images/users/u2.png"
-  //   },
-  //   {
-  //     id: 4,
-  //     Username: "Johnny",
-  //     Donated: 1500,
-  //     profile: "/assets/images/users/u0.png"
-  //   }
-  //   , {
-  //     id: 5,
-  //     Username: "Raj",
-  //     Donated: 3200,
-  //     profile: "/assets/images/users/u1.png"
-  //   }, {
-  //     id: 6,
-  //     Username: "Dhruv",
-  //     Donated: 4500,
-  //     profile: "/assets/images/users/u3.png"
-  //   }
-  //   // Add more campaigns as needed
-  // ];
-  
   const [userDonations, setUserDonations] = useState();
   const [userReviews, setUserReviews] = useState();
   const [percentage, setPercentage] = useState(0);
@@ -157,11 +119,7 @@ function CampaignDashboard() {
               <h4 class="servicesHeading ngolink" style={{ marginTop: "10px", marginBottom: "10px" }}>Category : </h4> <h3 style={{ display: 'inline-block' }}>{campaign.category}</h3>
             </div>
           </div>
-          {/* <div style={{textAlign:'center', margin:'10px'}}>
-    <img src={campaign.image} alt="" srcset="" width="400rem" className='center' />
-    {campaign.desc}
-</div>
- */}
+      
 
 
           <p style={{ width: '50vw', margin: 'auto', marginBottom: '20px' }}>
@@ -190,7 +148,7 @@ function CampaignDashboard() {
                       <span>Rs {campaign.raised}</span> Raised
                     </p>
                     <p>
-                      <span>Rs{campaign.goal}</span> Goal
+                      <span>Rs {campaign.goal}</span> Goal
                     </p>
                   </div>
 

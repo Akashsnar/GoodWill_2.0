@@ -38,6 +38,7 @@ function Userhome() {
   useEffect(() => {
     async function fetchData() {
       console.log("hi");
+      console.log(props);
       const userid = props.id;
       console.log(userid);
       const response = await axios.get(`http://localhost:4000/sitedata/userdetail/${userid}`);

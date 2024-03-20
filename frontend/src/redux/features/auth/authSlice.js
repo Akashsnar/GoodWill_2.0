@@ -3,17 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const name = JSON.parse(localStorage.getItem("name"));
 const email = JSON.parse(localStorage.getItem("email"));
 
-// var name="";
-// var email="";
-// if(localStorage.getItem("name")===undefined)
-// {
-//     name = JSON.parse(localStorage.getItem("name"));
-// }
-// if(localStorage.getItem("email")===undefined)
-// {
-//     email = JSON.parse(localStorage.getItem("email"));
-// }
-// // const name = "ram"
+
 const initialState = {
   isLoggedIn: false,
   name: name ? name : "",
@@ -31,13 +21,17 @@ const authSlice = createSlice({
     },
     SET_LOGOUT_USER(state, action) {
       state.isLoggedIn = action.payload;
-      //   console.log(state.isLoggedIn);
     },
     SET_NAME(state, action) {
+      console.log("User name in local storage", state, action);
       localStorage.setItem("name", JSON.stringify(action.payload));
       state.name = action.payload;
-      //    console.log(action.payload)
       console.log(state.name);
+    },
+    SET_USERID(state, action) {
+      localStorage.setItem("userid", JSON.stringify(action.payload));
+      state.userid = action.payload;
+      console.log(state.userid);
     },
     SAVE_USER(state, action) {
       localStorage.setItem("email", JSON.stringify(action.payload));
@@ -59,6 +53,7 @@ export const {
   SET_LOGIN_USER,
   SET_LOGOUT_USER,
   SET_NAME,
+  SET_USERID,
   SAVE_USER,
   addBlog,
   deleteBlog,

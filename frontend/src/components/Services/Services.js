@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from '../navbar/Navbar';
 import { Link } from "react-router-dom";
 
 function Services() {
@@ -7,7 +6,7 @@ function Services() {
         <>
 
         
-            <Navbar />
+   
             <div class="service-header" style={{ backgroundColor: '#ffffff' }}>
                 <h1 class="servicesHeading">Our services</h1>
                 <div class="container-fluid">

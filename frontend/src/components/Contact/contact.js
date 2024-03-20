@@ -1,7 +1,5 @@
 import React , { useState } from "react";
 import NGOHeader  from '../NGO/NGO_header';
-import Navbar from "../navbar/Navbar";
-
 function Contact(){
     const headerProps={
         bgimage: "assets/images/main-slider/slider-1-1.jpg",
@@ -69,7 +67,6 @@ function Contact(){
 
   return (
     <div style={{backgroundColor:'white'}}>
-<Navbar/>
 
       <NGOHeader props={headerProps}/>
 

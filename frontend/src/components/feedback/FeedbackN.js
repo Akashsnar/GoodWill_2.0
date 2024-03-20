@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import NGOHeader from "../NGO/NGO_header";
-import Navbar from "../navbar/Navbar";
+
 import FeedbackRating from "./FeedbackRating";
 import FeedbackRadioButtons from "./FeedbackRadioButtons";
 
@@ -71,7 +71,6 @@ function Feedback() {
 
   return (
     <div style={{ backgroundColor: "white" }}>
-      <Navbar />
 
       {/* <NGOHeader props={headerProps} /> */}
 

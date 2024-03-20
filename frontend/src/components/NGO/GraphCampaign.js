@@ -95,8 +95,12 @@ const App = (CampaignName) => {
   };
 
   return (
+    <div>
+      <center>
     <div style={chartContainerStyle}>
       <CanvasJSChart options={options} />
+    </div>
+    </center>
     </div>
   );
 };

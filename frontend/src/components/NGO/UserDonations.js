@@ -19,7 +19,7 @@ const UserDonations = ({ data, goal }) => {
                     
             <div className="bar">
               <div className="bar-inner count-bar" ref={barInnerRef} style={{ width: `${percentage}%`}}>
-                {/* <div className="count-text">{percentage}%</div> */}
+           
               </div>
             </div>
             <div className="popular-causes__goals" style={{marginBottom: "0" , paddingBottom: "0"}}>

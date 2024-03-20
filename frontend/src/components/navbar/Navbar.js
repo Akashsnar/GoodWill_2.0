@@ -5,10 +5,17 @@ import "./Navbar.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
+import cartSlice from "../../redux/features/auth/cartSlice";
 
 const NavBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  console.log(useSelector((state) => state.auth));
+  const checkuserdata=useSelector((state) => state.auth)
+  const cartitems=useSelector((state)=> state.cart)
+  console.log(cartitems);
+  const totalitems= cartitems.cartitems.length;
+
+
+  console.log("checking user login or not",checkuserdata);
   const navigate = useNavigate();
   useEffect(() => {
     const navbar = document.querySelector(".navbar");
@@ -156,16 +163,6 @@ const NavBar = () => {
                 <span class="displayNone">Chat</span>
               </Link>
             </li>
-            
-            <li class="nav-item">
-              <Link
-                class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"
-                to="/login"
-              >
-                <i class="fa fa-sign-in "></i>
-                <span class="displayNone">&nbsp;Log In</span>
-              </Link>
-            </li>
             <li class="nav-item">
               <Link
                 class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer "
@@ -175,15 +172,41 @@ const NavBar = () => {
                 <span class="displayNone">&nbsp; Feedback</span>
               </Link>
             </li>
-            {/* <li className="nav-item">
+            {checkuserdata.isLoggedIn===false?
+            <li class="nav-item">
               <Link
-                class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer "
-                to="/blogs"
+                class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"
+                to="/login"
               >
-                <i class="fa-solid fa-newspaper"></i>
-                <span class="displayNone">&nbsp; Blog</span>
+                <i class="fa fa-sign-in "></i>
+                <span class="displayNone">&nbsp;Log In</span>
               </Link>
-            </li> */}
+            </li>:<li class="nav-item">
+              <Link
+                class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"
+                to={`/user/${checkuserdata.userid}`}
+              >
+               <i class="fa-solid fa-user"></i>
+                <span class="displayNone">&nbsp;Your Profile</span>
+              </Link>
+            </li>
+            }
+            
+
+            <li class="nav-item">
+                <Link
+                  class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer p-4"
+                  to="/feedback"
+                >
+              <div> 
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span>{totalitems}</span>
+              </div>
+                </Link>
+              </li>
+
+
+           
             <li class="nav-item">
               <button
                 class="donateBtn nav-link btn customTextColor paddingR_custom font_custom cursor-pointer"
@@ -288,6 +311,18 @@ const NavBar = () => {
                   &nbsp;Feedback
                 </Link>
               </li>
+             
+              <li class="nav-item">
+                <Link
+                  class="nav-link btn customTextColor paddingR_custom font_custom cursor-pointer p-4"
+                  to="/feedback"
+                >
+                  <i class="fa-regular fa-cart-shopping"></i>
+                </Link>
+              </li>
+
+             
+              
               <li class="nav-item">
                 <Link
                   to="#"

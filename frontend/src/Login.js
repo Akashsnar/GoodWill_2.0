@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import RegisterForm from "./components/LoginForm/RegisterForm";
-import LoginFom from "./components/LoginForm/LoginFom";
+import LoginForm from "./components/LoginForm/LoginFom";
 import { toast } from "react-toastify";
 import { loginUser, registerUser, validateEmail } from "./services/authService";
 import {
   SAVE_USER,
   SET_LOGIN_USER,
   SET_NAME,
+  SET_USERID
 } from "./redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -64,7 +65,7 @@ const Login = () => {
       setIsLoading(true);
       try {
         const data = await registerUser(userData);
-        console.log("hel");
+        console.log("register form submitting");
         console.log(data);
         dispatch(SET_LOGIN_USER(true));
         dispatch(SET_NAME(data.name));
@@ -124,6 +125,7 @@ const Login = () => {
         console.log(data);
         dispatch(SET_LOGIN_USER(true));
         dispatch(SET_NAME(data.name));
+        dispatch(SET_USERID(data._id));
         dispatch(SAVE_USER(data.email));
 
         console.log("user ka ",data);
@@ -159,7 +161,7 @@ const Login = () => {
           />
         </div>
         <div className="form-container sign-in-container">
-          <LoginFom
+          <LoginForm
             formData={LogFormData}
             handleInputChange={handleloginInputChange}
             login={login}
