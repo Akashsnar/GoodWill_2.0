@@ -13,10 +13,10 @@ const multer = require("multer");
 const morgan = require("morgan");
 const cors = require("cors");
 const { config } = require("dotenv");
-const fs = require('fs');
+const fs = require("fs");
 config();
 // app.use(express.static("uploads"));
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use(express.static("registrationproof"));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -29,11 +29,11 @@ app.use(
     credentials: true,
   })
 );
-const csrf = require('csurf');
-const csrfprotection=csrf({ cookie: true });
+const csrf = require("csurf");
+const csrfprotection = csrf({ cookie: true });
 
-const logStream = fs.createWriteStream(`28_log.txt`, { flags: 'a' });
-app.use(morgan('combined', { stream: logStream }));
+const logStream = fs.createWriteStream(`28_log.txt`, { flags: "a" });
+app.use(morgan("combined", { stream: logStream }));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -44,6 +44,53 @@ app.use(
     extended: false,
   })
 );
+
+//redis
+const redis = require("redis");
+const redisUrl = "redis://localhost:6379";
+const redisClient = redis.createClient({ url: redisUrl });
+// (async () => {
+//   await redisClient.connect();
+// })();
+// Check Redis connection
+redisClient.on("error", (err) => {
+  console.error("Redis connection error:", err);
+});
+redisClient.on("connect", () => {
+  console.log("Connected to Redis server");
+});
+
+// Middleware function to cache data
+function cache2(req, res, next) {
+  const key = req.originalUrl;
+  redisClient.get(key, (err, data) => {
+    if (err) {
+      console.error("Redis error:", err);
+      next(); // Proceed without caching if there's an error
+    }
+
+    if (data !== null) {
+      res.send(JSON.parse(data));
+    } else {
+      next();
+    }
+  });
+}
+function cache(req, res, next) {
+  const key = req.originalUrl;
+  redisClient.get(key, (err, data) => {
+    if (err) {
+      console.error("Redis error:", err);
+      next(); // Proceed without caching if there's an error
+    }
+
+    if (data !== null) {
+      res.send(JSON.parse(data));
+    } else {
+      next();
+    }
+  });
+}
 
 var upload = multer({
   storage: multer.diskStorage({
@@ -59,10 +106,9 @@ var upload = multer({
   }),
 });
 
-
 const UserRoute = require("./routes/UserRoute.js");
 app.use("/api/users", UserRoute);
-const Group_no = 'Group_28'; 
+const Group_no = "Group_28";
 
 const port = 4000;
 
@@ -170,8 +216,6 @@ app.post("/deleteUser", async (req, res) => {
   }
 });
 
-
-
 const Feedback = require("./mongoSchema/feedbackSchema");
 app.post("/deleteFeedback", async (req, res) => {
   const id = req.body.id;
@@ -236,6 +280,7 @@ app.post("/deleteEvent", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 app.post("/deleteNGOData", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -254,18 +299,19 @@ app.use(function (err, req, res, next) {
   res.status(500).send("Something broke!");
 });
 
-
-app.get("/eventsData", async (req, res) => {
+app.get("/eventsData", cache, async (req, res) => {
   try {
     const event = await Events.find().sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(event));
     res.json(event);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-app.get("/eventsLength", async (req, res) => {
+app.get("/eventsLength", cache, async (req, res) => {
   try {
     const event = await Events.find();
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(event));
     res.json(event.length);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -275,6 +321,7 @@ app.get("/eventsLength", async (req, res) => {
 app.get("/ngosData", async (req, res) => {
   try {
     const ngo = await UserNgo.find({ mode: "Ngo" }).sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
     res.json(ngo);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -283,6 +330,7 @@ app.get("/ngosData", async (req, res) => {
 app.get("/NGOsLength", async (req, res) => {
   try {
     const ngo = await UserNgo.find({ mode: "Ngo" });
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
     res.json(ngo.length);
   } catch (err) {
     res.status(500).json({ message: err.message });
