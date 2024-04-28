@@ -21,11 +21,7 @@ const contactSchema = new mongoose.Schema(
     message: {
       type: String,
       required: true,
-    },
-    // created: {
-    //     type: Date,
-    //     default: Date.now
-    // }
+    }
   },
   { timestamps: true }
 );

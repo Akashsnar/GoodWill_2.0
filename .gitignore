@@ -6,4 +6,4 @@ rohan_backend/server/node_modules
 rohan_backend/server/.env
 
 node_modules
-
+*.log

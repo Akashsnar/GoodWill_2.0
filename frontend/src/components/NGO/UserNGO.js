@@ -254,7 +254,9 @@ console.log(checkcartdata);
                     ></i>
                   </p>
                 
-                <Link to='products'>Donate Needs</Link>
+                <Link to='products'
+                 state={{ ngodata: data, userDetails: userDetails }}
+                >Donate Needs</Link>
                   {/* <button className="bg-green-400" onClick={()=>{dispatch(addCartItems({"productname":"milk", "campagainname":data.name}));}}>cartAdd</button>
                  {checkcartdata.cartitems.map((item)=>item.productname)} */}
                  </div>

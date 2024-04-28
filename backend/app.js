@@ -11,8 +11,6 @@ const cookieParser = require("cookie-parser");
 const db = require("./mongoSchema/database");
 const multer = require("multer");
 const morgan = require("morgan");
-const userRoute = require("./routes/user");
-const blogRoute = require("./routes/blog");
 const cors = require("cors");
 const { config } = require("dotenv");
 const fs = require('fs');
@@ -139,8 +137,6 @@ app.use("/userinfo", userinfo);
 const AdminRoute = require("./routes/adminRoutes");
 app.use("/admin", AdminRoute);
 
-app.use("/bloguser", userRoute);
-app.use("/blog", blogRoute);
 const userdataRouter = require("./routes/sitedata");
 app.use("/sitedata", userdataRouter);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

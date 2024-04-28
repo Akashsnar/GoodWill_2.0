@@ -6,8 +6,8 @@ const email = JSON.parse(localStorage.getItem("email"));
 
 const initialState = {
   isLoggedIn: false,
-  name: name ? name : "",
-  email: email ? email : "",
+  name: name ? name : "dfg",
+  email: email ? email : "dfg@dsfd",
   blogs: [],
 };
 

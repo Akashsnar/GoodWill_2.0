@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+onst mongoose = require('mongoose');
 
 const getContactSchema = new mongoose.Schema({
     name: {
