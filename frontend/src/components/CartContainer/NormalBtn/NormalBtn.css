@@ -1,0 +1,15 @@
+.normal-btn {
+  background-color:  #b47e28ad;
+  width: 6rem;
+  height: 2.5rem;
+  border-radius: 5px;
+  border: 1px solid #d99a1c1b;
+  color: #b47e28ad;
+  cursor: pointer;
+  margin: 0.2rem;
+}
+
+
+.center-text{
+  text-align: center;
+}

@@ -161,3 +161,23 @@ export const GetEvents = async (formData) => {
     throw new Error(message);
   }
 };
+export const SendCartInfo = async (formData) => {
+  try {
+
+    console.log("SendCartInfo", formData)
+    const response = await axios.post(`${Backend_URL}/api/users/cart/cartdetails`,formData,{
+      withCredentials:true,
+    });
+    console.log(response);
+    // return response.data;
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+
+    throw new Error(message);
+  }
+};
+
+

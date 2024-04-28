@@ -59,6 +59,8 @@ var upload = multer({
   }),
 });
 
+const CartPostRoutes = require('./routes/CartPostRoutes.js');
+app.use("/api/users/cart", CartPostRoutes);
 
 const UserRoute = require("./routes/UserRoute.js");
 app.use("/api/users", UserRoute);
@@ -288,3 +290,4 @@ app.get("/NGOsLength", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+

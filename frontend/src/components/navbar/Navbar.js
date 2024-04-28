@@ -5,16 +5,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 import cartSlice from "../../redux/features/auth/cartSlice";
+import { FaCartShopping } from "react-icons/fa6";
+import CustomDropdown from "../CartContainer/CustomDropdownList/CustomDropdown";
+import TbContent from "../CartContainer/TbContent";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const checkuserdata = useSelector((state) => state.auth)
   const cartitems = useSelector((state) => state.cart)
-  console.log(cartitems);
-  const totalitems = cartitems.cartitems.length;
+  // console.log(cartitems);
   const navigate = useNavigate();
-
+  const [showCartDetails,setshowCartDetails] = useState(false)
     const handleDonation = () => {
     // alert(`Login : ${isLoggedIn}`);
     if (!isLoggedIn) {
@@ -24,6 +26,10 @@ const Navbar = () => {
       navigate("/donation");
     }
   };
+  const handleCartDetails = () =>{
+    // console.log('cart');
+    setshowCartDetails(!showCartDetails);
+  }
   return (
     <nav className="flex items-center justify-between flex-wrap ">
       <div className="flex items-center flex-shrink-0 text-white mr-6 lg:mr-72">
@@ -70,6 +76,11 @@ const Navbar = () => {
           <Link to="/feedback" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
           Feedback
           </Link>
+        <div className="cartcontainer" style={{width:'50px',height:'50px',position:'relative'}} onClick={handleCartDetails}>
+          <FaCartShopping style={{cursor:'pointer'}} /> {cartitems.length}
+          {showCartDetails && cartitems.length !==0 && <CustomDropdown seq_arr={cartitems.cartitems} />}
+          </div>
+
           {checkuserdata.isLoggedIn === false ?
                 <Link
                   to="/login"
@@ -85,7 +96,6 @@ const Navbar = () => {
                 </Link>
             }
               
-        
 
         </div>
         <div>
