@@ -1,30 +1,29 @@
-.cart-side-panel {
-    position: fixed;  /* Fixed position to always stay in the viewport */
-    right: 0;         /* Align to the right side of the viewport */
-    top: 0;           /* Align to the top of the viewport */
-    width: 300px;     /* Fixed width */
-    height: 100%;     /* Full height */
-    background-color: white; /* Background color */
-    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5); /* Shadow to create depth */
-    overflow-y: auto; /* Allows scrolling within the panel */
-    z-index: 1050;    /* Higher than most elements */
-    transform: translateX(100%); /* Start off-screen */
-    transition: transform 0.3s ease-in-out; /* Smooth transition for sliding in/out */
-  }
-  
-  .cart-side-panel.open {
-    transform: translateX(0); /* Moves into view when open */
-  }
-  
-  .cart-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 10px;
-  }
-  
-  .cart-footer {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
+/* .cart-side-panel {
+  position: absolute;  
+  right: 0;         
+  top: 0;          
+  width: 300px;     
+  height: 100%;     
+  background-color: white; 
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5); 
+  overflow-y: auto; 
+  z-index: 1050;    
+  transform: translateX(100%); 
+  transition: transform 0.3s ease-in-out; 
+}
+
+.cart-side-panel.open {
+  transform: translateX(0); 
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.cart-footer {
+  text-align: center;
+  margin-top: 20px;
+} */
