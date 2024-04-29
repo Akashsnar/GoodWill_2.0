@@ -10,7 +10,6 @@ const LoginContainer = () => {
   // useRedirectLoggedOutUser('/login')
   return (
     <>
-   <Navbar/>
       <Login />
     
     <ToastContainer/>
