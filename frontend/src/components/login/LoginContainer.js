@@ -7,7 +7,6 @@ import Navbar from "../navbar/Navbar";
 
 
 const LoginContainer = () => {
-  // useRedirectLoggedOutUser('/login')
   return (
     <>
       <Login />

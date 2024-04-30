@@ -24,6 +24,7 @@ const RegisterForm = ({
         />
         <input
           type="email"
+          className="input-tag"
           placeholder="EMAIL"
           name="email"
           value={formData.email}
@@ -31,6 +32,7 @@ const RegisterForm = ({
         />
         <input
           type="password"
+          className="input-tag"
           placeholder="PASSWORD"
           name="password"
           value={formData.password}
@@ -38,6 +40,7 @@ const RegisterForm = ({
         />
         <input
           type="password"
+          className="input-tag"
           placeholder="CONFIRMPASSWORD"
           name="password2"
           value={formData.password2}
