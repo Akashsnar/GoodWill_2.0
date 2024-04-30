@@ -76,7 +76,10 @@ const Navbar = () => {
           <Link to="/feedback" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
             Feedback
           </Link>
-
+          <Link to="/chatapp" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
+          chatapp
+          </Link>
+         
 
           {checkuserdata.isLoggedIn === false ?
             <Link
