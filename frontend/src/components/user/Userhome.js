@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./userstyle.css";
 import ngos from "./ngoscard";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { selectName, selectEmail } from "../../redux/features/auth/authSlice";
@@ -65,6 +64,10 @@ function Userhome() {
           phone: (responses.phone),
           dob: (responses.dob)
         });
+        // if(userDetails.Email!=''||!userDetails.details||!userDetails.name||!userDetails.phone){
+        //         alert("Please Update your profile");        
+        // }
+
       }
     }
     fetchData();
@@ -74,7 +77,7 @@ function Userhome() {
 
   return (
     <div className="body">
-      <div className="row profile flex">
+      <div className="flex">
 
         <div className="sticky flex-shrink-0 p-3 bg-white " style={{ width: "20%" }}>
           <div className="profile-userpic">
@@ -83,10 +86,10 @@ function Userhome() {
               alt=""
             />
           </div>
-          <div className="pl-8 pt-1">
+          <div className="pt-1">
             <Link to={`/userprofile/${userDetails.name}`} className="profile-usertitle">
-              <div className="profile-usertitle-name">{userDetails.name}</div>
-              <div className="profile-usertitle-job">{userDetails.Email}</div>
+              <div className="profile-usertitle-name text-center">{userDetails.name}</div>
+              <div className="profile-usertitle-job text-center">{userDetails.Email}</div>
             </Link>
           </div>
 
@@ -120,7 +123,7 @@ function Userhome() {
                 <Link
                   to="https://www.apollowebstudio.com"
                   className="link">
-                  {Email}
+                   {" "}{Email}
                 </Link>
               </div>
               <div className="profile-desc-link mt-2">
@@ -128,7 +131,7 @@ function Userhome() {
                 <Link
                   to="https://www.twitter.com/jasondavisfl/"
                   className="link">
-                  {userDetails.phone}
+                  {" "} {userDetails.phone}
                 </Link>
               </div>
               <Link

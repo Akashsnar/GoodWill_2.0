@@ -1,13 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const expressAsyncHandler = require('express-async-handler');
-const productlisting = require('../mongoSchema/Products');
-router.post('/cartdetails',expressAsyncHandler(async(req,res)=>{
+const {handleCart} = require('../controllers/cartController');
 
-    const payload = req.body;
-    console.log("je");
-    console.log(req.body);
-    res.status(200).send(req.body)
+router.post('/cartdetails',handleCart);
+// router.post('/cartdetails',(req,res)=>{
+//     console.log('h')
+// });
 
-}));
 module.exports=router;

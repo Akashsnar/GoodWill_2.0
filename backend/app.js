@@ -6,17 +6,45 @@ const ngoschema = require("./mongoSchema/mongoschemango");
 const reviewschema = require("./mongoSchema/reviewschema");
 const Events = require("./mongoSchema/EventSchema");
 const UserNgo = require("./mongoSchema/userModel");
-const reportschema = require("./mongoSchema/reportschema");
 const cookieParser = require("cookie-parser");
 const db = require("./mongoSchema/database");
 const multer = require("multer");
 const morgan = require("morgan");
 const cors = require("cors");
 const { config } = require("dotenv");
+
 const fs = require('fs');
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 config();
 // app.use(express.static("uploads"));
+// Swagger configuration
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Your API Documentation",
+      version: "1.0.0",
+      description: "Documentation for your API",
+    },
+    servers: [
+      {
+        url: "http://localhost:4000", // Update this with your server URL
+      },
+    ],
+  },
+  apis: [
+    "./app.js",
+    "./mongoSchema/*.js", // Update this path to include all your schema files
+    "./routes/*.js", // Update this path to include all your route files
+  ],
+};
+const specs = swaggerJsdoc(options);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
+// Your existing middleware and routes
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
+
 app.use(express.static("registrationproof"));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -29,11 +57,11 @@ app.use(
     credentials: true,
   })
 );
-const csrf = require('csurf');
-const csrfprotection=csrf({ cookie: true });
+const csrf = require("csurf");
+const csrfprotection = csrf({ cookie: true });
 
-const logStream = fs.createWriteStream(`28_log.txt`, { flags: 'a' });
-app.use(morgan('combined', { stream: logStream }));
+const logStream = fs.createWriteStream(`28_log.txt`, { flags: "a" });
+app.use(morgan("combined", { stream: logStream }));
 
 // app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -44,6 +72,61 @@ app.use(
     extended: false,
   })
 );
+
+//redis
+const redis = require("redis");
+const redisUrl = "redis://localhost:6379";
+const redisClient = redis.createClient({ url: redisUrl });
+// const redisClient = createClient({
+//   password: "YfG1c8MnMa4gDxW10h0eDs0fDwrrxMVz",
+//   socket: {
+//     host: "redis-17000.c264.ap-south-1-1.ec2.redns.redis-cloud.com",
+//     port: 17000,
+//   },
+// })
+// redisClient.connect()
+// (async () => {
+//   await redisClient.connect();
+// })();
+// Check Redis connection
+redisClient.on("error", (err) => {
+  console.error("Redis connection error:", err);
+});
+redisClient.on("connect", () => {
+  console.log("Connected to Redis server");
+});
+
+// Middleware function to cache data
+// function cache2(req, res, next) {
+//   const key = req.originalUrl;
+//   redisClient.get(key, (err, data) => {
+//     if (err) {
+//       console.error("Redis error:", err);
+//       next(); // Proceed without caching if there's an error
+//     }
+
+//     if (data !== null) {
+//       res.send(JSON.parse(data));
+//     } else {
+//       next();
+//     }
+//   });
+// }
+function cache(req, res, next) {
+  const key = req.originalUrl;
+  redisClient.get(key, (err, data) => {
+    if (err) {
+      console.error("Redis error:", err);
+      next(); // Proceed without caching if there's an error
+    }
+
+    if (data !== null) {
+      res.send(JSON.parse(data));
+    } else {
+      next();
+    }
+  });
+}
 
 var upload = multer({
   storage: multer.diskStorage({
@@ -59,12 +142,14 @@ var upload = multer({
   }),
 });
 
+
 const CartPostRoutes = require('./routes/CartPostRoutes.js');
 app.use("/api/users/cart", CartPostRoutes);
 
+
 const UserRoute = require("./routes/UserRoute.js");
 app.use("/api/users", UserRoute);
-const Group_no = 'Group_28'; 
+const Group_no = "Group_28";
 
 const port = 4000;
 
@@ -141,10 +226,33 @@ app.use("/admin", AdminRoute);
 
 const userdataRouter = require("./routes/sitedata");
 app.use("/sitedata", userdataRouter);
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
 
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
+
+/**
+ * @swagger
+ * /deleteNgo:
+ *   post:
+ *     summary: Delete NGO by ID
+ *     description: Delete an NGO from the database by its ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the NGO to delete.
+ *     responses:
+ *       '200':
+ *         description: NGO deletion successful
+ *       '500':
+ *         description: Internal server error
+ */
 
 app.post("/deleteNgo", async (req, res) => {
   const id = req.body.id;
@@ -158,6 +266,7 @@ app.post("/deleteNgo", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 const User = require("./mongoSchema/userdetails");
 app.post("/deleteUser", async (req, res) => {
   const id = req.body.id;
@@ -171,8 +280,6 @@ app.post("/deleteUser", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
 
 const Feedback = require("./mongoSchema/feedbackSchema");
 app.post("/deleteFeedback", async (req, res) => {
@@ -190,6 +297,30 @@ app.post("/deleteFeedback", async (req, res) => {
 
 const Contact = require("./mongoSchema/contactSchema");
 const Donation = require("./mongoSchema/donationschema.js");
+
+/**
+ * @swagger
+ * /deleteMessage:
+ *   post:
+ *     summary: Delete message by ID
+ *     description: Delete a message from the database by its ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the message to delete.
+ *     responses:
+ *       '200':
+ *         description: Message deletion successful
+ *       '500':
+ *         description: Internal server error
+ */
+
 app.post("/deleteMessage", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -202,6 +333,7 @@ app.post("/deleteMessage", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 app.post("/deleteReview", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -214,6 +346,7 @@ app.post("/deleteReview", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 app.post("/deleteDonation", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -226,6 +359,30 @@ app.post("/deleteDonation", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+/**
+ * @swagger
+ * /deleteEvent:
+ *   post:
+ *     summary: Delete event by ID
+ *     description: Delete an event from the database by its ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the event to delete.
+ *     responses:
+ *       '200':
+ *         description: Event deletion successful
+ *       '500':
+ *         description: Internal server error
+ */
+
 app.post("/deleteEvent", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -238,6 +395,31 @@ app.post("/deleteEvent", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+
+/**
+ * @swagger
+ * /deleteNGOData:
+ *   post:
+ *     summary: Delete NGO data by ID
+ *     description: Delete NGO data from the database by its ID.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the NGO data to delete.
+ *     responses:
+ *       '200':
+ *         description: Deletion successful
+ *       '500':
+ *         description: Internal server error
+ */
+
 app.post("/deleteNGOData", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -252,42 +434,112 @@ app.post("/deleteNGOData", async (req, res) => {
 });
 
 app.use(function (err, req, res, next) {
-  console.error(err.stack);
+  console.error(err.stack, err);
   res.status(500).send("Something broke!");
 });
 
 
-app.get("/eventsData", async (req, res) => {
+app.get("/eventsData", cache, async (req, res) => {
+
+/**
+ * @swagger
+ * /eventsData:
+ *   get:
+ *     summary: Get all events data
+ *     description: Retrieve all events data from the database.
+ *     responses:
+ *       '200':
+ *         description: Returns all events data.
+ *       '500':
+ *         description: Internal server error
+ */
+
   try {
     const event = await Events.find().sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(event));
     res.json(event);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-app.get("/eventsLength", async (req, res) => {
+
+app.get("/eventsLength", cache, async (req, res) => {
+
+/**
+ * @swagger
+ * /eventsLength:
+ *   get:
+ *     summary: Get the number of events
+ *     description: Retrieve the count of events from the database.
+ *     responses:
+ *       '200':
+ *         description: Returns the number of events.
+ *       '500':
+ *         description: Internal server error
+ */
+
+
   try {
     const event = await Events.find();
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(event));
     res.json(event.length);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+/**
+ * @swagger
+ * /ngosData:
+ *   get:
+ *     summary: Get NGO data
+ *     description: Retrieve data of NGOs from the database.
+ *     responses:
+ *       '200':
+ *         description: Returns data of NGOs.
+ *       '500':
+ *         description: Internal server error
+ */
+
 app.get("/ngosData", async (req, res) => {
   try {
     const ngo = await UserNgo.find({ mode: "Ngo" }).sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
     res.json(ngo);
-  } catch (err) {
+  } catch (err) { 
     res.status(500).json({ message: err.message });
   }
 });
+
+/**
+ * @swagger
+ * /NGOsLength:
+ *   get:
+ *     summary: Get the number of NGOs
+ *     description: Retrieve the count of NGOs from the database where the mode is set to "Ngo".
+ *     responses:
+ *       '200':
+ *         description: Returns the number of NGOs.
+ *       '500':
+ *         description: Internal server error
+ */
+
 app.get("/NGOsLength", async (req, res) => {
   try {
     const ngo = await UserNgo.find({ mode: "Ngo" });
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
     res.json(ngo.length);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+
+app.get('/users', (req, res) => {
+  const users = [    { id: 1, name: 'Alice' },    { id: 2, name: 'Bob' },    { id: 3, name: 'Charlie' },  ];
+  res.json(users);
+});
+
+
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// module.exports = app;
