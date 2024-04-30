@@ -34,16 +34,14 @@
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
     "sqlite3": "^5.1.6",
-<<<<<<< HEAD
     "stripe": "^11.16.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^7.0.0"
-=======
+    "supertest": "^7.0.0",
     "stripe": "^11.16.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
->>>>>>> 80d0446b73d59dd5c5fa06dbd6cb28bf6fab0d62
+
   }
 }

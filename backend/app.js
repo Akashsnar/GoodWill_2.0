@@ -464,7 +464,6 @@ app.get("/NGOsLength", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-<<<<<<< HEAD
 });
 
 app.get('/users', (req, res) => {
@@ -475,6 +474,4 @@ app.get('/users', (req, res) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // module.exports = app;
-=======
-});
->>>>>>> 80d0446b73d59dd5c5fa06dbd6cb28bf6fab0d62
+
