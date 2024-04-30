@@ -7,3 +7,6 @@ rohan_backend/server/.env
 
 node_modules
 *.log
+backend/28_log.txt
+./backend/28_log.txt
+
