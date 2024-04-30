@@ -19,13 +19,13 @@ To run the project, simply navigate to the website URL in your web browser.
 
 1. **Git clone gh repo clone Akashsnar/GoodWill_2.0**
 1. Open the project folder
-1. Open the terminal and run 
+2. Open the terminal and run 
 
 the following commands:
 
 1. npm install
-1. node app.js -> Backend
-1. npm start -> Frontend
+2. node app.js -> Backend
+3. npm start -> Frontend
 
 
 **Built With**
