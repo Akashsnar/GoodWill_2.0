@@ -33,15 +33,15 @@
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
+    "redis": "^3.1.2",
     "sqlite3": "^5.1.6",
     "stripe": "^11.16.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^7.0.0",
     "stripe": "^11.16.0",
+    "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
-
   }
 }
