@@ -13,15 +13,15 @@ const generateToken = (id) => {
 
 // Register User
 const registerUser = asyncHandler(async (req, res) => {
-  
+
   // console.log(req.body);
-  const { mode,name,email,password} = req.body;
+  const { mode, name, email, password } = req.body;
   console.log(mode)
   console.log(name)
   console.log(email)
   console.log(password)
   // Validation
-  if (!name || !email || !password||!mode) {
+  if (!name || !email || !password || !mode) {
     res.status(400);
     throw new Error("Please fill in all required fields");
   }
@@ -31,26 +31,26 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Check if user email already exists
-  const userExists = await User.findOne({ name,email });
+  const userExists = await User.findOne({ name, email });
 
   if (userExists) {
     res.status(400);
     throw new Error("Email has already been registered");
   }
-      //encrypt password
-      const encryptedPassword = await bcrypt.hash(password, 10);
+  //encrypt password
+  const encryptedPassword = await bcrypt.hash(password, 10);
 
   // Create new user
   const user = await new User({
     name,
     mode,
     email,
-    password:encryptedPassword,
+    password: encryptedPassword,
     // registrationProof: fileData
   });
-user.save()
+  user.save()
   //   Generate Token
-console.log(user);
+  console.log(user);
   const token = generateToken(user._id);
 
   // Send HTTP-only cookie
@@ -63,7 +63,7 @@ console.log(user);
   });
 
   if (user) {
-    const { _id, name, email} = user;
+    const { _id, name, email } = user;
     res.status(201).json({
       _id,
       name,
@@ -84,22 +84,22 @@ console.log(user);
 // Login User
 const loginUser = asyncHandler(async (req, res) => {
   console.log("hello");
-  const { mode,email, password } = req.body;
- 
+  const { mode, email, password } = req.body;
+
   // Validate Request
-  if (!mode ||!email || !password) {
+  if (!mode || !email || !password) {
     res.status(400);
     throw new Error("Please add name and password");
   }
 
   // Check if user exists
-  const user = await User.findOne({ mode,email });
+  const user = await User.findOne({ mode, email });
   if (!user) {
     res.status(400);
     throw new Error("User not found, please signup");
   }
 
-  
+
   // User exists, check if password is correct
   const passwordIsCorrect = await bcrypt.compare(password, user.password);
   //   Generate Token
@@ -108,25 +108,25 @@ const loginUser = asyncHandler(async (req, res) => {
   console.log(token)
   console.log(user)
   console.log(passwordIsCorrect)
-  if(passwordIsCorrect){
-   // Send HTTP-only cookie
-  res.cookie("token", token, {
-    path: "/",
-    httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400), // 1 day
-    sameSite: "none",
-    secure: true,
-  });
-}
+  if (passwordIsCorrect) {
+    // Send HTTP-only cookie
+    res.cookie("token", token, {
+      path: "/",
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 86400), // 1 day
+      sameSite: "none",
+      secure: true,
+    });
+  }
   if (user && passwordIsCorrect) {
-    const { _id, name, email, profilepic}= user;
+    const { _id, name, email, profilepic } = user;
     res.status(200).json({
       _id,
       name,
       email,
       mode,
-     profilepic,
-    //  registrationProof,
+      profilepic,
+      //  registrationProof,
       token,
     });
   } else {
@@ -139,16 +139,16 @@ const loginUser = asyncHandler(async (req, res) => {
 const logout = asyncHandler(async (req, res) => {
 
   console.log("in userController logout")
-    const token = req.cookies.token;
-    console.log(token);
-    if (!token) {
-      res.status(401);
-      throw new Error("Not authorized, please login");
-    }
+  const token = req.cookies.token;
+  console.log(token);
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized, please login");
+  }
 
-    // Verify Token
-    const verified = jwt.verify(token, 'dhruv');
-    console.log(verified)
+  // Verify Token
+  const verified = jwt.verify(token, 'dhruv');
+  console.log(verified)
   // console.log(req.cookie.token)
   res.cookie("token", "", {
     path: "/",
@@ -161,27 +161,26 @@ const logout = asyncHandler(async (req, res) => {
 });
 
 // get Login Status
-const loginStatus = asyncHandler(async(req,res)=>{
-   const token = req.cookies.token;
+const loginStatus = asyncHandler(async (req, res) => {
+  const token = req.cookies.token;
   //  console.log(token)
   //  console.log(process.env.JWT_SECRET)
 
-   if(!token){
+  if (!token) {
     return res.json(false);
-   }
-  
-   //verify token
-   const verified = jwt.verify(token,'dhruv');
+  }
+
+  //verify token
+  const verified = jwt.verify(token, 'dhruv');
   //  const verified =  jwt.verify(token, process.env.JWT_SECRET);;
-   console.log(verified)
-   if(verified)
-   {
+  console.log(verified)
+  if (verified) {
     return res.json(true);
-   }
-   return res.json(false);
+  }
+  return res.json(false);
 })
 
-module.exports={
+module.exports = {
   registerUser,
   loginUser,
   logout,
