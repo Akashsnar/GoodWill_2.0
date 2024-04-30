@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import UserDonations from './UserDonations';
 import UserReviews from './UserReview';
 import GraphCampaign from './GraphCampaign';
+import Events from './displayevents';
 import { useParams } from 'react-router-dom';
+
 
 // import NGO_Dashboard_form from './Ngo_DashboardForm';
 import { useDispatch, useSelector } from 'react-redux';
@@ -39,7 +41,6 @@ function CampaignDashboard() {
   }
 
   const Ngoname = useSelector((state) => state.name);
-  console.log(Ngoname)
   const Email = useSelector((state) => state.email)
   console.log(Email)
 
@@ -94,7 +95,39 @@ function CampaignDashboard() {
     fetchUserDonations();
   }, []);
 
+const [events, setEvents] = useState();
 
+// if(campaign){
+  useEffect(() => {
+    const fetchEventsDetails = async () => {
+      try {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ Ngoname: campaign.ngoname, campaignname: campaignname })
+        };
+        const response = await fetch('http://localhost:4000/sitedata/eventfromcampaign', requestOptions);
+        if (response.ok) {
+          const eventData = await response.json();
+          setEvents(eventData);
+          console.log("Event data is from here");
+          console.log(events);
+        } else {
+          console.error('Error fetching events:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    };
+  
+    fetchEventsDetails();
+  }, [campaign , campaignname]);
+// }
+
+
+ 
+
+  // console.log("Ngo name here here here here "+campaign.ngoname);
   useEffect(() => {
     if (campaign) {
       const calculatedPercentage = Math.floor((campaign.raised / campaign.goal) * 100);
@@ -106,9 +139,11 @@ function CampaignDashboard() {
   }, [campaign]);
 
 
+
+
   return (
     <div style={{ backgroundColor: 'white', paddingTop: '6rem' }}>
-      {campaign&& userReviews ? (<>
+      {campaign&& userReviews && events ? (<>
         <div class="block-title text-center" style={{ marginBottom: '10rem' }}>
           <h4 class="servicesHeading ngolink" style={{}}>{campaign.campagainname}</h4>
           <div style={{ display: 'flex', justifyContent: "space-evenly" }}>
@@ -188,9 +223,18 @@ function CampaignDashboard() {
           </section>
 
         </div>
+        <div>
+          <h4 class="servicesHeading ngolink">Events</h4>
+          <center>
+          {events.map(event => (
+            <Events event={event} />
+          ))}
+          </center>
+        </div>
         <center>
         <GraphCampaign CampaignName = {campaign.campagainname} />
         </center>
+
         {/* <NGO_Dashboard_form Ngoname={Ngoname}/> */} </>) : (
         <p>Loading ...</p>
       )}
