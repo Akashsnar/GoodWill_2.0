@@ -1,0 +1,49 @@
+:root {
+    --very-dark-color: #437fc7;
+    --dark-color: #6daffe;
+    --light-color: #edf6ff;
+    --very-light-color: #ffffff;
+    --option-light: #e2f0f9;
+    --option-dark: #286fb4;
+  }
+  .tbContent_main-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    /* background-color: yellow; */
+    justify-content: center;
+    align-items: center;
+  }
+
+.tb-dropdown-handle-container{
+  width: 60%;
+  height: 8rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+
+}
+.tb-paper-container {
+    /* border-bottom: 2px solid gray; */
+    width: 100%;
+    height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0.5em 0;
+    /* background-color: rgb(37, 163, 96); */
+
+  }
+  /* .tb-paper-container:hover {
+    border: 1px solid #c3deff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  } */
+ .tbfilters{
+    width: 30%;
+    height: 100vh;
+    background-color:var(--very-dark-color) ;
+ }

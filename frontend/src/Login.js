@@ -173,7 +173,7 @@ const Login = () => {
           <div className="overlay">
             <div className="overlay-panel overlay-left">
               <button
-                className="ghost"
+                className="ghost logbtn"
                 id="signIn"
                 onClick={() => {
                   setaddclass("");
@@ -185,7 +185,7 @@ const Login = () => {
             </div>
             <div className="overlay-panel overlay-right">
               <button
-                className="ghost"
+                className="ghost logbtn"
                 id="signUp"
                 onClick={() => {
                   setaddclass("right-panel-active");

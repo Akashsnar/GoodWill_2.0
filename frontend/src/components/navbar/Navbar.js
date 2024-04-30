@@ -5,17 +5,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../redux/features/auth/authSlice";
 import cartSlice from "../../redux/features/auth/cartSlice";
+import { FaCartShopping } from "react-icons/fa6";
+import CustomDropdown from "../CartContainer/CustomDropdownList/CustomDropdown";
+import TbContent from "../CartContainer/TbContent";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const checkuserdata = useSelector((state) => state.auth)
   const cartitems = useSelector((state) => state.cart)
-  console.log(cartitems);
-  const totalitems = cartitems.cartitems.length;
+  // console.log(cartitems);
   const navigate = useNavigate();
-
-    const handleDonation = () => {
+  const [showCartDetails, setshowCartDetails] = useState(false)
+  const handleDonation = () => {
     // alert(`Login : ${isLoggedIn}`);
     if (!isLoggedIn) {
       alert("Plz login first");
@@ -24,11 +26,15 @@ const Navbar = () => {
       navigate("/donation");
     }
   };
+  const handleCartDetails = () => {
+    // console.log('cart');
+    setshowCartDetails(!showCartDetails);
+  }
   return (
-    <nav className="flex items-center justify-between flex-wrap ">
+    <nav className="flex items-center justify-between flex-wrap pt-2 pb-2">
       <div className="flex items-center flex-shrink-0 text-white mr-6 lg:mr-72">
         {/* <img src={locofy} className="w-100 h-10 mr-2" alt="Logo" /> */}
-      <span className="text-black lg:px-[5rem] sm:px-2 fond-bold">GoodWill</span>
+        <span className="text-black lg:px-[5rem] sm:px-2 fond-bold">GoodWill</span>
       </div>
       <div className="block lg:hidden">
         <button
@@ -56,49 +62,59 @@ const Navbar = () => {
       >
         <div className="text-sm lg:flex-grow">
           <Link to="/" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
-          Home
+            Home
           </Link>
           <Link to="/services" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
-          Services
+            Services
           </Link>
           <Link to="/ngo" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
-          NGO
+            NGO
           </Link>
           <Link to="/contact" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
-          Contact
+            Contact
           </Link>
           <Link to="/feedback" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
-          Feedback
+            Feedback
           </Link>
-          {checkuserdata.isLoggedIn === false ?
-                <Link
-                  to="/login"
-                  className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold"
-                >
-                  <span class="displayNone">Log In</span>
-                </Link>
-           : 
-                <Link
-                  to={`/user/${checkuserdata.userid}`}
-                >
-                  <span class="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">&nbsp;Your Profile</span>
-                </Link>
-            }
-              
-        
+          <Link to="/chatapp" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
+          chatapp
+          </Link>
+         
 
+          {checkuserdata.isLoggedIn === false ?
+            <Link
+              to="/login"
+              className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold"
+            >
+              <span class="displayNone">Log In</span>
+            </Link>
+            :
+            <Link
+              to={`/user/${checkuserdata.userid}`}
+            >
+              <span class="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">&nbsp;Your Profile</span>
+            </Link>
+          }
         </div>
         <div>
-          <button className="inline-flex items-center bg-amber-500 border-0 py-0 px-4 text-white"
-           id="donateBtn"
-           onClick={handleDonation}
-           >
-          Donate
-          </button>
+          <div className="flex">
+          {checkuserdata.isLoggedIn && <div className="cartcontainer m-auto pr-2" onClick={handleCartDetails}>
+              <FaCartShopping className="cursor-pointer " size="30px" /> {cartitems.length}
+              {/* {showCartDetails && cartitems.length !== 0 && <CustomDropdown seq_arr={cartitems.cartitems} />} */}
+            </div>}
+
+            <button className="inline-flex items-center bg-amber-500 border-0 py-0 px-4 text-white rounded-full mr-2"
+              id="donateBtn"
+              onClick={handleDonation}
+            >
+              Donate
+            </button>
+           { <CustomDropdown isOpen={showCartDetails} setshowCartDetails={setshowCartDetails} seq_arr={cartitems.cartitems} />}
+          </div>
+
         </div>
       </div>
     </nav>
   )
 }
-
 export default Navbar

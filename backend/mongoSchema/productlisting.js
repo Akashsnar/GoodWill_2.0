@@ -1,27 +1,38 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const productlistingschema =new Schema({
-        ngoId: {
-            type: mongoose.Schema.Types.ObjectId
-            },
-            campaignId: {
-                type: mongoose.Schema.Types.ObjectId
-                },
-            productname:{
-             type: String
-            },
-            productimage:{
-                type:string
-            },
-            amount:{
-                type: Number
-            },
-            details:{
-                type:String
-            }
-            
-}, {timestamps: true})
+const productlisting = new Schema(
+  {
+    Username: { type: String },
+    Ngoname: { type: String },
+    CampaignName: { type: String },
+    UserDetails: {
+      Email: { type: String },
+      Gender: { type: String },
+      Phone: { type: String },
+    },
+    ProductDetails: [
+      {
+        category: {
+          type: String,
+        },
+        image: {
+          type: String,
+        },
+        price: {
+          type: Number,
+        },
+        description: {
+          type: String,
+        },
+        title:{
+          type:String,
+        }
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-const productlisting = mongoose.model('productlisting', productlistingschema)
-module.exports= productlisting;
+const CartDetails = mongoose.model("CartDetails", productlisting);
+module.exports = CartDetails;

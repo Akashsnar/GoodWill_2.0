@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 // import './onlystyle.css'
 import { useParams } from "react-router-dom";
-import NavBar from "../navbar/Navbar";
 import UserdonationCampaigns from './UserdonationCampaigns' ;
-/* Example CSS import with relative path */
 
 function Userprofile() {
   const { username } = useParams();
@@ -95,9 +93,7 @@ function Userprofile() {
 
   return (
 
-    <div style={{ margin: "20vh" }}>
-    <NavBar />
-
+    <div style={{ margin: "10vh" }}>
       {user && userDonations ? (
         <section class="feature-one features-service">
           <div class="container">

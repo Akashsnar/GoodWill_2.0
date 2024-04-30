@@ -6,17 +6,33 @@ import { addCartItems } from "../../redux/features/auth/cartSlice";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { Link } from "react-router-dom";
-
+import { Link,useLocation } from "react-router-dom";
+//state={{ ngodata: data, userDetails: userDetails }}
 const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
   let componentMounted = true;
 
   const dispatch = useDispatch();
 
   const addProduct = (product) => {
+    let ngodata = location?.state?.ngodata;
+    let userDetails = location?.state?.userDetails;
+    let user_storeDetails={
+      Email:userDetails.Email,
+      Name:userDetails.name,
+      Gender:userDetails.gender,
+      Phone:userDetails.phone
+    }
+    let ngo_storeDetails = {
+      CampaignName:ngodata.campagainname,
+      NgoName:ngodata.ngoname
+    }
+    product.user_storeDetails = user_storeDetails;
+    product.ngo_storeDetails = ngo_storeDetails;
+    console.log(product);
     dispatch(addCartItems(product))
   }
 
@@ -76,10 +92,9 @@ const Products = () => {
         <div className="buttons text-center py-5">
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => setFilter(data)}>All</button>
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("Food")}>Food</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("women's clothing")}>
-            Women's Clothing
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("dailyneeds")}>
+          Dailyneeds
           </button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("electronics")}>Electronics</button>
         </div>
 

@@ -5,20 +5,20 @@ import { selectName, selectEmail } from "../../redux/features/auth/authSlice";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { addCartItems } from "../../redux/features/auth/cartSlice";
-
+import Swal from "sweetalert2";
 
 
 const Campaign = ({ data, mode, username, userDetails }) => {
   console.log("user detail", userDetails);
   console.log("Ngo detail", data);
-  const checkcartdata=useSelector((state) => state.cart)
-console.log(checkcartdata);
-// const cart={
-//   productname: "",
-//   quantity:"",
-//   Campaignname:"",
-//   username:"",
-// }
+  const checkcartdata = useSelector((state) => state.cart)
+  console.log(checkcartdata);
+  // const cart={
+  //   productname: "",
+  //   quantity:"",
+  //   Campaignname:"",
+  //   username:"",
+  // }
 
   const dispatch = useDispatch();
   const name = useSelector(selectName);
@@ -34,8 +34,6 @@ console.log(checkcartdata);
       barInnerRef.current.classList.add("counted");
     }
   }, [data.raised, data.goal]);
-  // const image=`http://localhost:4000/${data.image}`
-
   const reportthis = (e) => {
     const id = e.target.id;
     const color = document.getElementById(id).style.color;
@@ -91,17 +89,57 @@ console.log(checkcartdata);
   };
 
 
-  const addvolunteer=async (campaignid)=>{
+  const addvolunteer = async (campaignid) => {
     try {
-      console.log("ids=>", campaignid, userDetails._id);
-      const formDatas = { campaignid: campaignid, userid:userDetails._id}
-      const response = await axios.post(
-        "http://localhost:4000/sitedata/user/volunteer",
-        formDatas, {
-          withCredentials:true,
-      }
-      );
-      console.log("data saved", response);
+
+
+      Swal.fire({
+        title: "Are you sure to volunteer this events?",
+        text: "",
+        icon: "",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "yeah",
+      }).then(async (result) => {
+
+        if (result.isConfirmed) {
+          console.log("ids=>", campaignid, userDetails._id);
+          const formDatas = { campaignid: campaignid, userid: userDetails._id }
+          const response = await axios.post(
+            "http://localhost:4000/sitedata/user/volunteer",
+            formDatas, {
+            withCredentials: true,
+          }
+          );
+          if(response.status==200){
+          Swal.fire({
+            title: "Success!",
+            text: "You are registerd for volunteer.",
+            icon: "success",
+          });
+        }
+        else{
+          Swal.fire({
+            title: "Error!",
+            text: "Try again request not able to proceed",
+            icon: "failure",
+          })
+        }
+        }
+      });
+      
+
+
+      // console.log("ids=>", campaignid, userDetails._id);
+      // const formDatas = { campaignid: campaignid, userid: userDetails._id }
+      // const response = await axios.post(
+      //   "http://localhost:4000/sitedata/user/volunteer",
+      //   formDatas, {
+      //   withCredentials: true,
+      // }
+      // );
+      // console.log("data saved", response);
     } catch (error) {
       console.log(error);
     }
@@ -110,7 +148,7 @@ console.log(checkcartdata);
 
   return (
     <div>
- 
+
       <section class="feature-one features-service">
         <div class="container">
           <div class="feature-one__inner" style={{ padding: "0" }}>
@@ -175,8 +213,8 @@ console.log(checkcartdata);
                   </div>
                   <div
                     className="text-center more-post__btn Ngobtn"
-                    style={{ marginTop: "1rem", display: "flex" }}
-                  >
+                    style={{ marginTop: "1rem", display: "flex" }}>
+
                     <Link
                       to="/givereview"
                       state={{
@@ -235,31 +273,31 @@ console.log(checkcartdata);
                       Donate
                     </Link>
                   </div>
-                 
-                 <div className="flex justify-between">
-                 <button class="NGOReport" style={{ textAlign: "right" }}
-                onClick={() => (addvolunteer(data._id))}
-                 >
-                    Apply for Volunteer{" "}
-                   
-                  </button>
-                 <p class="NGOReport" style={{ textAlign: "right" }}>
-                    Report this NGO{" "}
-                    <i
-                      id={data.name}
-                      class="fa-solid fa-thumbs-down thumbsdown"
-                      onClick={(e) => {
-                        reportthis(e);
-                      }}
-                    ></i>
-                  </p>
-                
-                <Link to='products'
-                 state={{ ngodata: data, userDetails: userDetails }}
-                >Donate Needs</Link>
-                  {/* <button className="bg-green-400" onClick={()=>{dispatch(addCartItems({"productname":"milk", "campagainname":data.name}));}}>cartAdd</button>
+
+                  <div className="flex justify-between">
+                    <button class="NGOReport"
+                      onClick={() => (addvolunteer(data._id))}
+                    >
+                      Apply for Volunteer{" "}
+
+                    </button>
+                    <p class="NGOReport" style={{ textAlign: "right" }}>
+                      Report this NGO{" "}
+                      <i
+                        id={data.name}
+                        class="fa-solid fa-thumbs-down thumbsdown"
+                        onClick={(e) => {
+                          reportthis(e);
+                        }}
+                      ></i>
+                    </p>
+
+                    <Link to='products'
+                      state={{ ngodata: data, userDetails: userDetails }}
+                    >Donate Needs</Link>
+                    {/* <button className="bg-green-400" onClick={()=>{dispatch(addCartItems({"productname":"milk", "campagainname":data.name}));}}>cartAdd</button>
                  {checkcartdata.cartitems.map((item)=>item.productname)} */}
-                 </div>
+                  </div>
 
                 </div>
               </div>
@@ -322,22 +360,22 @@ console.log(checkcartdata);
                   Add your needs
                 </Link>
               </div>
-            ): (
+            ) : (
               <button
-              className="thm-btn"
-              style={{
-                height: "2rem",
-                width: "10rem",
-                margin: "0px",
-                marginBottom: "1rem",
-                padding: "10px",
-                textAlign: "center",
-                lineHeight: "10px",
-              }}
-              onClick={() => handleOpen(data._id)}
-            >
-              Open
-            </button>
+                className="thm-btn"
+                style={{
+                  height: "2rem",
+                  width: "10rem",
+                  margin: "0px",
+                  marginBottom: "1rem",
+                  padding: "10px",
+                  textAlign: "center",
+                  lineHeight: "10px",
+                }}
+                onClick={() => handleOpen(data._id)}
+              >
+                Open
+              </button>
             )}
           </div>
         </div>

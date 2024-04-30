@@ -1,0 +1,46 @@
+:root {
+    --very-dark-color: #437fc7;
+    --dark-color: #6daffe;
+    --light-color: #edf6ff;
+    --very-light-color: #ffffff;
+    --option-light: #e2f0f9;
+    --option-dark: #286fb4;
+  }
+
+  .tbPaperContainer {
+    margin: 4px;
+    display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 2rem;
+  padding-left: 1rem;
+  /* background-color: yellow; */
+  }
+.tbPaperContainer:hover{
+    cursor: pointer;
+}
+
+.tbpaper {
+    width: 70%;
+    height: inherit;
+    display: flex;
+    /* background-color: yellow; */
+    align-items: center;
+    margin: 3px;
+    margin-left: 4px;
+    gap: 1.3rem;
+
+}
+
+
+.tbheading{
+    max-height: calc(50%);
+    color: color(display-p3 0.1647 0.3922 0.5843);      font-weight: 400;
+      font-size: 1.4rem;
+} 
+
+.tbpaperarrow-icon{
+
+}
+
