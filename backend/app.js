@@ -14,6 +14,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const { config } = require("dotenv");
 const fs = require('fs');
+const indexData = require('./Solr/SyncData.js');
 config();
 // app.use(express.static("uploads"));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
@@ -291,3 +292,4 @@ app.get("/NGOsLength", async (req, res) => {
   }
 });
 
+indexData();
