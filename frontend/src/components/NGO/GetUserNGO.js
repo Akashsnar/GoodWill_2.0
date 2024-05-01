@@ -94,7 +94,7 @@ function GetUserNGO(props){
 };
 
     const loadMore = () => {
-      // Increase the number of visible campaigns
+    
       setVisibleCampaigns(prevVisibleCampaigns => prevVisibleCampaigns + 3);
     };
 

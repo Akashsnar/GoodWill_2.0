@@ -251,8 +251,7 @@
 <a name='L186'></a><a href='#L186'>186</a>
 <a name='L187'></a><a href='#L187'>187</a>
 <a name='L188'></a><a href='#L188'>188</a>
-<a name='L189'></a><a href='#L189'>189</a>
-<a name='L190'></a><a href='#L190'>190</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L189'></a><a href='#L189'>189</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -429,7 +428,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -456,15 +454,15 @@ const generateToken = <span class="fstat-no" title="function not covered" >(i</s
 &nbsp;
 // Register User
 const registerUser = asyncHandler(<span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
-  
+&nbsp;
   // console.log(req.body);
-  const { mode,name,email,password} = <span class="cstat-no" title="statement not covered" >req.body;</span>
+  const { mode, name, email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
 <span class="cstat-no" title="statement not covered" >  console.log(mode)</span>
 <span class="cstat-no" title="statement not covered" >  console.log(name)</span>
 <span class="cstat-no" title="statement not covered" >  console.log(email)</span>
 <span class="cstat-no" title="statement not covered" >  console.log(password)</span>
   // Validation
-<span class="cstat-no" title="statement not covered" >  if (!name || !email || !password||!mode) {</span>
+<span class="cstat-no" title="statement not covered" >  if (!name || !email || !password || !mode) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400);</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error("Please fill in all required fields");</span>
   }
@@ -474,26 +472,26 @@ const registerUser = asyncHandler(<span class="fstat-no" title="function not cov
   }
 &nbsp;
   // Check if user email already exists
-  const userExists = <span class="cstat-no" title="statement not covered" >await User.findOne({ name,email });</span>
+  const userExists = <span class="cstat-no" title="statement not covered" >await User.findOne({ name, email });</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (userExists) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400);</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error("Email has already been registered");</span>
   }
-      //encrypt password
-      const encryptedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(password, 10);</span>
+  //encrypt password
+  const encryptedPassword = <span class="cstat-no" title="statement not covered" >await bcrypt.hash(password, 10);</span>
 &nbsp;
   // Create new user
   const user = <span class="cstat-no" title="statement not covered" >await new User({</span>
     name,
     mode,
     email,
-    password:encryptedPassword,
+    password: encryptedPassword,
     // registrationProof: fileData
   });
-<span class="cstat-no" title="statement not covered" >user.save()</span>
+<span class="cstat-no" title="statement not covered" >  user.save()</span>
   //   Generate Token
-<span class="cstat-no" title="statement not covered" >console.log(user);</span>
+<span class="cstat-no" title="statement not covered" >  console.log(user);</span>
   const token = <span class="cstat-no" title="statement not covered" >generateToken(user._id);</span>
 &nbsp;
   // Send HTTP-only cookie
@@ -506,7 +504,7 @@ const registerUser = asyncHandler(<span class="fstat-no" title="function not cov
   });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  if (user) {</span>
-    const { _id, name, email} = <span class="cstat-no" title="statement not covered" >user;</span>
+    const { _id, name, email } = <span class="cstat-no" title="statement not covered" >user;</span>
 <span class="cstat-no" title="statement not covered" >    res.status(201).json({</span>
       _id,
       name,
@@ -527,22 +525,22 @@ const registerUser = asyncHandler(<span class="fstat-no" title="function not cov
 // Login User
 const loginUser = asyncHandler(<span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
 <span class="cstat-no" title="statement not covered" >  console.log("hello");</span>
-  const { mode,email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
- 
+  const { mode, email, password } = <span class="cstat-no" title="statement not covered" >req.body;</span>
+&nbsp;
   // Validate Request
-<span class="cstat-no" title="statement not covered" >  if (!mode ||!email || !password) {</span>
+<span class="cstat-no" title="statement not covered" >  if (!mode || !email || !password) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400);</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error("Please add name and password");</span>
   }
 &nbsp;
   // Check if user exists
-  const user = <span class="cstat-no" title="statement not covered" >await User.findOne({ mode,email });</span>
+  const user = <span class="cstat-no" title="statement not covered" >await User.findOne({ mode, email });</span>
 <span class="cstat-no" title="statement not covered" >  if (!user) {</span>
 <span class="cstat-no" title="statement not covered" >    res.status(400);</span>
 <span class="cstat-no" title="statement not covered" >    throw new Error("User not found, please signup");</span>
   }
 &nbsp;
-  
+&nbsp;
   // User exists, check if password is correct
   const passwordIsCorrect = <span class="cstat-no" title="statement not covered" >await bcrypt.compare(password, user.password);</span>
   //   Generate Token
@@ -551,25 +549,25 @@ const loginUser = asyncHandler(<span class="fstat-no" title="function not covere
 <span class="cstat-no" title="statement not covered" >  console.log(token)</span>
 <span class="cstat-no" title="statement not covered" >  console.log(user)</span>
 <span class="cstat-no" title="statement not covered" >  console.log(passwordIsCorrect)</span>
-<span class="cstat-no" title="statement not covered" >  if(passwordIsCorrect){</span>
-   // Send HTTP-only cookie
-<span class="cstat-no" title="statement not covered" >  res.cookie("token", token, {</span>
-    path: "/",
-    httpOnly: true,
-    expires: new Date(Date.now() + 1000 * 86400), // 1 day
-    sameSite: "none",
-    secure: true,
-  });
-}
+<span class="cstat-no" title="statement not covered" >  if (passwordIsCorrect) {</span>
+    // Send HTTP-only cookie
+<span class="cstat-no" title="statement not covered" >    res.cookie("token", token, {</span>
+      path: "/",
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 86400), // 1 day
+      sameSite: "none",
+      secure: true,
+    });
+  }
 <span class="cstat-no" title="statement not covered" >  if (user &amp;&amp; passwordIsCorrect) {</span>
-    const { _id, name, email, profilepic}= <span class="cstat-no" title="statement not covered" >user;</span>
+    const { _id, name, email, profilepic } = <span class="cstat-no" title="statement not covered" >user;</span>
 <span class="cstat-no" title="statement not covered" >    res.status(200).json({</span>
       _id,
       name,
       email,
       mode,
-     profilepic,
-    //  registrationProof,
+      profilepic,
+      //  registrationProof,
       token,
     });
   } else {
@@ -582,16 +580,16 @@ const loginUser = asyncHandler(<span class="fstat-no" title="function not covere
 const logout = asyncHandler(<span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >  console.log("in userController logout")</span>
-    const token = <span class="cstat-no" title="statement not covered" >req.cookies.token;</span>
-<span class="cstat-no" title="statement not covered" >    console.log(token);</span>
-<span class="cstat-no" title="statement not covered" >    if (!token) {</span>
-<span class="cstat-no" title="statement not covered" >      res.status(401);</span>
-<span class="cstat-no" title="statement not covered" >      throw new Error("Not authorized, please login");</span>
-    }
+  const token = <span class="cstat-no" title="statement not covered" >req.cookies.token;</span>
+<span class="cstat-no" title="statement not covered" >  console.log(token);</span>
+<span class="cstat-no" title="statement not covered" >  if (!token) {</span>
+<span class="cstat-no" title="statement not covered" >    res.status(401);</span>
+<span class="cstat-no" title="statement not covered" >    throw new Error("Not authorized, please login");</span>
+  }
 &nbsp;
-    // Verify Token
-    const verified = <span class="cstat-no" title="statement not covered" >jwt.verify(token, 'dhruv');</span>
-<span class="cstat-no" title="statement not covered" >    console.log(verified)</span>
+  // Verify Token
+  const verified = <span class="cstat-no" title="statement not covered" >jwt.verify(token, 'dhruv');</span>
+<span class="cstat-no" title="statement not covered" >  console.log(verified)</span>
   // console.log(req.cookie.token)
 <span class="cstat-no" title="statement not covered" >  res.cookie("token", "", {</span>
     path: "/",
@@ -604,27 +602,26 @@ const logout = asyncHandler(<span class="fstat-no" title="function not covered" 
 });
 &nbsp;
 // get Login Status
-const loginStatus = asyncHandler(<span class="fstat-no" title="function not covered" >as</span>ync(req,res)=&gt;{
-   const token = <span class="cstat-no" title="statement not covered" >req.cookies.token;</span>
+const loginStatus = asyncHandler(<span class="fstat-no" title="function not covered" >as</span>ync (req, res) =&gt; {
+  const token = <span class="cstat-no" title="statement not covered" >req.cookies.token;</span>
   //  console.log(token)
   //  console.log(process.env.JWT_SECRET)
 &nbsp;
-<span class="cstat-no" title="statement not covered" >   if(!token){</span>
+<span class="cstat-no" title="statement not covered" >  if (!token) {</span>
 <span class="cstat-no" title="statement not covered" >    return res.json(false);</span>
-   }
-  
-   //verify token
-   const verified = <span class="cstat-no" title="statement not covered" >jwt.verify(token,'dhruv');</span>
+  }
+&nbsp;
+  //verify token
+  const verified = <span class="cstat-no" title="statement not covered" >jwt.verify(token, 'dhruv');</span>
   //  const verified =  jwt.verify(token, process.env.JWT_SECRET);;
-<span class="cstat-no" title="statement not covered" >   console.log(verified)</span>
-<span class="cstat-no" title="statement not covered" >   if(verified)</span>
-   {
+<span class="cstat-no" title="statement not covered" >  console.log(verified)</span>
+<span class="cstat-no" title="statement not covered" >  if (verified) {</span>
 <span class="cstat-no" title="statement not covered" >    return res.json(true);</span>
-   }
-<span class="cstat-no" title="statement not covered" >   return res.json(false);</span>
+  }
+<span class="cstat-no" title="statement not covered" >  return res.json(false);</span>
 })
 &nbsp;
-module.exports={
+module.exports = {
   registerUser,
   loginUser,
   logout,
@@ -637,7 +634,7 @@ module.exports={
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-04-30T13:32:22.579Z
+                at 2024-05-01T17:52:09.651Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -25,6 +25,8 @@ const redisClient = redis.createClient({ url: redisUrl });
 //   },
 // })
 // redisClient.connect();
+
+
 redisClient.on("error", (err) => {
   console.error("Redis connection error:", err);
 });
