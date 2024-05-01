@@ -10,6 +10,7 @@ const Donation = require("../mongoSchema/donationschema");
 const Events = require("../mongoSchema/EventSchema");
 const expressAsyncHandler = require("express-async-handler");
 const redis = require("redis");
+const cartDetails= require("../mongoSchema/productlisting")
 const redisUrl = "redis://localhost:6379";
 const redisClient = redis.createClient({ url: redisUrl });
 
@@ -572,5 +573,35 @@ router.post("/opencamp", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+
+
+router.get("/donationneeds/:campaignname", async (req, res) => {
+  try {
+    console.log("Hello Donation Campaign Needs")
+    const campaignname = req.params.campaignname;
+    // const username = "Swastik";
+    console.log(campaignname)
+    const donationsneeds = await cartDetails.find({ CampaignName: campaignname }).sort({ _id: -1 });
+    console.log("donation needs data-> ", donationsneeds);
+    let totaldonation = 0;
+
+    // for (const donation of donationsneeds) {
+    //   totaldonation += parseInt(donation.ProductDetails.price);
+    // }
+    for (const donation of donationsneeds) {
+      for (const pd of donation.ProductDetails){
+        totaldonation += parseInt(pd.price);
+      }
+   }
+
+    console.log("Total Donation:", totaldonation);
+    res.json({ donationsneeds, totaldonation });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 
 module.exports = router;

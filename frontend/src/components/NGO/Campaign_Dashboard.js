@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 function CampaignDashboard() {
   console.log("hj");
   const { campaignname } = useParams();
-  console.log("camapgain name",campaignname);
+  console.log("camapgain name", campaignname);
   const [campaign, setCampaign] = useState();
 
   useEffect(() => {
@@ -46,6 +46,7 @@ function CampaignDashboard() {
   const [userDonations, setUserDonations] = useState();
   const [userReviews, setUserReviews] = useState();
   const [percentage, setPercentage] = useState(0);
+  const [NeedsDonations, setNeedsDonations] = useState();
 
 
   const barInnerRef = useRef(null);
@@ -79,7 +80,7 @@ function CampaignDashboard() {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({campaignname })
+          body: JSON.stringify({ campaignname })
         });
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -92,6 +93,37 @@ function CampaignDashboard() {
     };
 
     fetchUserDonations();
+  }, []);
+
+
+
+  useEffect(() => {
+    const fetchNeedsDonations = async () => {
+      try {
+        console.log("Inside userDonation fetch");
+        const response = await fetch(`http://localhost:4000/sitedata/donationneeds/${campaignname}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        // console.log("UserDo")
+        const data = await response.json();
+        console.log(data);
+        const { donationsneeds, totaldonation } = data;
+        console.log('Needs Donations:', donationsneeds);
+        setNeedsDonations(donationsneeds);
+        console.log('Total Needs Donation:', totaldonation);
+        // setTotalNeedsDonations(totaldonation)
+      } catch (error) {
+        console.error('Error fetching needs data:', error);
+      }
+    };
+    fetchNeedsDonations();
   }, []);
 
 
@@ -108,7 +140,7 @@ function CampaignDashboard() {
 
   return (
     <div style={{ backgroundColor: 'white', paddingTop: '6rem' }}>
-      {campaign&& userReviews ? (<>
+      {campaign && userReviews ? (<>
         <div class="block-title text-center" style={{ marginBottom: '10rem' }}>
           <h4 class="servicesHeading ngolink" style={{}}>{campaign.campagainname}</h4>
           <div style={{ display: 'flex', justifyContent: "space-evenly" }}>
@@ -119,7 +151,7 @@ function CampaignDashboard() {
               <h4 class="servicesHeading ngolink" style={{ marginTop: "10px", marginBottom: "10px" }}>Category : </h4> <h3 style={{ display: 'inline-block' }}>{campaign.category}</h3>
             </div>
           </div>
-      
+
 
 
           <p style={{ width: '50vw', margin: 'auto', marginBottom: '20px' }}>
@@ -189,13 +221,44 @@ function CampaignDashboard() {
 
         </div>
         <center>
-        <GraphCampaign CampaignName = {campaign.campagainname} />
+          <GraphCampaign CampaignName={campaign.campagainname} />
         </center>
         {/* <NGO_Dashboard_form Ngoname={Ngoname}/> */} </>) : (
         <p>Loading ...</p>
       )}
 
-    </div>
+
+<div className='mt-[12rem]'>
+        <h2 className="font-serif text-3xl pb-3">Needs Donated</h2>
+
+        {NeedsDonations ? NeedsDonations.map(NeedDonation => (
+          NeedDonation.ProductDetails.map((product) => (
+            <table class="min-w-full table-auto text-center border-collapse border border-gray-300">
+              <thead class="bg-gray-200">
+                <tr>
+                  <th class="border border-gray-300 p-4">Product Image</th>
+                  <th class="border border-gray-300 p-4">Product Name</th>
+                  <th class="border border-gray-300 p-4">Price</th>
+                  <th class="border border-gray-300 p-4">NGO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="border border-gray-300 p-4"><img src={product.image} alt="Product Image" class="h-20 mx-auto" /></td>
+                  <td class="border border-gray-300 p-4">{product.title}</td>
+                  <td class="border border-gray-300 p-4">{product.price}</td>
+                  <td class="border border-gray-300 p-4">{NeedDonation.Ngoname}</td>
+                </tr>
+              </tbody>
+            </table>
+          ))
+        )) : <h1>No Need Donation by you</h1>}
+        {/* <p className="mt-2 text-2xl text-center text-green-600">Total Need Donation Amount: {totalNeedsDonation}</p> */}
+
+      </div>
+
+
+    </div >
   )
 }
 
