@@ -39,14 +39,14 @@ const UserdonationCampaigns = ({ data }) => {
 
     return (
         <div>
-            <div className="popular-causes__progress UserNgoProgress" style={{paddingTop: "0"}}>
+            <div className="popular-causes__progress UserNgoProgress pb-5" style={{paddingTop: "0"}}>
                 <div style={{display:"flex"}}>
                <div>
                <img src={campaign.image} alt={data.campaignName} style={{height: "10rem"}} /> 
                 {data.campaignName}
                </div>
                <div>
-               <h2> <center>Ngo Name : {campaign.ngoname}</center></h2>
+               <h2 className='font-serif text-2xl pt-3'> <center>Ngo Name : {campaign.ngoname}</center></h2>
                 {campaign.desc}
                </div>
                </div>

@@ -7,6 +7,7 @@ import {
   SAVE_USER,
   SET_LOGIN_USER,
   SET_NAME,
+  SAVE_MODE,
   SET_USERID
 } from "./redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
@@ -126,7 +127,7 @@ const Login = () => {
         dispatch(SET_LOGIN_USER(true));
         dispatch(SET_NAME(data.name));
         dispatch(SET_USERID(data._id));
-        dispatch(SAVE_USER(data.email));
+        dispatch(SAVE_MODE(data.mode));
 
         console.log("user ka ",data);
 
@@ -173,7 +174,7 @@ const Login = () => {
           <div className="overlay">
             <div className="overlay-panel overlay-left">
               <button
-                className="ghost"
+                className="ghost logbtn"
                 id="signIn"
                 onClick={() => {
                   setaddclass("");
@@ -185,7 +186,7 @@ const Login = () => {
             </div>
             <div className="overlay-panel overlay-right">
               <button
-                className="ghost"
+                className="ghost logbtn"
                 id="signUp"
                 onClick={() => {
                   setaddclass("right-panel-active");

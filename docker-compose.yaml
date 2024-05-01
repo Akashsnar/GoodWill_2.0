@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  backend:
+    build: ./backend
+    container_name: name
+    ports:
+      - 5000:4000
+    restart: "unless-stopped"
+    volumes:
+      - /app/node_modules
+
+  frontend:
+    build: ./frontend
+    ports:
+      - 3000:3000
+    volumes:
+      - /app/node_modules
+    depends_on:
+      - backend

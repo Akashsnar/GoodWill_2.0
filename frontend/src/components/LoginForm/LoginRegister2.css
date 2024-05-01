@@ -36,7 +36,7 @@
   transition: all 0.6s ease-in-out;
 }
 
-form {
+.loginform {
   left: 0;
   top: 0;
   display: flex;
@@ -104,7 +104,7 @@ h2 {
 
 /* button styling */
 
-button {
+.logbtn {
   border-radius: 1.7rem;
   border: 1px solid #dfe3e580;
   background-color:  #fcf9f9;
@@ -120,7 +120,7 @@ button {
   transition: transform 80ms ease-in;
 }
 
-button:active {
+.logbtn:active {
   transform: scale(0.95);
 }
 
@@ -134,7 +134,7 @@ button:active {
   border-color: #eee;
   font-size: 13px;
 }
-button:focus {
+.logbtn:focus {
   outline: none;
 }
 
@@ -150,7 +150,7 @@ button:focus {
 /* end of button styling */
 
 /* input styling */
-input {
+.input-tag {
   background-color: #eee;
   border-radius: 5px;
   border: none;
@@ -162,7 +162,7 @@ input {
   transition: opacity 0.1s ease-in;
 }
 
-input:focus {
+.input-tag:focus {
   outline: none;
 }
 
