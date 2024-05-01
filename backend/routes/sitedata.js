@@ -8,6 +8,8 @@ const Feedback = require("../mongoSchema/feedbackSchema");
 const Ngomodel = require("../mongoSchema/mongoschemango");
 const Donation = require("../mongoSchema/donationschema");
 const Events = require("../mongoSchema/EventSchema");
+const searchSolr = require("../Solr/SearchNGO");
+const indexData = require("../Solr/SyncData");
 const expressAsyncHandler = require("express-async-handler");
 const redis = require("redis");
 const cartDetails= require("../mongoSchema/productlisting")
@@ -313,9 +315,10 @@ router.post("/ngo_details", async (req, res) => {
     // const result = await User.updateOne({},newngomodel);
     await newngomodel.save().then(() => {
       console.log("saved successfully");
+      indexData();
       //   res.redirect("/users");
     });
-
+   
     res.status(201).json({ message: "Uploaded Successfully" });
   } catch (err) {
     console.error(err); // Log the error to the console for debugging
@@ -634,6 +637,19 @@ router.post("/opencamp", async (req, res) => {
     }
   });
 
+  // API endpoint to search Solr
+
+router.get('/searchNGO', async (req, res) => {
+  try {
+      const userInput = req.query.input;
+      console.log("User USer User Input : ",userInput)
+      const searchResults = await searchSolr(userInput);
+      res.json(searchResults);
+  } catch (error) {
+      console.error('Error searching Solr:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 //     res.json(result);
 //   } catch (err) {

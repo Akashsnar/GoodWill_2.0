@@ -14,6 +14,8 @@ const cors = require("cors");
 const { config } = require("dotenv");
 
 const fs = require('fs');
+
+const indexData = require('./Solr/SyncData.js');
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 config();
@@ -535,6 +537,9 @@ app.get("/NGOsLength", async (req, res) => {
 });
 
 
+indexData();
+
+
 app.get('/users', (req, res) => {
   const users = [    { id: 1, name: 'Alice' },    { id: 2, name: 'Bob' },    { id: 3, name: 'Charlie' },  ];
   res.json(users);
@@ -543,3 +548,4 @@ app.get('/users', (req, res) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // module.exports = app;
+
