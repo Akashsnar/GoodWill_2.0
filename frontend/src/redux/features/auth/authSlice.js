@@ -8,6 +8,7 @@ const initialState = {
   isLoggedIn: false,
   name: name ? name : "dfg",
   email: email ? email : "dfg@dsfd",
+  mode: "user",
   blogs: [],
 };
 
@@ -38,6 +39,11 @@ const authSlice = createSlice({
       state.email = action.payload;
       console.log(state.email);
     },
+    SAVE_MODE(state, action) {
+      localStorage.setItem("mode", JSON.stringify(action.payload));
+      state.mode = action.payload;
+      console.log(state.mode);
+    },
     addBlog: (state, action) => {
       state.blogs.push(action.payload);
     },
@@ -55,6 +61,7 @@ export const {
   SET_NAME,
   SET_USERID,
   SAVE_USER,
+  SAVE_MODE,
   addBlog,
   deleteBlog,
 } = authSlice.actions;

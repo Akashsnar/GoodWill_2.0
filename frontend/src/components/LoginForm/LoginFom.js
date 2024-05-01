@@ -24,12 +24,13 @@ const LoginFom = ({
         />
         <input
           type="password"
+          className="input-tag"
           placeholder="PASSWORD"
           name="password"
           value={formData.password}
           onChange={handleInputChange}
         />
-        <button type="submit" className="lg-btn" >
+        <button type="submit" className="lg-btn logbtn" >
           LOGIN
         </button>
       </form>

@@ -8,7 +8,47 @@ const Feedback = require("../mongoSchema/feedbackSchema");
 const Ngomodel = require("../mongoSchema/mongoschemango");
 const Donation = require("../mongoSchema/donationschema");
 const Events = require("../mongoSchema/EventSchema");
+const searchSolr = require("../Solr/SearchNGO");
+const indexData = require("../Solr/SyncData");
 const expressAsyncHandler = require("express-async-handler");
+const redis = require("redis");
+const cartDetails= require("../mongoSchema/productlisting")
+const redisUrl = "redis://localhost:6379";
+const redisClient = redis.createClient({ url: redisUrl });
+
+// const {createClient} = require("redis");
+// const redisClient = createClient({
+//   password: "YfG1c8MnMa4gDxW10h0eDs0fDwrrxMVz",
+//   socket: {
+//     host: "redis-17000.c264.ap-south-1-1.ec2.redns.redis-cloud.com",
+//     port: 17000,
+//   },
+// })
+// redisClient.connect();
+
+
+redisClient.on("error", (err) => {
+  console.error("Redis connection error:", err);
+});
+redisClient.on("connect", () => {
+  console.log("Redis server ready");
+});
+
+// Middleware function to cache data
+function cache(req, res, next) {
+  const key = req.originalUrl;
+  redisClient.get(key, (err, data) => {
+    if (err) {
+      console.error("Redis error:", err);
+      next(); // Proceed without caching if there's an error
+    }
+    if (data !== null) {
+      res.send(JSON.parse(data));
+    } else {
+      next();
+    }
+  });
+}
 
 // Getting all
 router.get("/", async (req, res) => {
@@ -20,29 +60,32 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/ngodetails", async (req, res) => {
+router.get("/ngodetails", cache, async (req, res) => {
   try {
     const ngomodel = await Ngomodel.find().sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngomodel));
     res.json(ngomodel);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-router.get("/ngodetail/:ngoid", async (req, res) => {
+router.get("/ngodetail/:ngoid", cache, async (req, res) => {
   const campagainid = req.params.ngoid;
   console.log(campagainid);
   try {
     let query = { _id: campagainid };
     const ngomodel = await Ngomodel.findOne(query);
     console.log(ngomodel);
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngomodel));
     res.json(ngomodel);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-router.get("/allUsers", async (req, res) => {
+router.get("/allUsers", cache, async (req, res) => {
   try {
     const User = await User.find();
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(User));
     res.json(User);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -91,17 +134,19 @@ router.get("/ngodetail", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-router.get("/feedbacks", async (req, res) => {
+router.get("/feedbacks", cache, async (req, res) => {
   try {
     const feedback = await Feedback.find().sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(feedback));
     res.json(feedback);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-router.get("/reviews", async (req, res) => {
+router.get("/reviews", cache, async (req, res) => {
   try {
     const review = await Review.find().sort({ _id: -1 });
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(review));
     res.json(review);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -125,33 +170,36 @@ router.post("/addComment", async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-router.get("/contact", async (req, res) => {
+router.get("/contact", cache, async (req, res) => {
   try {
     const contact = await Contact.find().sort({ _id: -1 });
+    console.log("contact data->", contact);
+    redisClient.setex(req.originalUrl, 3600, JSON.stringify(contact));
     res.json(contact);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-
 router.get("/donations", async (req, res) => {
   try {
     const donation = await Donation.find().sort({ _id: -1 });
     console.log("donation data->", donation);
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(donations));
     res.json(donation);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-
 router.post("/donationsCampaign", async (req, res) => {
   try {
     // console.log("Hello")
     const campaignname = req.body.campaignname;
-    console.log(campaignname)
-    const donation = await Donation.find({ campaignName: campaignname }).sort({ _id: -1 });
+    console.log(campaignname);
+    const donation = await Donation.find({ campaignName: campaignname }).sort({
+      _id: -1,
+    });
     console.log("donation data->", donation);
     res.json(donation);
   } catch (err) {
@@ -165,16 +213,15 @@ router.post("/donationsNGO", async (req, res) => {
     const NgoName = req.body.Ngoname;
     console.log(NgoName);
     // console.log(campaignname)
-    const donation = await Donation.find({ NgoName: NgoName }).sort({ _id: -1 });
+    const donation = await Donation.find({ NgoName: NgoName }).sort({
+      _id: -1,
+    });
     console.log("donation data->", donation);
     res.json(donation);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
-
-
 
 router.get("/campaign/:name", async (req, res, next) => {
   try {
@@ -270,9 +317,10 @@ router.post("/ngo_details", async (req, res) => {
     // const result = await User.updateOne({},newngomodel);
     await newngomodel.save().then(() => {
       console.log("saved successfully");
+      indexData();
       //   res.redirect("/users");
     });
-
+   
     res.status(201).json({ message: "Uploaded Successfully" });
   } catch (err) {
     console.error(err); // Log the error to the console for debugging
@@ -357,8 +405,16 @@ router.post(
 router.post(
   "/events",
   expressAsyncHandler(async (req, res) => {
-
-    const { NgoName, campaignName, EventPic, EventName, Location, Duration, Details, DateRange } = req.body;
+    const {
+      NgoName,
+      campaignName,
+      EventPic,
+      EventName,
+      Location,
+      Duration,
+      Details,
+      DateRange,
+    } = req.body;
     console.log("image", campaignName, EventPic);
 
     const { startDate, endDate } = DateRange;
@@ -398,14 +454,12 @@ router.post(
   })
 );
 
-
-
 router.post("/ngodetails/campns", async (req, res) => {
   const ngoname = req.body.ngoname;
   const status = req.body.status;
 
   console.log(ngoname);
-  console.log(status)
+  console.log(status);
   try {
     let query = { ngoname: ngoname, status: status };
     const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
@@ -416,122 +470,223 @@ router.post("/ngodetails/campns", async (req, res) => {
   }
 });
 
-  router.post("/user/volunteer", async (req, res) => {
-    try {
-      console.log("this is volunteer");
-      const { campaignid, userid } = req.body;
-      console.log(req.body);
-      const users = await User.updateOne(
-        { _id: userid },
-        { $push: { volunteerNgosCampaign: campaignid } }
-      );
+router.post("/user/volunteer", async (req, res) => {
+  try {
+    console.log("this is volunteer");
+    const { campaignid, userid } = req.body;
+    console.log(req.body);
+    const users = await User.updateOne(
+      { _id: userid },
+      { $push: { volunteerNgosCampaign: campaignid } }
+    );
 
-      if (users.matchedCount === 0) {
-        console.log('User not found');
-      } else {
-        console.log('NGO added for user successfully');
-      }
-
-      //campagians
-
-      const ngos = await Ngomodel.updateOne(
-        { _id: campaignid },
-        { $push: { volunteers: userid } }
-      );
-
-      if (ngos.matchedCount === 0) {
-        console.log('User not found');
-      } else {
-        console.log('NGO added for user successfully');
-      }
-
-      res.status(200).send({ users, ngos });
-    } catch (error) {
-      res.status(500).json({ message: err.message });
+    if (users.matchedCount === 0) {
+      console.log("User not found");
+    } else {
+      console.log("NGO added for user successfully");
     }
 
-  })
+    //campagians
 
-  router.post("/event/addusers", async (req, res) => {
-    try {
-      const { eventid, userid } = req.body;
-      console.log(req.body);
-      const Eventsupdate = await Events.updateOne(
-        { _id: eventid },
-        { $push: { ParticipatedUser: userid } }
-      );
+    const ngos = await Ngomodel.updateOne(
+      { _id: campaignid },
+      { $push: { volunteers: userid } }
+    );
 
-      if (Eventsupdate.matchedCount === 0) {
-        console.log('Events not found');
-      } else {
-        console.log('User participated successfully');
-
-      }
-      res.status(200).send(Eventsupdate);
-
-    } catch (error) {
-      res.status(500).json({ message: err.message });
+    if (ngos.matchedCount === 0) {
+      console.log("User not found");
+    } else {
+      console.log("NGO added for user successfully");
     }
 
+    res.status(200).send({ users, ngos });
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
-  })
+router.post("/event/addusers", async (req, res) => {
+  try {
+    const { eventid, userid } = req.body;
+    console.log(req.body);
+    const Eventsupdate = await Events.updateOne(
+      { _id: eventid },
+      { $push: { ParticipatedUser: userid } }
+    );
 
-  // router.get("/ngodetails/campns", async (req, res) => {
-  //   const ngoname = req.params.ngoname;
-  router.post("/ngodetails/campns", async (req, res) => {
+    if (Eventsupdate.matchedCount === 0) {
+      console.log("Events not found");
+    } else {
+      console.log("User participated successfully");
+    }
+    res.status(200).send(Eventsupdate);
+  } catch (error) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// router.get("/ngodetails/campns", async (req, res) => {
+//   const ngoname = req.params.ngoname;
+router.post("/ngodetails/campns", async (req, res) => {
   const ngoname = req.body.ngoname;
   const status = req.body.status;
 
-    console.log(ngoname);
-    // console.log(status)
+  console.log(ngoname);
+  // console.log(status)
+  try {
+    let query = { ngoname: ngoname, status: status };
+    const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
+    console.log(ngomodel);
+    res.json(ngomodel);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/closecamp", async (req, res) => {
+  const CloseId = req.body.CloseId;
+  console.log(CloseId);
+  try {
+    const result = await Ngomodel.findByIdAndUpdate(CloseId, {
+      $set: { status: "closed" },
+    });
+
+    if (!result) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.post("/opencamp", async (req, res) => {
+  const OpenId = req.body.OpenId;
+  console.log(OpenId);
+  try {
+    const result = await Ngomodel.findByIdAndUpdate(OpenId, {
+      $set: { status: "ongoing" },
+    });
+
+    if (!result) {
+      return res.status(404).json({ message: "Document not found" });
+    }
+  }
+  catch{
+    console.log("erroe");
+  }
+})
+
+  // router.post('/eventfromcampaign', async (req, res) => {
+  //   const { Ngoname, campaignname } = req.body;
+  //   console.log("NGO name "+Ngoname);
+  //   console.log("Campaign name "+campaignname);
+  //   try {
+  //     const events = await Events.find({NgoName: Ngoname , campaignName: campaignname});
+  
+  //      // Fetch user details for each ParticipatedUser ID in the events
+  //     const populatedEvents = await Promise.all(events.map(async event => {
+  //     const populatedParticipants = await Promise.all(event.ParticipatedUsers.map(async userId => {
+  //       const user = await User.findById(userId);
+  //       return { name: user.name, email: user.email };
+  //     }));
+
+  //     // Replace the ParticipatedUsers array with the populated user details
+  //     return { ...event._doc, ParticipatedUsers: populatedParticipants };
+  //   }));
+  //   console.log("Here  ");
+  //   console.log(populatedEvents);
+  //   res.json(populatedEvents);
+  // } catch (err) {
+  //   res.status(500).json({ message: err.message });
+  // }
+
+  // });
+
+  router.post('/eventfromcampaign', async (req, res) => {
+    const { Ngoname, campaignname } = req.body;
+    console.log("NGO name " + Ngoname);
+    console.log("Campaign name " + campaignname);
     try {
-      let query = { ngoname: ngoname, status: status };
-      const ngomodel = await Ngomodel.find(query).sort({ _id: -1 });
-      console.log(ngomodel);
-      res.json(ngomodel);
+      const events = await Events.find({ NgoName: Ngoname, campaignName: campaignname });
+      console.log("Events found:", events); // Add this line to log events
+    
+      // Fetch user details for each ParticipatedUser ID in the events
+      const populatedEvents = await Promise.all(events.map(async event => {
+        const populatedParticipants = [];
+      
+        if (event.ParticipatedUser && Array.isArray(event.ParticipatedUser)) {
+          // If ParticipatedUser exists and is an array, fetch user details for each user ID
+          await Promise.all(event.ParticipatedUser.map(async userId => {
+            const user = await User.findById(userId);
+            if (user) {
+              populatedParticipants.push({ id: user._id ,name: user.name, email: user.Email});
+            }
+          }));
+        }
+      
+        // Replace the ParticipatedUsers array with the populated user details
+        return { ...event._doc, ParticipatedUser: populatedParticipants };
+      }));
+      
+  
+      console.log("Here ", populatedEvents); // Add this line to log populatedEvents
+      res.json(populatedEvents);
     } catch (err) {
+      console.error("Error:", err); // Add this line to log any errors
       res.status(500).json({ message: err.message });
     }
   });
 
-  router.post("/closecamp", async (req, res) => {
-    const CloseId = req.body.CloseId;
-    console.log(CloseId);
-    try {
+  // API endpoint to search Solr
 
-      const result = await Ngomodel.findByIdAndUpdate(CloseId, { $set: { status: "closed" } });
+router.get('/searchNGO', async (req, res) => {
+  try {
+      const userInput = req.query.input;
+      console.log("User USer User Input : ",userInput)
+      const searchResults = await searchSolr(userInput);
+      res.json(searchResults);
+  } catch (error) {
+      console.error('Error searching Solr:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
-      if (!result) {
-        return res.status(404).json({ message: "Document not found" });
+//     res.json(result);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
+
+
+
+router.get("/donationneeds/:campaignname", async (req, res) => {
+  try {
+    console.log("Hello Donation Campaign Needs")
+    const campaignname = req.params.campaignname;
+    // const username = "Swastik";
+    console.log(campaignname)
+    const donationsneeds = await cartDetails.find({ CampaignName: campaignname }).sort({ _id: -1 });
+    console.log("donation needs data-> ", donationsneeds);
+    let totaldonation = 0;
+
+    // for (const donation of donationsneeds) {
+    //   totaldonation += parseInt(donation.ProductDetails.price);
+    // }
+    for (const donation of donationsneeds) {
+      for (const pd of donation.ProductDetails){
+        totaldonation += parseInt(pd.price);
       }
+   }
 
-      res.json(result);
-    } catch (err) {
-
-      res.status(500).json({ message: err.message });
-    }
-  });
-
-  router.post("/opencamp", async (req, res) => {
-    const OpenId = req.body.OpenId;
-    console.log(OpenId);
-    try {
-
-      const result = await Ngomodel.findByIdAndUpdate(OpenId, { $set: { status: "ongoing" } });
-
-
-      if (!result) {
-        return res.status(404).json({ message: "Document not found" });
-      }
-
-
-      res.json(result);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  });
+    console.log("Total Donation:", totaldonation);
+    res.json({ donationsneeds, totaldonation });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 
 
-
-  module.exports = router;
+module.exports = router;

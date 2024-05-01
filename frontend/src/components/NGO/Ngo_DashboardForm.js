@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { logoutUser } from '../../services/authService';
+import { logout } from "../../redux/actions/useractions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import { useDispatch, useSelector } from "react-redux";
 
 function NGO_Dashboard_form(props) {
 
   const [image, setimage] = useState();
   const Ngonameused = props.Ngoname;
   const [imagelink, setimagelink] = useState();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logout = async () => {
-    console.log("Ngo logout")
-    navigate('/');
-  }
+  const Logout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
 
   const [formData, setFormData] = useState({
     ngoname:  Ngonameused,
@@ -185,7 +185,7 @@ function NGO_Dashboard_form(props) {
                           </button>
                         </div>
                         <img src={image} />
-                        <button type="submit" className="btn" style={{ marginTop: '4rem', backgroundColor: 'red', color: 'white', fontSize: '1.5rem' }} onClick={logout} >
+                        <button type="submit" className="btn" style={{ marginTop: '4rem', backgroundColor: 'red', color: 'white', fontSize: '1.5rem' }} onClick={Logout} >
                           Logout
                         </button>
                       </div>

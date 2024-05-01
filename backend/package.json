@@ -4,8 +4,8 @@
   "description": "Landing Page",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "test": "jest --coverage --forceExit",
+    "start": "node app.js"
   },
   "author": "ReyKan",
   "license": "ISC",
@@ -23,6 +23,7 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-session": "^1.17.3",
+    "jest": "^29.7.0",
     "jquery": "^3.6.4",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.2.0",
@@ -30,11 +31,15 @@
     "mongoosh": "^0.0.7",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.3",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
+    "redis": "^3.1.2",
+    "solr-client": "^0.10.0-rc10",
     "sqlite3": "^5.1.6",
     "stripe": "^11.16.0",
+    "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   }

@@ -4,6 +4,7 @@ const bodyparser = require("body-parser");
 const { urlencoded } = require("body-parser");
 const User = require("../mongoSchema/userdetails");
 const Ngomodel = require("../mongoSchema/mongoschemango");
+const cartDetails= require("../mongoSchema/productlisting")
 const UserAuthLogin = require("../mongoSchema/userModel");
 const middleware = require("../middleware/middleware");
 const multer = require("multer");
@@ -92,6 +93,33 @@ router.post("/donationsUsername", async (req, res) => {
     }
     console.log("Total Donation:", totaldonation);
     res.json({ donations, totaldonation });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+router.get("/donationneeds/:username", async (req, res) => {
+  try {
+    console.log("Hello Donation User Needs")
+    const username = req.params.username;
+    // const username = "Swastik";
+    console.log(username)
+    const donationsneeds = await cartDetails.find({ Username: username }).sort({ _id: -1 });
+    console.log("donation needs data-> ", donationsneeds);
+    let totaldonation = 0;
+
+    // for (const donation of donationsneeds) {
+    //   totaldonation += parseInt(donation.ProductDetails.price);
+    // }
+    for (const donation of donationsneeds) {
+      for (const pd of donation.ProductDetails){
+        totaldonation += parseInt(pd.price);
+      }
+   }
+
+    console.log("Total Donation:", totaldonation);
+    res.json({ donationsneeds, totaldonation });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

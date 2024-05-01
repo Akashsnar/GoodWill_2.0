@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="Ngodetails" version="1.6">
+    <types>
+        <!-- Define a custom fieldType for the 'volunteers' field -->
+        <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+            <analyzer>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+
+        
+        <!-- boolean type: "true" or "false" -->
+        <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true"/>
+        <!-- <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true" multiValued="true"/> -->
+
+            <!-- KD-tree versions of date fields -->
+    <fieldType name="pdate" class="solr.DatePointField" docValues="true"/>
+    <fieldType name="pdates" class="solr.DatePointField" docValues="true" multiValued="true"/>
+
+    <fieldType name="pints" class="solr.IntPointField" docValues="true" multiValued="true"/>
+    <fieldType name="pfloats" class="solr.FloatPointField" docValues="true" multiValued="true"/>
+    <fieldType name="plongs" class="solr.LongPointField" docValues="true" multiValued="true"/>
+    <fieldType name="pdoubles" class="solr.DoublePointField" docValues="true" multiValued="true"/>
+
+        <!-- Define a fieldType for storing integers -->
+        <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
+         <fieldType name="string" class="solr.StrField" sortMissingLast="true" docValues="true" />
+        <!-- Define a fieldType for storing longs -->
+        <fieldType name="plong" class="solr.LongPointField" docValues="true"/>
+    </types>
+    <fields>
+     <!-- Define the _version_ field -->
+        <field name="_version_" type="plong" indexed="true" stored="true"/>
+        <!-- Map the 'volunteers' field to the custom fieldType -->
+        <field name="volunteers" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <!-- Define other fields here -->
+        <field name="_id" type="string" indexed="true" stored="true" />
+        <field name="ngoname" type="text_general" indexed="true" stored="true" />
+        <field name="campagainname" type="text_general" indexed="true" stored="true" />
+        <field name="image" type="text_general" indexed="true" stored="true" />
+        <field name="desc" type="text_general" indexed="true" stored="true" />
+        <field name="category" type="text_general" indexed="true" stored="true" />
+        <field name="goal" type="pint" indexed="true" stored="true" />
+        <field name="raised" type="pint" indexed="true" stored="true" />
+        <field name="status" type="text_general" indexed="true" stored="true" />
+       
+    </fields>
+    <uniqueKey>_id</uniqueKey>
+</schema>

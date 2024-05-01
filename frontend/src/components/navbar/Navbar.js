@@ -19,11 +19,15 @@ const Navbar = () => {
   const [showCartDetails, setshowCartDetails] = useState(false)
   const handleDonation = () => {
     // alert(`Login : ${isLoggedIn}`);
+  
     if (!isLoggedIn) {
       alert("Plz login first");
-    } else {
-      console.log("hello");
+    } else if(checkuserdata.mode=='User') {
+      console.log("hello", checkuserdata);
       navigate("/donation");
+    }
+    else{
+      navigate("/ngo2ngodonation");
     }
   };
   const handleCartDetails = () => {
@@ -31,7 +35,7 @@ const Navbar = () => {
     setshowCartDetails(!showCartDetails);
   }
   return (
-    <nav className="flex items-center justify-between flex-wrap ">
+    <nav className="flex items-center justify-between flex-wrap pt-2 pb-2">
       <div className="flex items-center flex-shrink-0 text-white mr-6 lg:mr-72">
         {/* <img src={locofy} className="w-100 h-10 mr-2" alt="Logo" /> */}
         <span className="text-black lg:px-[5rem] sm:px-2 fond-bold">GoodWill</span>
@@ -76,7 +80,10 @@ const Navbar = () => {
           <Link to="/feedback" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
             Feedback
           </Link>
-
+          <Link to="/chatapp" className="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">
+          chatapp
+          </Link>
+         
 
           {checkuserdata.isLoggedIn === false ?
             <Link
@@ -86,27 +93,32 @@ const Navbar = () => {
               <span class="displayNone">Log In</span>
             </Link>
             :
-            <Link
+            checkuserdata.mode=='User'?<Link
               to={`/user/${checkuserdata.userid}`}
             >
               <span class="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">&nbsp;Your Profile</span>
             </Link>
+            :<Link
+            to={`/Ngo_dashboard`}
+          >
+            <span class="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">&nbsp;Your Profile</span>
+          </Link>
           }
         </div>
         <div>
           <div className="flex">
-            <div className="cartcontainer m-auto" onClick={handleCartDetails}>
-              <FaCartShopping className="cursor-pointer" size="30px" /> {cartitems.length}
+          {checkuserdata.isLoggedIn && <div className="cartcontainer m-auto pr-2" onClick={handleCartDetails}>
+              <FaCartShopping className="cursor-pointer " size="30px" /> {cartitems.length}
               {/* {showCartDetails && cartitems.length !== 0 && <CustomDropdown seq_arr={cartitems.cartitems} />} */}
-            </div>
+            </div>}
 
-            <button className="inline-flex items-center bg-amber-500 border-0 py-0 px-4 text-white"
+            <button className="inline-flex items-center bg-amber-500 border-0 py-0 px-4 text-white rounded-full mr-2"
               id="donateBtn"
               onClick={handleDonation}
             >
               Donate
             </button>
-            <CustomDropdown isOpen={showCartDetails} seq_arr={cartitems.cartitems} />
+           { <CustomDropdown isOpen={showCartDetails} setshowCartDetails={setshowCartDetails} seq_arr={cartitems.cartitems} />}
           </div>
 
         </div>
