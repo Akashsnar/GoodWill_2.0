@@ -63,7 +63,12 @@ const Sidebar = () => {
           )}
         </li>
         <li className="charts-item">
-          <Link to="#"  onClick={toggleTableDropdown}>
+          <Link to="/adminDashboard/chat">
+            <i class="fa fa-comments" aria-hidden="true"></i>Chats
+          </Link>
+        </li>
+        <li className="charts-item">
+          <Link to="#" onClick={toggleTableDropdown}>
             <i className="fa fa-table"></i> Tables
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <span className="arrow">

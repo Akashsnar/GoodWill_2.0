@@ -3,13 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const name = JSON.parse(localStorage.getItem("name"));
 const email = JSON.parse(localStorage.getItem("email"));
 
-
 const initialState = {
   isLoggedIn: false,
   name: name ? name : "dfg",
   email: email ? email : "dfg@dsfd",
   blogs: [],
-};
+};  
 
 const authSlice = createSlice({
   name: "auth",

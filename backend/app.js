@@ -7,7 +7,9 @@ const reviewschema = require("./mongoSchema/reviewschema");
 const Events = require("./mongoSchema/EventSchema");
 const UserNgo = require("./mongoSchema/userModel");
 const cookieParser = require("cookie-parser");
-const db = require("./mongoSchema/database");
+const http = require('http');
+const { Server } = require('socket.io');
+// const db = require("./mongoSchema/database");
 const multer = require("multer");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -15,6 +17,7 @@ const { config } = require("dotenv");
 const fs = require('fs');
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const UserModel = require("./mongoSchema/userModel.js")
 config();
 // app.use(express.static("uploads"));
 // Swagger configuration
@@ -222,6 +225,117 @@ app.post("/deleteUser", async (req, res) => {
   }
 });
 
+const server = http.createServer(app);
+
+const onlineUsers = new Set();
+const userSocketId = new Map();
+
+const io = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+    }
+})
+
+const getId = async ({ email }) => {
+    // console.log(email)
+    const user = await UserModel.findOne({ email: email });
+    return user._id;
+}
+
+function formatTimestamp(timestamp) {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+  const currentDay = currentDate.getDate();
+
+  const date = new Date(timestamp);
+
+  // Check if the timestamp is yesterday or earlier
+  if (date.getFullYear() < currentYear || date.getMonth() < currentMonth || date.getDate() < currentDay) {
+    // If it's yesterday or earlier, format as dd/mm/yyyy
+    return date.toLocaleDateString('en-GB'); // Change the locale as needed
+  } else {
+    // If it's today, format as hh:mm A.M or P.M
+    const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    return formattedTime;
+  }
+}
+
+io.on("connection", async (socket) => {
+    console.log(`User Connected: ${socket.id}`);
+    console.log(`emailId is ${socket.handshake.query.email}`);
+    const userId = await getId({ email: socket.handshake.query.email });
+    console.log("User Id is ", userId);
+    onlineUsers.add(userId.toString());
+    userSocketId.set(userId.toString(), socket.id);
+    console.log(onlineUsers);
+    console.log(userSocketId)
+    socket.on("send-message", async (data) => {
+        try {
+            console.log("send_message")
+            const {
+              content,
+              senderId,
+              receiverId,
+              roomId
+            } = data;
+            console.log(data)
+            const newMessage = new Message({
+                content,
+                roomId,
+                senderId
+            });
+
+            await newMessage.save();
+            const formattedTime = formatTimestamp(newMessage.createdAt);
+            const dataToSend = {
+              senderId,
+              content,
+              time: formattedTime,
+            };
+            console.log(userSocketId.get(receiverId));
+            if(onlineUsers.has(receiverId)) {
+              socket.to(userSocketId.get(receiverId)).emit("recieve-message", dataToSend);
+            }
+        } catch (error) {
+            console.error("Error saving message:", error);
+        }
+    });
+
+    socket.on("disconnect", () => {
+        console.log("User Disconnected", socket.id);
+        onlineUsers.delete(userId);
+        userSocketId.delete(userId);
+    });
+});
+
+const Message = require("./mongoSchema/message");
+
+app.get("/helpline/user-details/:emailId", async(req, res) => {
+  try {
+    const user = await UserModel.findOne({ email: req.params.emailId });
+    if(!user) return res.status(400).json({ message: "User not found" });
+    const admin = await UserModel.findOne({ mode: "Admin" });
+    if(!admin) return res.status(400).json({ message: "Admin not found!" });
+    const messages = await Message.find({ roomId: user._id });
+    return res.status(200).json({ user_id: user._id, admin_id: admin._id, messages: messages });
+  } catch(err) {
+    console.log(err);
+  }
+})
+
+app.get("/helpline/admin/:userId", async(req, res) => {
+  try {
+    const admin = await UserModel.findOne({ mode: "Admin" });
+    if(!admin) return res.status(400).json({ message: "Admin not found!" });
+    const messages = await Message.find({ roomId: req.params.userId });
+    return res.status(200).json({ messages: messages, admin_id: admin._id })
+  } catch(err) {
+    console.log(err);
+  }
+})
+
 const Feedback = require("./mongoSchema/feedbackSchema");
 app.post("/deleteFeedback", async (req, res) => {
   const id = req.body.id;
@@ -238,6 +352,7 @@ app.post("/deleteFeedback", async (req, res) => {
 
 const Contact = require("./mongoSchema/contactSchema");
 const Donation = require("./mongoSchema/donationschema.js");
+const { send } = require("process");
 
 /**
  * @swagger
@@ -275,6 +390,11 @@ app.post("/deleteMessage", async (req, res) => {
   }
 });
 
+
+app.get("/sitedata/chatlists", async(req, res) => {
+  const users = await UserModel.find({ mode: "User" });
+  return res.status(200).json(users);
+})
 app.post("/deleteReview", async (req, res) => {
   const id = req.body.id;
   console.log("confirmDeleteIndex:", id);
@@ -464,7 +584,6 @@ app.get("/NGOsLength", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-<<<<<<< HEAD
 });
 
 app.get('/users', (req, res) => {
@@ -472,9 +591,7 @@ app.get('/users', (req, res) => {
   res.json(users);
 });
 
+const url = "mongodb+srv://aksn0204:aAKgkxCEiyXB5O59@cluster0.dpmnhfa.mongodb.net/GoodWill";
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+mongoose.connect(url).then(() => {server.listen(port, () => console.log(`Example app listening on port ${port}!`))});
 // module.exports = app;
-=======
-});
->>>>>>> 80d0446b73d59dd5c5fa06dbd6cb28bf6fab0d62

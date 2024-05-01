@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import moment from "moment";
 import ScrollToBottom from "react-scroll-to-bottom";
 import './Chat.css'
+import { useSelector } from 'react-redux';
+
 const Chat = ({ socket, username, room }) => {
+  const name = useSelector((state) => state.auth.name);
+  const email = useSelector((state) => state.auth.email);   
+
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
 
@@ -38,45 +43,15 @@ const Chat = ({ socket, username, room }) => {
   }, [socket]);
 
   return (
-    <div className="chat-window">
-      <div className="chat-header">
-        <p>GoodWill-helpdesk</p>
+    <div className="helpline_container">
+      <div className="helpline_header">HelpLine Desk</div>
+      <div className="chat_container">
+        {messageList.map((message) => {
+
+        })}
       </div>
-      <div className="chat-body">
-        <div className="message-container">
-          {messageList.map((messageContent) => {
-            return (
-              <div
-                className="message"
-                id={username === messageContent.author ? "you" : "other"}
-              >
-                <div>
-                  <div className="message-content">
-                    <p>{messageContent.message}</p>
-                  </div>
-                  <div className="message-meta">
-                    <p id="time">{messageContent.time}</p>
-                    <p id="author">{messageContent.author}</p>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-      <div className="chat-footer">
-        <input
-          type="text"
-          value={currentMessage}
-          placeholder="Hey..."
-          onChange={(event) => {
-            setCurrentMessage(event.target.value);
-          }}
-          onKeyDown={(event) => {
-            event.key === "Enter" && sendMessage();
-          }}
-        />
-        <button onClick={sendMessage}>&#9658;</button>
+      <div className="chat_input">
+
       </div>
     </div>
   );
