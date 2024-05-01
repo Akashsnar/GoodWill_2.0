@@ -567,12 +567,79 @@ router.post("/opencamp", async (req, res) => {
     if (!result) {
       return res.status(404).json({ message: "Document not found" });
     }
-
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
-});
+  catch{
+    console.log("erroe");
+  }
+})
+
+  // router.post('/eventfromcampaign', async (req, res) => {
+  //   const { Ngoname, campaignname } = req.body;
+  //   console.log("NGO name "+Ngoname);
+  //   console.log("Campaign name "+campaignname);
+  //   try {
+  //     const events = await Events.find({NgoName: Ngoname , campaignName: campaignname});
+  
+  //      // Fetch user details for each ParticipatedUser ID in the events
+  //     const populatedEvents = await Promise.all(events.map(async event => {
+  //     const populatedParticipants = await Promise.all(event.ParticipatedUsers.map(async userId => {
+  //       const user = await User.findById(userId);
+  //       return { name: user.name, email: user.email };
+  //     }));
+
+  //     // Replace the ParticipatedUsers array with the populated user details
+  //     return { ...event._doc, ParticipatedUsers: populatedParticipants };
+  //   }));
+  //   console.log("Here  ");
+  //   console.log(populatedEvents);
+  //   res.json(populatedEvents);
+  // } catch (err) {
+  //   res.status(500).json({ message: err.message });
+  // }
+
+  // });
+
+  router.post('/eventfromcampaign', async (req, res) => {
+    const { Ngoname, campaignname } = req.body;
+    console.log("NGO name " + Ngoname);
+    console.log("Campaign name " + campaignname);
+    try {
+      const events = await Events.find({ NgoName: Ngoname, campaignName: campaignname });
+      console.log("Events found:", events); // Add this line to log events
+    
+      // Fetch user details for each ParticipatedUser ID in the events
+      const populatedEvents = await Promise.all(events.map(async event => {
+        const populatedParticipants = [];
+      
+        if (event.ParticipatedUser && Array.isArray(event.ParticipatedUser)) {
+          // If ParticipatedUser exists and is an array, fetch user details for each user ID
+          await Promise.all(event.ParticipatedUser.map(async userId => {
+            const user = await User.findById(userId);
+            if (user) {
+              populatedParticipants.push({ id: user._id ,name: user.name, email: user.Email});
+            }
+          }));
+        }
+      
+        // Replace the ParticipatedUsers array with the populated user details
+        return { ...event._doc, ParticipatedUser: populatedParticipants };
+      }));
+      
+  
+      console.log("Here ", populatedEvents); // Add this line to log populatedEvents
+      res.json(populatedEvents);
+    } catch (err) {
+      console.error("Error:", err); // Add this line to log any errors
+      res.status(500).json({ message: err.message });
+    }
+  });
+
+
+//     res.json(result);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// });
 
 
 
