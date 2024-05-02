@@ -35,7 +35,7 @@ function NgoProfile() {
       console.log("hi");
       const ngocampaignid = id.id;
       console.log(ngocampaignid);
-      const response = await axios.get(`http://localhost:4000/sitedata/ngodetail/${ngocampaignid}`);
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+`/sitedata/ngodetail/${ngocampaignid}`);
       console.log("data saved");
       console.log(response);
       const responses = await response.data;

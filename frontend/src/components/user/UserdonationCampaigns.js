@@ -8,7 +8,7 @@ const UserdonationCampaigns = ({ data }) => {
     useEffect(() => {
         const fetchCampaignDetails = async () => {
           try {
-            const response = await fetch(`http://localhost:4000/sitedata/campaign/${data.campaignName}`);
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/sitedata/campaign/${data.campaignName}`);
             if (response.ok) {
               const campaignData = await response.json();
               setCampaign(campaignData);

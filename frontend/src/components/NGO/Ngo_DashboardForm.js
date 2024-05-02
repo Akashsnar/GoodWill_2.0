@@ -73,7 +73,7 @@ function NGO_Dashboard_form(props) {
 
     try {
       console.log(formData);
-      const response = await axios.post(' http://localhost:4000/sitedata/ngo_details', formData);
+      const response = await axios.post(process.env.REACT_APP_BACKEND_URL+'/sitedata/ngo_details', formData);
       console.log("data saved");
 
       // Log the response from the server (you can handle it as needed)

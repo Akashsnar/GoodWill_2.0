@@ -14,40 +14,31 @@ const expressAsyncHandler = require("express-async-handler");
 const redis = require("redis");
 const cartDetails= require("../mongoSchema/productlisting")
 const redisUrl = "redis://localhost:6379";
-const redisClient = redis.createClient({ url: redisUrl });
-
-// const {createClient} = require("redis");
-// const redisClient = createClient({
-//   password: "YfG1c8MnMa4gDxW10h0eDs0fDwrrxMVz",
-//   socket: {
-//     host: "redis-17000.c264.ap-south-1-1.ec2.redns.redis-cloud.com",
-//     port: 17000,
-//   },
-// })
-// redisClient.connect();
+// const redisClient = redis.createClient({ url: redisUrl });
 
 
-redisClient.on("error", (err) => {
-  console.error("Redis connection error:", err);
-});
-redisClient.on("connect", () => {
-  console.log("Redis server ready");
-});
+
+// redisClient.on("error", (err) => {
+//   console.error("Redis connection error:", err);
+// });
+// redisClient.on("connect", () => {
+//   console.log("Redis server ready");
+// });
 
 // Middleware function to cache data
 function cache(req, res, next) {
-  const key = req.originalUrl;
-  redisClient.get(key, (err, data) => {
-    if (err) {
-      console.error("Redis error:", err);
-      next(); // Proceed without caching if there's an error
-    }
-    if (data !== null) {
-      res.send(JSON.parse(data));
-    } else {
-      next();
-    }
-  });
+  // const key = req.originalUrl;
+  // redisClient.get(key, (err, data) => {
+  //   if (err) {
+  //     console.error("Redis error:", err);
+  //     next(); // Proceed without caching if there's an error
+  //   }
+  //   if (data !== null) {
+  //     res.send(JSON.parse(data));
+  //   } else {
+  //     next();
+  //   }
+  // });
 }
 
 // Getting all
@@ -63,7 +54,7 @@ router.get("/", async (req, res) => {
 router.get("/ngodetails", cache, async (req, res) => {
   try {
     const ngomodel = await Ngomodel.find().sort({ _id: -1 });
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngomodel));
+   // redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngomodel));
     res.json(ngomodel);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -76,7 +67,7 @@ router.get("/ngodetail/:ngoid", cache, async (req, res) => {
     let query = { _id: campagainid };
     const ngomodel = await Ngomodel.findOne(query);
     console.log(ngomodel);
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngomodel));
+   // redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngomodel));
     res.json(ngomodel);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -85,7 +76,7 @@ router.get("/ngodetail/:ngoid", cache, async (req, res) => {
 router.get("/allUsers", cache, async (req, res) => {
   try {
     const User = await User.find();
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(User));
+   // redisClient.setex(req.originalUrl, 3600, JSON.stringify(User));
     res.json(User);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -137,7 +128,7 @@ router.get("/ngodetail", async (req, res) => {
 router.get("/feedbacks", cache, async (req, res) => {
   try {
     const feedback = await Feedback.find().sort({ _id: -1 });
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(feedback));
+   // redisClient.setex(req.originalUrl, 3600, JSON.stringify(feedback));
     res.json(feedback);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -146,7 +137,7 @@ router.get("/feedbacks", cache, async (req, res) => {
 router.get("/reviews", cache, async (req, res) => {
   try {
     const review = await Review.find().sort({ _id: -1 });
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(review));
+   // redisClient.setex(req.originalUrl, 3600, JSON.stringify(review));
     res.json(review);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -174,7 +165,7 @@ router.get("/contact", cache, async (req, res) => {
   try {
     const contact = await Contact.find().sort({ _id: -1 });
     console.log("contact data->", contact);
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(contact));
+   // redisClient.setex(req.originalUrl, 3600, JSON.stringify(contact));
     res.json(contact);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -185,7 +176,7 @@ router.get("/donations", async (req, res) => {
   try {
     const donation = await Donation.find().sort({ _id: -1 });
     console.log("donation data->", donation);
-    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(donations));
+    //// redisClient.setex(req.originalUrl, 3600, JSON.stringify(donations));
     res.json(donation);
   } catch (err) {
     res.status(500).json({ message: err.message });

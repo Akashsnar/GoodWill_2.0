@@ -11,7 +11,7 @@ function EventTable() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/eventsData"
+          process.env.REACT_APP_BACKEND_URL+"/eventsData"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -74,7 +74,7 @@ function EventTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteEvent", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteEvent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

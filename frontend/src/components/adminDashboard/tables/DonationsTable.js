@@ -188,7 +188,7 @@ function DonationsTable() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/sitedata/donations"
+          process.env.REACT_APP_BACKEND_URL+"/sitedata/donations"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -250,7 +250,7 @@ function DonationsTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteDonation", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteDonation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

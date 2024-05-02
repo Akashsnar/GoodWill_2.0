@@ -16,7 +16,7 @@ function Userprofile() {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/userinfo/${username}`
+          process.env.REACT_APP_BACKEND_URL+`/userinfo/${username}`
         );
         if (response.ok) {
           const userData = await response.json();
@@ -37,7 +37,6 @@ function Userprofile() {
   //   const fetchUserDetails = async () => {
   //     try {
   //       const response = await fetch(
-  //         `http://localhost:4000/userinfo/donation/${username}`
   //       );
   //       if (response.ok) {
   //         const userData = await response.json();
@@ -57,7 +56,7 @@ function Userprofile() {
     const fetchUserDonations = async () => {
       try {
         console.log("Inside userDonation fetch");
-        const response = await fetch('http://localhost:4000/userinfo/donationsUsername', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/userinfo/donationsUsername', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -89,7 +88,7 @@ function Userprofile() {
     const fetchNeedsDonations = async () => {
       try {
         console.log("Inside userDonation fetch");
-        const response = await fetch(`http://localhost:4000/userinfo/donationneeds/${username}`, {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/userinfo/donationneeds/${username}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -142,7 +141,7 @@ function Userprofile() {
                   {/* <div style={{width:"100%"}}> */}
 
                   <img
-                    src={(user.profilePic != '') ? `http://localhost:4000/uploads/${user.profilePic}` : 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg'}
+                    src={(user.profilePic != '') ? process.env.REACT_APP_BACKEND_URL+`/uploads/${user.profilePic}` : 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg'}
                     alt="Iamge alt"
                     srcset=""
                     style={{

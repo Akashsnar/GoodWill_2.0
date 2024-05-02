@@ -18,7 +18,7 @@ function CampaignDashboard() {
   useEffect(() => {
     const fetchCampaignDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/sitedata/campaign/${campaignname}`);
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/sitedata/campaign/${campaignname}`);
         if (response.ok) {
           const campaignData = await response.json();
           setCampaign(campaignData);
@@ -56,7 +56,7 @@ function CampaignDashboard() {
   useEffect(() => {
     const fetchReviewDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/sitedata/reviews/${campaignname}`);
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/sitedata/reviews/${campaignname}`);
         if (response.ok) {
           const ReviewData = await response.json();
           setUserReviews(ReviewData);
@@ -76,7 +76,7 @@ function CampaignDashboard() {
   useEffect(() => {
     const fetchUserDonations = async () => {
       try {
-        const response = await fetch('http://localhost:4000/sitedata/donationsCampaign', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/sitedata/donationsCampaign', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -107,7 +107,7 @@ function CampaignDashboard() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ Ngoname: campaign.ngoname, campaignname: campaignname })
         };
-        const response = await fetch('http://localhost:4000/sitedata/eventfromcampaign', requestOptions);
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/sitedata/eventfromcampaign', requestOptions);
         if (response.ok) {
           const eventData = await response.json();
           setEvents(eventData);
@@ -135,7 +135,7 @@ function CampaignDashboard() {
     const fetchNeedsDonations = async () => {
       try {
         console.log("Inside userDonation fetch");
-        const response = await fetch(`http://localhost:4000/sitedata/donationneeds/${campaignname}`, {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/sitedata/donationneeds/${campaignname}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'

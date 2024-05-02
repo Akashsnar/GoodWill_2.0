@@ -26,7 +26,7 @@ const Addusers=async (eventid)=>{
 
         const formDatas = { eventid: eventid, userid: userid}
         const response = await axios.post(
-            "http://localhost:4000/sitedata/event/addusers",
+            process.env.REACT_APP_BACKEND_URL+"/sitedata/event/addusers",
             formDatas, {
               withCredentials:true,
           }

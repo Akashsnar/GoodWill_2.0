@@ -48,7 +48,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
 
   const handleClose = async (CloseId) => {
     try {
-      const response = await fetch("http://localhost:4000/sitedata/closecamp", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/sitedata/closecamp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
 
   const handleOpen = async (OpenId) => {
     try {
-      const response = await fetch("http://localhost:4000/sitedata/opencamp", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/sitedata/opencamp", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,7 +107,7 @@ const Campaign = ({ data, mode, username, userDetails }) => {
           console.log("ids=>", campaignid, userDetails._id);
           const formDatas = { campaignid: campaignid, userid: userDetails._id }
           const response = await axios.post(
-            "http://localhost:4000/sitedata/user/volunteer",
+            process.env.REACT_APP_BACKEND_URL+"/sitedata/user/volunteer",
             formDatas, {
             withCredentials: true,
           }
@@ -134,7 +134,6 @@ const Campaign = ({ data, mode, username, userDetails }) => {
       // console.log("ids=>", campaignid, userDetails._id);
       // const formDatas = { campaignid: campaignid, userid: userDetails._id }
       // const response = await axios.post(
-      //   "http://localhost:4000/sitedata/user/volunteer",
       //   formDatas, {
       //   withCredentials: true,
       // }
