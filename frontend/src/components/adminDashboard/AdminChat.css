@@ -1,0 +1,66 @@
+ .helpline_middle {
+  display: flex;
+  background-color: rgb(226 232 240);
+}
+
+/* Style for user list container */
+.chatlists {
+  width: 30%; /* Set to 50% of parent width */
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  overflow-y: auto; /* Adding overflow-y for vertical scroll */
+  max-height: 65vh; /* Limiting max height to prevent overflowing */
+  /* border: 2px solid black; */
+  flex: 0 0 30%;
+}
+
+.iamtwo {
+  display: flex;
+  flex: 0 0 70%; /* Take 70% width and don't allow shrinking or growing */
+  overflow-y: auto; /* Adding overflow-y for vertical scroll */
+  height: 65vh; /* Limiting max height to prevent overflowing */
+}
+
+.selected-user {
+  color: rgb(2, 174, 33); /* Adjust text color as needed */
+  background-color: #90EE90;
+  /* Add more styles as needed */
+}
+
+.chatlists button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.chatlists button:hover {
+  background-color: #eaeaea;
+}
+
+
+.mainContent {
+  margin-top: 6rem;
+} 
+
+.main_chat_container{
+  margin: auto;
+  width: 100%;
+  margin-top: 10px;
+  background-color: rgb(226 232 240);
+  border-radius: 2px;
+}
+
+
+.container_chat_contain{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

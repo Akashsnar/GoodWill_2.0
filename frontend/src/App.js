@@ -46,7 +46,7 @@ import Eventpage from "./Event/Eventpage.js";
 import Navbar from "./components/navbar/Navbar.js";
 import Products from "./components/Products/Productitems.js";
 import ProductsForm from "./components/Products/Productsform.js";
-
+import AdminChat from "./components/adminDashboard/AdminChat.js";
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -113,6 +113,10 @@ function App() {
           <Route
             path="/adminDashboard/Graph"
             element={<DonationGraphTable />}
+          />
+          <Route
+            path="/adminDashboard/chat"
+            element={<AdminChat />}
           />
           <Route
             path="/adminDashboard/PieChart"
