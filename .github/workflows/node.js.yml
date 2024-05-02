@@ -1,0 +1,37 @@
+name: Node.JS CI/CD
+
+on:
+  push:
+    paths:
+    - 'backend/**'
+    branches: ["main"]
+
+jobs:
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Use Node.JS ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies and run tests
+      run: |
+        npm install pm2 -g
+        npm install
+        pm2 start app.js
+        sleep 20
+        npm test
+        pm2 stop app
+      
+      working-directory: backend
