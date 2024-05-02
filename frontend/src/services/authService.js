@@ -63,7 +63,7 @@ export const logoutUser = async () => {
   try {
     console.log("logoutUser");
 
-    await axios.get(`http://localhost:4000/api/users/logout`);
+    await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/users/logout`);
 
     toast.success("Logged Out");
   } catch (error) {

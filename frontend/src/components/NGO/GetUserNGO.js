@@ -18,7 +18,7 @@ function GetUserNGO(props){
       if(searchQuery){
         try {
           const encodedQuery = encodeURIComponent(searchQuery);
-          const response = await fetch(`http://localhost:4000/sitedata/searchNGO?input=${encodedQuery}`);
+          const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/sitedata/searchNGO?input=${encodedQuery}`);
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -40,7 +40,7 @@ function GetUserNGO(props){
         if(props.mode!=='ngodash'){
           // if(searchQuery=''){
         try {
-          const response = await fetch('http://localhost:4000/sitedata/ngodetails');
+          const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/sitedata/ngodetails');
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
@@ -54,10 +54,8 @@ function GetUserNGO(props){
       // }
       }else{
         try {
-          // console.log(props.ngoname);
-          // const response = await fetch(`http://localhost:4000/sitedata/${props.ngoname}`);
           console.log("Inside userDonation fetch");
-          const response = await fetch('http://localhost:4000/sitedata/ngodetails/campns', {
+          const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/sitedata/ngodetails/campns', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

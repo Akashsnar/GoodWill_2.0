@@ -134,7 +134,7 @@ function ReviewsTable() {
    const fetchData = async () => {
      try {
        const response = await fetch(
-         "http://localhost:4000/sitedata/reviews"
+        process.env.REACT_APP_BACKEND_URL+"/sitedata/reviews"
        );
        if (!response.ok) {
          throw new Error("Network response was not ok");
@@ -195,7 +195,7 @@ function ReviewsTable() {
 
  const handleConfirmDelete = async (deleteId) => {
    try {
-     const response = await fetch("http://localhost:4000/deleteReview", {
+     const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteReview", {
        method: "POST",
        headers: {
          "Content-Type": "application/json",

@@ -12,7 +12,7 @@ const App = (CampaignName) => {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            "http://localhost:4000/sitedata/donationsCampaign", {
+            process.env.REACT_APP_BACKEND_URL+"/sitedata/donationsCampaign", {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'

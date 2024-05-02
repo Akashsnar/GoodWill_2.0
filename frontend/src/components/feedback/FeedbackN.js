@@ -39,7 +39,7 @@ function Feedback() {
 
     try {
       // Make an HTTP POST request to your Node.js server using fetch
-      const response = await fetch("http://localhost:4000/sitedata/feedback", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/sitedata/feedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

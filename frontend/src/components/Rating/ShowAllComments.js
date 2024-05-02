@@ -8,7 +8,7 @@ const AllComments = ({campagainname, users, showStars }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/sitedata/reviews/${campagainname}`);
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/sitedata/reviews/${campagainname}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

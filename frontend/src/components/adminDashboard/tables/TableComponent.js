@@ -94,7 +94,7 @@ function TableComponent({ columns, rows, onDelete, props, showSidebar }) {
                                 <TableCell key={column.id} align={column.align}>
                                   {column.id === "profilePic"? (
                                     <img
-                                      src={`http://localhost:4000/uploads/${value}`}
+                                      src={process.env.REACT_APP_BACKEND_URL+`/uploads/${value}`}
                                       alt="Profile Pic"
                                       style={{
                                         width: 50,

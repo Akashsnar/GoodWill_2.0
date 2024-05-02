@@ -36,7 +36,7 @@ function Contact(){
 
     try {
         // Make an HTTP POST request to your Node.js server using fetch
-        const response = await fetch('http://localhost:4000/sitedata/submitmessage', {
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+'/sitedata/submitmessage', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

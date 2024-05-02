@@ -20,12 +20,12 @@ const AdminChat = () => {
     console.log("emailId ", emailId);
     useEffect(() => {
         const getUsers = async () => {
-            const response = await fetch("http://localhost:4000/sitedata/chatlists");
+            const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/sitedata/chatlists");
             const data = await response.json();
             console.log(data);
             setUsers(data);
             setUserId(data[0]._id);
-            const response2 = await fetch(`http://localhost:4000/helpline/admin/${data[0]._id}`);
+            const response2 = await fetch(`${process.env.REACT_APP_BACKEND_URL}/helpline/admin/${data[0]._id}`);
             const data2 = await response2.json();
             console.log(data2.messages);
             setMessageList(data2.messages);
@@ -44,7 +44,7 @@ const AdminChat = () => {
     }, [userId, messageList])
 
     useEffect(() => {
-        const userSocket = io('http://localhost:4000', {
+        const userSocket = io(`${process.env.REACT_APP_BACKEND_URL}`, {
             query: {
                 email: emailId,
             },
@@ -68,7 +68,7 @@ const AdminChat = () => {
 
     const handleUserChange = async (user_id) => {
         setUserId(user_id);
-        const response = await fetch(`http://localhost:4000/helpline/admin/${user_id}`);
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/helpline/admin/${user_id}`);
         const data = await response.json();
         const { admin_id, messages } = data;
         console.log(" user_id ", user_id, admin_id, messages);

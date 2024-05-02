@@ -98,7 +98,7 @@ function UserdetailsForm(props) {
     try {
       console.log(formData);
       const response = await axios.post(
-        " http://localhost:4000/userinfo",
+        process.env.REACT_APP_BACKEND_URL+"/userinfo",
         formDatas, {
         headers: {
           'Content-Type': 'multipart/form-data'

@@ -11,7 +11,7 @@ function NGOsTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:4000/ngosData");
+        const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/ngosData");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -68,7 +68,7 @@ function NGOsTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteNGOData", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteNGOData", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -86,7 +86,7 @@ const userDetails=state.userDetails;
     // try {
     //   // Make a POST request to the backend endpoint
     //   const response = await fetch(
-    //     "http://localhost:4000/sitedata/addComment",
+  
     //     {
     //       method: "POST",
     //       headers: {
@@ -100,7 +100,6 @@ const userDetails=state.userDetails;
     //   const data = await response.json();
     //   console.log("Comment added:", data);
 
-      // Update local state if needed
       setComments([newComment, ...comments]);
       setFormData((prevData) => ({
         ...prevData,

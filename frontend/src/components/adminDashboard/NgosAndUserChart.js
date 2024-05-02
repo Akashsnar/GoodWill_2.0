@@ -14,7 +14,7 @@ const NgosAndUserChart = () => {
     const fetchNgoData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/NGOsLength"
+          process.env.REACT_APP_BACKEND_URL+"/NGOsLength"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -29,7 +29,7 @@ const NgosAndUserChart = () => {
     const fetchEventData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/eventsLength"
+          process.env.REACT_APP_BACKEND_URL+"/eventsLength"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -44,7 +44,7 @@ const NgosAndUserChart = () => {
     const fetchNgoCampaignData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/sitedata/ngolength"
+          process.env.REACT_APP_BACKEND_URL+"/sitedata/ngolength"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -60,7 +60,7 @@ const NgosAndUserChart = () => {
     const fetchUserData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/sitedata/userlength"
+          process.env.REACT_APP_BACKEND_URL+"/sitedata/userlength"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");

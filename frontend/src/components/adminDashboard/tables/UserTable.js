@@ -183,7 +183,7 @@ function UserTable() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/userinfo"
+          process.env.REACT_APP_BACKEND_URL+"/userinfo"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -245,7 +245,7 @@ function UserTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteUser", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

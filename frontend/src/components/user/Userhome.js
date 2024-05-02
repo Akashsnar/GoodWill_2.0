@@ -40,7 +40,7 @@ function Userhome() {
       console.log(props);
       const userid = props.id;
       console.log(userid);
-      const response = await axios.get(`http://localhost:4000/sitedata/userdetail/${userid}`);
+      const response = await axios.get(process.env.REACT_APP_BACKEND_URL+`/sitedata/userdetail/${userid}`);
       console.log("data fetched successfully");
       setuserdata(response.data)
 
@@ -81,7 +81,7 @@ function Userhome() {
 
         <div className="sticky flex-shrink-0 p-3 bg-white " style={{ width: "20%" }}>
           <div className="profile-userpic">
-            <img src={`http://localhost:4000/uploads/${userDetails.profilePic}`}
+            <img src={process.env.REACT_APP_BACKEND_URL+`/uploads/${userDetails.profilePic}`}
               className="img-responsive rounded-full h-[15rem] w-[15rem] pl-3"
               alt=""
             />

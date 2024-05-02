@@ -10,7 +10,7 @@ const App = () => {
       const fetchData = async () => {
         try {
           const response = await fetch(
-            "http://localhost:4000/sitedata/donations"
+            process.env.REACT_APP_BACKEND_URL+"/sitedata/donations"
           );
           const data = await response.json();
           setDonationData(data);

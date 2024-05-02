@@ -107,7 +107,9 @@ import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
 
 const ChatPage = () => {
+  const auth = useSelector((state) => state.auth)
   const emailId = useSelector((state) => state.auth.email);
+  console.log("auth" , auth);
   const [inputMessage, setInputMessage] = useState("");
   const [socket, setSocket] = useState();
   const [messageList, setMessageList] = useState([]);
@@ -118,7 +120,7 @@ const ChatPage = () => {
 
 
   useEffect(() => {
-    const userSocket = io('http://localhost:4000', {
+    const userSocket = io(process.env.REACT_APP_BACKEND_URL, {
       query: {
         email: emailId,
       },
@@ -141,9 +143,12 @@ const ChatPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:4000/helpline/user-details/${emailId}`);
+      console.log("email" , emailId);
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+`/helpline/user-details/${emailId}`);
       const data = await response.json();
       const { user_id, admin_id, messages } = data;
+      console.log("messages" , messages)
+      console.log("data" , data);
       setUserId(user_id);
       setAdminId(admin_id);
       setMessageList(messages);

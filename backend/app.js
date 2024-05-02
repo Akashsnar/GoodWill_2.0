@@ -9,7 +9,7 @@ const UserNgo = require("./mongoSchema/userModel");
 const cookieParser = require("cookie-parser");
 const http = require('http');
 const { Server } = require('socket.io');
-// const db = require("./mongoSchema/database");
+const db = require("./mongoSchema/database");
 const multer = require("multer");
 const morgan = require("morgan");
 const cors = require("cors");
@@ -81,56 +81,33 @@ app.use(
 //redis
 const redis = require("redis");
 const redisUrl = "redis://localhost:6379";
-const redisClient = redis.createClient({ url: redisUrl });
-// const redisClient = createClient({
-//   password: "YfG1c8MnMa4gDxW10h0eDs0fDwrrxMVz",
-//   socket: {
-//     host: "redis-17000.c264.ap-south-1-1.ec2.redns.redis-cloud.com",
-//     port: 17000,
-//   },
-// })
-// redisClient.connect()
-// (async () => {
-//   await redisClient.connect();
-// })();
-// Check Redis connection
-redisClient.on("error", (err) => {
-  console.error("Redis connection error:", err);
-});
-redisClient.on("connect", () => {
-  console.log("Connected to Redis server");
-});
+// const redisClient = redis.createClient({ url: redisUrl });
 
-// Middleware function to cache data
-// function cache2(req, res, next) {
-//   const key = req.originalUrl;
-//   redisClient.get(key, (err, data) => {
-//     if (err) {
-//       console.error("Redis error:", err);
-//       next(); // Proceed without caching if there's an error
-//     }
 
-//     if (data !== null) {
-//       res.send(JSON.parse(data));
-//     } else {
-//       next();
-//     }
-//   });
-// }
+//redisthings
+
+
+// redisClient.on("error", (err) => {
+//   console.error("Redis connection error:", err);
+// });
+// redisClient.on("connect", () => {
+//   console.log("Connected to Redis server");
+// });
+
 function cache(req, res, next) {
-  const key = req.originalUrl;
-  redisClient.get(key, (err, data) => {
-    if (err) {
-      console.error("Redis error:", err);
-      next(); // Proceed without caching if there's an error
-    }
+  // const key = req.originalUrl;
+  // redisClient.get(key, (err, data) => {
+  //   if (err) {
+  //     console.error("Redis error:", err);
+  //     next(); // Proceed without caching if there's an error
+  //   }
 
-    if (data !== null) {
-      res.send(JSON.parse(data));
-    } else {
-      next();
-    }
-  });
+  //   if (data !== null) {
+  //     res.send(JSON.parse(data));
+  //   } else {
+  //     next();
+  //   }
+  // });
 }
 
 var upload = multer({
@@ -407,6 +384,8 @@ const Message = require("./mongoSchema/message");
 
 app.get("/helpline/user-details/:emailId", async(req, res) => {
   try {
+    const data = await UserModel.findOne({name :req.params.emailId});
+    console.log("data" , data);
     const user = await UserModel.findOne({ email: req.params.emailId });
     if(!user) return res.status(400).json({ message: "User not found" });
     const admin = await UserModel.findOne({ mode: "Admin" });
@@ -637,7 +616,7 @@ app.get("/eventsData", cache, async (req, res) => {
 
   try {
     const event = await Events.find().sort({ _id: -1 });
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(event));
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(event));
     res.json(event);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -685,7 +664,7 @@ app.get("/eventsLength", cache, async (req, res) => {
 app.get("/ngosData", async (req, res) => {
   try {
     const ngo = await UserNgo.find({ mode: "Ngo" }).sort({ _id: -1 });
-    redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
+    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
     res.json(ngo);
   } catch (err) { 
     res.status(500).json({ message: err.message });
@@ -725,6 +704,6 @@ app.get('/users', (req, res) => {
 
 const url = "mongodb+srv://aksn0204:aAKgkxCEiyXB5O59@cluster0.dpmnhfa.mongodb.net/GoodWill";
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+server.listen(port, () => console.log(`Example app listening on port ${port}!`));
 // module.exports = app;
 

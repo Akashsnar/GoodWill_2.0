@@ -133,7 +133,7 @@ function FeedbackTable() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/sitedata/feedbacks"
+          process.env.REACT_APP_BACKEND_URL+"/sitedata/feedbacks"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -194,7 +194,7 @@ function FeedbackTable() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteFeedback", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteFeedback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

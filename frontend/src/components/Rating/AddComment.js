@@ -35,7 +35,7 @@ const handleCommentSubmit = async (event) => {
 
   try {
     console.log("hi");
-    const response = await fetch("http://localhost:4000/sitedata/addComment", {
+    const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/sitedata/addComment", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -51,7 +51,7 @@ const handleCommentSubmit = async (event) => {
     const data = await response.json();
     console.log("Comment added:", data);
 
-    // Update local state if needed
+
     addComment(newComment);
     handleReset();
     window.location.reload();

@@ -11,7 +11,7 @@ function NGOsCampaign() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/sitedata/ngodetails"
+          process.env.REACT_APP_BACKEND_URL+"/sitedata/ngodetails"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
