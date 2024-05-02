@@ -101,7 +101,7 @@
 
 // export default ChatPage;
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import './ChatPage.css'
 import { useSelector } from 'react-redux';
 import io from 'socket.io-client';
@@ -111,9 +111,11 @@ const ChatPage = () => {
   const [inputMessage, setInputMessage] = useState("");
   const [socket, setSocket] = useState();
   const [messageList, setMessageList] = useState([]);
-
+  const [adminOnline, setAdminOnline] = useState(false)
   const [userId, setUserId] = useState();
   const [adminId, setAdminId] = useState();
+  const scrollRef = useRef(null);
+
 
   useEffect(() => {
     const userSocket = io('http://localhost:4000', {
@@ -127,7 +129,15 @@ const ChatPage = () => {
     userSocket.on("recieve-message", (data) => {
       setMessageList(prevMessages => [...prevMessages, data]);
     })
-  }, [emailId]);
+
+    userSocket.on("online-admin", () => {
+      setAdminOnline(true);
+    })
+
+    userSocket.on("offline-admin", () => {
+      setAdminOnline(false);
+    })
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -148,6 +158,12 @@ const ChatPage = () => {
     return `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
   };
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messageList])
+
   const handleSendMessage = async () => {
     const data = {
       content: inputMessage,
@@ -161,6 +177,7 @@ const ChatPage = () => {
       senderId: userId,
       content: inputMessage,
       time: formatCurrentTime()
+
     };
 
     setMessageList(prevMessages => [...prevMessages, newMessage]);
@@ -173,23 +190,27 @@ const ChatPage = () => {
 
   return (
     <div className="main_chat_container">
-    <div className="helpline_container">
-      <div className="helpline_header">HelpLine Desk</div>
-      <div className="chat_container">
-        {messageList.map((message, index) => (
-          <div key={index}  className={`message ${message.senderId === userId ? "chat_div_content_sender" : "chat_div_content_receiver"}`} >
-          <div  className={`message ${message.senderId === userId ? "sender_message" : "receiver_message"}`}>
-            {message.content}
-            <p className="message_time">{message.time}</p>
-          </div>
-          </div>
-        ))}
+      <div className="helpline_container">
+        <div className="helpline_header">
+          <b>HelpLine Desk</b>
+          {adminOnline && <p>Online</p>}
+          {!adminOnline && <p>Offline</p>}
+        </div>
+        <div className="chat_container" ref={scrollRef}>
+          {messageList.map((message, index) => (
+            <div key={index} className={`message ${message.senderId === userId ? "chat_div_content_sender" : "chat_div_content_receiver"}`} >
+              <div className={`message ${message.senderId === userId ? "sender_message" : "receiver_message"}`}>
+                {message.content}
+                <p className="message_time">{message.time}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="chat_input">
+          <input type="text" placeholder="Type your message here" value={inputMessage} onChange={handleInputChange} />
+          <button className="send_button" onClick={handleSendMessage}>Send Message</button>
+        </div>
       </div>
-      <div className="chat_input">
-        <input type="text" placeholder="Type your message here" value={inputMessage} onChange={handleInputChange} />
-        <button className="send_button" onClick={handleSendMessage}>Send Message</button>
-      </div>
-    </div>
     </div>
   );
 };

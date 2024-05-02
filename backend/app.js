@@ -238,9 +238,10 @@ const io = new Server(server, {
 })
 
 const getId = async ({ email }) => {
-    // console.log(email)
+    console.log(email)
     const user = await UserModel.findOne({ email: email });
-    return user._id;
+    console.log(user)
+    return user._id.toString();
 }
 
 function formatTimestamp(timestamp) {
@@ -262,15 +263,35 @@ function formatTimestamp(timestamp) {
   }
 }
 
+const getAdminId = async () => {
+  const admin = await UserModel.findOne({ mode: "Admin" });
+  return admin._id.toString();
+}
+
 io.on("connection", async (socket) => {
-    console.log(`User Connected: ${socket.id}`);
     console.log(`emailId is ${socket.handshake.query.email}`);
     const userId = await getId({ email: socket.handshake.query.email });
     console.log("User Id is ", userId);
-    onlineUsers.add(userId.toString());
-    userSocketId.set(userId.toString(), socket.id);
+    const admin__id = await getAdminId();
+    console.log("equal ", userId, admin__id)
+    if(userId !== admin__id) {
+      if(onlineUsers.has(admin__id)) {
+        socket.to(userSocketId.get(admin__id)).emit("online-user", userId);
+        socket.emit("online-admin");
+        console.log("admin online")
+      }
+    } else {
+      for (let [key, value] of userSocketId ) {
+        if(key !== admin__id) {
+          socket.to(value).emit("online-admin");
+          socket.emit("online-user", key);
+        }
+      }
+    }
+    onlineUsers.add(userId);
+    userSocketId.set(userId, socket.id);
     console.log(onlineUsers);
-    console.log(userSocketId)
+    console.log(userSocketId);
     socket.on("send-message", async (data) => {
         try {
             console.log("send_message")
@@ -305,6 +326,17 @@ io.on("connection", async (socket) => {
 
     socket.on("disconnect", () => {
         console.log("User Disconnected", socket.id);
+        if(userId !== admin__id) {
+          if(onlineUsers.has(admin__id)) {
+            socket.to(userSocketId.get(admin__id)).emit("offline-user", userId);
+          }
+        } else {
+          for (let [key, value] of userSocketId ) {
+            if(key !== admin__id) {
+              socket.to(value).emit("offline-admin");
+            }
+          }
+        }
         onlineUsers.delete(userId);
         userSocketId.delete(userId);
     });
@@ -319,18 +351,45 @@ app.get("/helpline/user-details/:emailId", async(req, res) => {
     const admin = await UserModel.findOne({ mode: "Admin" });
     if(!admin) return res.status(400).json({ message: "Admin not found!" });
     const messages = await Message.find({ roomId: user._id });
-    return res.status(200).json({ user_id: user._id, admin_id: admin._id, messages: messages });
+    const formattedMessages = [];
+    messages.forEach((message) => {
+      const newMessage =  {
+        content: message.content,
+        senderId: message.senderId,
+        time: formatTimestamp(message.createdAt)
+      };
+      formattedMessages.push(newMessage);
+    })
+    return res.status(200).json({ user_id: user._id, admin_id: admin._id, messages: formattedMessages });
   } catch(err) {
     console.log(err);
   }
 })
 
+app.get("/helpline/admin", async(req, res) => {
+  try {
+    const admin = await UserModel.findOne({ mode: "Admin" });
+    if(!admin) return res.status(400).json({ message: "Admin not found!" });
+    return res.status(200).json({ admin_id: admin._id })
+  } catch(err) {
+    return res.status(500);
+  }
+})
 app.get("/helpline/admin/:userId", async(req, res) => {
   try {
     const admin = await UserModel.findOne({ mode: "Admin" });
     if(!admin) return res.status(400).json({ message: "Admin not found!" });
     const messages = await Message.find({ roomId: req.params.userId });
-    return res.status(200).json({ messages: messages, admin_id: admin._id })
+    const formattedMessages = [];
+    messages.forEach((message) => {
+      const newMessage =  {
+        content: message.content,
+        senderId: message.senderId,
+        time: formatTimestamp(message.createdAt)
+      };
+      formattedMessages.push(newMessage);
+    })
+    return res.status(200).json({ messages: formattedMessages, admin_id: admin._id })
   } catch(err) {
     console.log(err);
   }
