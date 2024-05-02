@@ -7,6 +7,7 @@ import {
   SAVE_USER,
   SET_LOGIN_USER,
   SET_NAME,
+  SAVE_MODE,
   SET_USERID
 } from "./redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
@@ -126,7 +127,7 @@ const Login = () => {
         dispatch(SET_LOGIN_USER(true));
         dispatch(SET_NAME(data.name));
         dispatch(SET_USERID(data._id));
-        dispatch(SAVE_USER(data.email));
+        dispatch(SAVE_MODE(data.mode));
 
         console.log("user ka ",data);
 

@@ -29,7 +29,7 @@ function NGODashboard() {
             <i className="fa fa-check-circle"></i>Complete Campaigns
           </li>
           <li className="charts-item" onClick={() => handleStatusChange('closed')} style={{cursor: 'pointer'}}>
-            <i className="fas fa-times-circle"></i>Closed Campaigns
+            <i className="fas fa-times-circle"></i> Closed Campaigns
           </li>
         </ul>
       </div>

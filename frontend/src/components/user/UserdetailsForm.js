@@ -78,28 +78,6 @@ function UserdetailsForm(props) {
 
       reader.readAsDataURL(imgfile);
     }
-
-
-    // if (imgfile.type === 'image/jpeg' || imgfile.type === 'image/png') {
-    //   console.log("cloudnary");
-    //   const data = new FormData()
-    //   data.append("file", imgfile);
-    //   data.append("upload_preset", "qyabhaz3")
-    //   data.append("cloud_name", "dhwrvpowg")
-    //   fetch("https://api.cloudinary.com/v1_1/dhwrvpowg/image/upload", {
-    //     method: 'post', body: data,
-    //   }).then((res) => res.json())
-    //     .then(data => {
-    //       // setPic(data.url.toString());
-    //       setFormData({ ...formData, 'image': data.url.toString() });
-    //       console.log(data);
-    //       // setLoading(false);
-    //     }).catch((err) => {
-    //       console.log(err);
-    //       // setLoading(false);
-
-    //     })
-    // }
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -128,10 +106,8 @@ function UserdetailsForm(props) {
       }
       );
       console.log("data saved", response);
-      // navigate('/postlist', { state: response.data.token })
     } catch (error) {
       console.log(error);
-      // setError(error.response.data.message);
     }
   };
 
@@ -195,12 +171,6 @@ function UserdetailsForm(props) {
                     value={formData.name}
                     onChange={handleChange}
                   />
-                  {/* <div>
-                                        <span className="text-red-500 text-xs italic">
-                                            Please fill out this field.
-                                        </span>
-                                    </div> */}
-
                 </div>
                 <div className="md:w-1/2 px-3">
                   <label

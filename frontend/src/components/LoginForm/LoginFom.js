@@ -23,7 +23,7 @@ const LoginFom = ({
           value={formData.email}
         />
         <input
-          type="password "
+          type="password"
           className="input-tag"
           placeholder="PASSWORD"
           name="password"

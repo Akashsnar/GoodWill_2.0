@@ -95,7 +95,7 @@ const Products = () => {
           <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("dailyneeds")}>
           Dailyneeds
           </button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("electronics")}>Electronics</button>
+          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("Medicine")}>Medicines</button>
         </div>
 
         {filter.map((product) => {

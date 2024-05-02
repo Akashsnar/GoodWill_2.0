@@ -19,11 +19,15 @@ const Navbar = () => {
   const [showCartDetails, setshowCartDetails] = useState(false)
   const handleDonation = () => {
     // alert(`Login : ${isLoggedIn}`);
+  
     if (!isLoggedIn) {
       alert("Plz login first");
-    } else {
-      console.log("hello");
+    } else if(checkuserdata.mode=='User') {
+      console.log("hello", checkuserdata);
       navigate("/donation");
+    }
+    else{
+      navigate("/ngo2ngodonation");
     }
   };
   const handleCartDetails = () => {
@@ -89,11 +93,16 @@ const Navbar = () => {
               <span class="displayNone">Log In</span>
             </Link>
             :
-            <Link
+            checkuserdata.mode=='User'?<Link
               to={`/user/${checkuserdata.userid}`}
             >
               <span class="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">&nbsp;Your Profile</span>
             </Link>
+            :<Link
+            to={`/Ngo_dashboard`}
+          >
+            <span class="block lg:inline-block lg:mt-0 text-white-900 mr-4 text-lg fond-bold">&nbsp;Your Profile</span>
+          </Link>
           }
         </div>
         <div>

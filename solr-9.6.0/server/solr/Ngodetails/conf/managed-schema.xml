@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+<schema name="Ngodetails" version="1.6">
+  <uniqueKey>_id</uniqueKey>
+  <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true"/>
+  <fieldType name="pdate" class="solr.DatePointField" docValues="true"/>
+  <fieldType name="pdates" class="solr.DatePointField" docValues="true" multiValued="true"/>
+  <fieldType name="pdoubles" class="solr.DoublePointField" docValues="true" multiValued="true"/>
+  <fieldType name="pfloats" class="solr.FloatPointField" docValues="true" multiValued="true"/>
+  <fieldType name="pint" class="solr.IntPointField" docValues="true"/>
+  <fieldType name="pints" class="solr.IntPointField" docValues="true" multiValued="true"/>
+  <fieldType name="plong" class="solr.LongPointField" docValues="true"/>
+  <fieldType name="plongs" class="solr.LongPointField" docValues="true" multiValued="true"/>
+  <fieldType name="string" class="solr.StrField" sortMissingLast="true" docValues="true"/>
+  <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100">
+    <analyzer>
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <field name="_id" type="string" indexed="true" stored="true"/>
+  <field name="_version_" type="plong" indexed="true" stored="true"/>
+  <field name="campagainname" type="text_general" indexed="true" stored="true"/>
+  <field name="category" type="text_general" indexed="true" stored="true"/>
+  <field name="desc" type="text_general" indexed="true" stored="true"/>
+  <field name="goal" type="pint" indexed="true" stored="true"/>
+  <field name="image" type="text_general" indexed="true" stored="true"/>
+  <field name="ngoname" type="text_general" indexed="true" stored="true"/>
+  <field name="raised" type="pint" indexed="true" stored="true"/>
+  <field name="status" type="text_general" indexed="true" stored="true"/>
+  <field name="volunteers" type="text_general" multiValued="true" indexed="true" stored="true"/>
+</schema>
