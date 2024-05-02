@@ -1,15 +1,24 @@
-const request = require('supertest');
-const app = require('../app');
+const request = require("supertest")
 
-test('returns a list of users', async () => {
-  const response = await request(app).get('/NGOsLength');
-  expect(response.status).toBe(200);
-  // expect(response.body).toEqual([    { id: 1, name: 'Alice' },    { id: 2, name: 'Bob' },    { id: 3, name: 'Charlie' },  ]);
+const baseURL = "http://localhost:4000/";
+
+describe('POST /api/users/login', () => {
+    it('should return 200 OK and a token if login is successful', async () => {
+        const response = await request(baseURL)
+            .post('api/users/login')
+            .send({ mode: "User", email: 'dj@gmail.com', password: 'dhruv@12' });
+        
+        expect(response.status).toBe(200);
+        expect(response.body).toHaveProperty('token');
+    });
 });
 
-
-// test('returns a list of users', async () => {
-//   const response = await request(app).get('/sitedata/userlength');
-//   expect(response.status).toBe(200);
-//   expect(response.body ? response.body.length : 0).toBeGreaterThan(10);
-// });
+describe('POST /api/users/login', () => {
+    it('should return 200 OK and a token if login is successful', async () => {
+        const response = await request(baseURL)
+            .post('api/users/login')
+            .send({ mode: "User", email: 'dj@gmail.com', password: 'dhruv@' });
+        
+        expect(response.status).toBe(400);
+    });
+});

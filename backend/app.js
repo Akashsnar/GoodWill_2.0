@@ -57,10 +57,7 @@ app.use(cookieParser());
 app.use(express.static(path.resolve("./public")));
 app.use(express.static("profile_pic"));
 app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    credentials: true,
-  })
+  cors()
 );
 const csrf = require("csurf");
 const csrfprotection = csrf({ cookie: true });
@@ -704,6 +701,11 @@ app.get('/users', (req, res) => {
 
 const url = "mongodb+srv://aksn0204:aAKgkxCEiyXB5O59@cluster0.dpmnhfa.mongodb.net/GoodWill";
 
+
 server.listen(port, () => console.log(`Example app listening on port ${port}!`));
-// module.exports = app;
+
+mongoose.connect(url).then(() => {
+  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+}).catch((err) => { console.log(err) });
+
 
