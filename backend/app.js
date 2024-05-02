@@ -529,7 +529,6 @@ app.get("/ngosData", async (req, res) => {
 app.get("/NGOsLength", async (req, res) => {
   try {
     const ngo = await UserNgo.find({ mode: "Ngo" });
-    // redisClient.setex(req.originalUrl, 3600, JSON.stringify(ngo));
     res.json(ngo.length);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -537,7 +536,7 @@ app.get("/NGOsLength", async (req, res) => {
 });
 
 
-indexData();
+// indexData();
 
 
 app.get('/users', (req, res) => {
@@ -546,6 +545,6 @@ app.get('/users', (req, res) => {
 });
 
 
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-module.exports = app;
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// module.exports = app;
 

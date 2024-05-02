@@ -18,15 +18,14 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [showCartDetails, setshowCartDetails] = useState(false)
   const handleDonation = () => {
-    // alert(`Login : ${isLoggedIn}`);
-  
     if (!isLoggedIn) {
       alert("Plz login first");
     } else if(checkuserdata.mode=='User') {
       console.log("hello", checkuserdata);
-      navigate("/donation");
+      navigate(`/user/${checkuserdata.userid}`);
     }
     else{
+      console.log("Ngo local host", checkuserdata);
       navigate("/ngo2ngodonation");
     }
   };
