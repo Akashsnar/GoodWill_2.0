@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-export const Backend_URL = "http://localhost:4000";
+export const Backend_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const validateEmail = (email) => {
   return email.match(
@@ -63,7 +63,7 @@ export const logoutUser = async () => {
   try {
     console.log("logoutUser");
 
-    await axios.get(`http://localhost:4000/api/users/logout`);
+    await axios.get(process.env.REACT_APP_BACKEND_URL+`/api/users/logout`);
 
     toast.success("Logged Out");
   } catch (error) {
