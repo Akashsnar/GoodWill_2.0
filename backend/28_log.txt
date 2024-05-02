@@ -2596,3 +2596,4 @@
 ::1 - - [02/May/2024:02:32:31 +0000] "GET /socket.io/?email=Ngo&EIO=4&transport=polling&t=Oyt9N28 HTTP/1.1" 404 149 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 ::1 - - [02/May/2024:02:32:32 +0000] "GET /socket.io/?email=Ngo&EIO=4&transport=polling&t=Oyt9NCk HTTP/1.1" 404 149 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 ::1 - - [02/May/2024:02:32:32 +0000] "GET /socket.io/?email=Ngo&EIO=4&transport=polling&t=Oyt9NET HTTP/1.1" 404 149 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+::1 - - [02/May/2024:07:52:26 +0000] "POST /api/users/login HTTP/1.1" 200 268 "-" "-"
