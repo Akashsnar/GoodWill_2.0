@@ -57,10 +57,7 @@ app.use(cookieParser());
 app.use(express.static(path.resolve("./public")));
 app.use(express.static("profile_pic"));
 app.use(
-  cors({
-    origin: ["https://good-will-2-0-lkqs-lodi1bgt3-akashsnars-projects.vercel.app/"],
-    credentials: true,
-  })
+  cors()
 );
 const csrf = require("csurf");
 const csrfprotection = csrf({ cookie: true });
