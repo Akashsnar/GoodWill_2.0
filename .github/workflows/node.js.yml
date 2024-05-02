@@ -34,4 +34,4 @@ jobs:
         npm test
         pm2 stop app
       
-      working-directory: backend
+      working-directory: backend
