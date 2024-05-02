@@ -4,8 +4,8 @@
   "description": "Landing Page",
   "main": "app.js",
   "scripts": {
-    "test": "jest --coverage --forceExit",
-    "start": "node app.js"
+    "test": "jest",
+    "start": "nodemon app.js"
   },
   "author": "ReyKan",
   "license": "ISC",
