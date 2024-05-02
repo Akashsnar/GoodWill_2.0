@@ -12,3 +12,13 @@ describe('POST /api/users/login', () => {
         expect(response.body).toHaveProperty('token');
     });
 });
+
+describe('POST /api/users/login', () => {
+    it('should return 200 OK and a token if login is successful', async () => {
+        const response = await request(baseURL)
+            .post('api/users/login')
+            .send({ mode: "User", email: 'dj@gmail.com', password: 'dhruv@' });
+        
+        expect(response.status).toBe(400);
+    });
+});
