@@ -702,7 +702,7 @@ app.get('/users', (req, res) => {
 const url = "mongodb+srv://aksn0204:aAKgkxCEiyXB5O59@cluster0.dpmnhfa.mongodb.net/GoodWill";
 
 
-server.listen(port, () => console.log(`Example app listening on port ${port}!`));
+// server.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 mongoose.connect(url).then(() => {
   app.listen(port, () => console.log(`Example app listening on port ${port}!`));
