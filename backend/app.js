@@ -132,6 +132,8 @@ const Group_no = "Group_28";
 
 const port = 4000;
 
+
+
 app.post("/user", csrfprotection, async (req, res) => {
   console.log("/user running");
   try {
@@ -378,6 +380,10 @@ io.on("connection", async (socket) => {
 });
 
 const Message = require("./mongoSchema/message");
+
+app.get("/", (req, res)=>{
+  res.json("Hi bro");
+})
 
 app.get("/helpline/user-details/:emailId", async(req, res) => {
   try {
