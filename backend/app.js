@@ -59,12 +59,30 @@ app.use(express.static("profile_pic"));
 // app.use(
 //   cors()
 // );
-const corsOptions ={
-  origin:'http://localhost:3000', 
-  credentials:true,            
-  optionSuccessStatus:200
-}
+
+onst allowedOrigins = ["http://localhost:3000", "https://good-will-2-0.vercel.app", "https://good-will-2-0-9cjpr081o-akashsnars-projects.vercel.app"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = "The CORS policy for this site does not allow access from the specified origin.";
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true,  // Enable credentials
+  optionsSuccessStatus: 200
+};
+
 app.use(cors(corsOptions));
+
+// const corsOptions ={
+//   origin:'http://localhost:3000', 
+//   credentials:true,            
+//   optionSuccessStatus:200
+// }
+// app.use(cors(corsOptions));
 
 const csrf = require("csurf");
 const csrfprotection = csrf({ cookie: true });
