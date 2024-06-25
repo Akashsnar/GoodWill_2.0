@@ -34,7 +34,7 @@ const options = {
     },
     servers: [
       {
-        url: "http://0.0.0.0 :4000", // Update this with your server URL
+        url: "http://localhost:4000", // Update this with your server URL
       },
     ],
   },
@@ -60,7 +60,7 @@ app.use(express.static("profile_pic"));
 //   cors()
 // );
 
-onst allowedOrigins = ["http://localhost:3000", "https://good-will-2-0.vercel.app", "https://good-will-2-0-9cjpr081o-akashsnars-projects.vercel.app"];
+const allowedOrigins = ["http://localhost:3000", "https://good-will-2-0.vercel.app", "https://good-will-2-0-9cjpr081o-akashsnars-projects.vercel.app"];
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
