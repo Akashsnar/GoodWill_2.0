@@ -13,9 +13,7 @@ function GetUserNGO(props) {
     useEffect(() => {
         if (searchQuery) {
             SearchData();
-        } else {
-            fetchData();
-        }
+        } 
     }, [searchQuery]);
 
     const SearchData = async () => {
