@@ -8,13 +8,9 @@ function GetUserNGO(props) {
 
     useEffect(() => {
         fetchData();
-    }, [props.mode, props.ngoname, props.status]);
+    }, []);
 
-    useEffect(() => {
-        if (searchQuery) {
-            SearchData();
-        } 
-    }, [searchQuery]);
+    
 
     const SearchData = async () => {
         try {
