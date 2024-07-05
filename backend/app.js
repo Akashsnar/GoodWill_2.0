@@ -77,12 +77,16 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// const corsOptions ={
-//   origin:'http://localhost:3000', 
-//   credentials:true,            
-//   optionSuccessStatus:200
-// }
-// app.use(cors(corsOptions));
+app.use((err, req, res, next) => {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).send('Invalid token');
+  } else if (err.message === "The CORS policy for this site does not allow access from the specified origin.") {
+    res.status(403).send(err.message);
+  } else {
+    next(err);
+  }
+});
+
 
 const csrf = require("csurf");
 const csrfprotection = csrf({ cookie: true });
