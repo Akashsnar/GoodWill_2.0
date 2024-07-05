@@ -6,10 +6,17 @@ function GetUserNGO(props) {
     const [visibleCampaigns, setVisibleCampaigns] = useState(3);
     const [searchQuery, setSearchQuery] = useState('');
 
-    useEffect(() => {
+     useEffect(() => {
         fetchData();
-    }, []);
+    }, [props.mode, props.ngoname, props.status]);
 
+    useEffect(() => {
+        if (searchQuery) {
+            SearchData();
+        } else {
+            fetchData();
+        }
+    }, [searchQuery]);
     
 
     const SearchData = async () => {
