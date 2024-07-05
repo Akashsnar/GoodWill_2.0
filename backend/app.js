@@ -120,21 +120,6 @@ const redisUrl = "redis://localhost:6379";
 //   console.log("Connected to Redis server");
 // });
 
-function cache(req, res, next) {
-  // const key = req.originalUrl;
-  // redisClient.get(key, (err, data) => {
-  //   if (err) {
-  //     console.error("Redis error:", err);
-  //     next(); // Proceed without caching if there's an error
-  //   }
-
-  //   if (data !== null) {
-  //     res.send(JSON.parse(data));
-  //   } else {
-  //     next();
-  //   }
-  // });
-}
 
 var upload = multer({
   storage: multer.diskStorage({
@@ -632,7 +617,7 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.get("/eventsData", cache, async (req, res) => {
+app.get("/eventsData", async (req, res) => {
 
 /**
  * @swagger
@@ -656,7 +641,7 @@ app.get("/eventsData", cache, async (req, res) => {
   }
 });
 
-app.get("/eventsLength", cache, async (req, res) => {
+app.get("/eventsLength", async (req, res) => {
 
 /**
  * @swagger
