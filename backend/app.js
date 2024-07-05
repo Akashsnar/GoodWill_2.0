@@ -60,7 +60,7 @@ app.use(express.static("profile_pic"));
 //   cors()
 // );
 
-const allowedOrigins = ["http://localhost:3000", "https://good-will-2-0.vercel.app", "https://good-will-2-0-9cjpr081o-akashsnars-projects.vercel.app"];
+const allowedOrigins = ["http://localhost:3000", "https://good-will-2-0.vercel.app","https://good-will-2-0-lkqs.vercel.app", "https://good-will-2-0-9cjpr081o-akashsnars-projects.vercel.app"];
 const corsOptions = {
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
