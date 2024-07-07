@@ -73,7 +73,7 @@ function NGOsCampaign() {
 
   const handleConfirmDelete = async (deleteId) => {
     try {
-      const response = await fetch("http://localhost:4000/deleteNGO", {
+      const response = await fetch(process.env.REACT_APP_BACKEND_URL+"/deleteNGO", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
