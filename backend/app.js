@@ -726,7 +726,7 @@ const url = "mongodb+srv://aksn0204:aAKgkxCEiyXB5O59@cluster0.dpmnhfa.mongodb.ne
 // server.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 mongoose.connect(url).then(() => {
-  app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+  server.listen(port, () => console.log(`Example app listening on port ${port}!`));
 }).catch((err) => { console.log(err) });
 
 
