@@ -42,6 +42,10 @@ This website was built using the following technologies:
 - MongoDB
 - AJAX(fetch)
 - Morgan
+- Redis
+- Swagger
+- Solr
+
 
 
 
